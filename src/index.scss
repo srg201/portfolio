@@ -1,0 +1,93 @@
+@use "sass:math";
+@import "./scss/mixins";
+@import url("https://fonts.googleapis.com/css2?family=Epilogue&family=Roboto:wght@400:600&display=swap");
+
+$fontFamily: "Epilogue";
+$fontSize: 20;
+
+$minWidth: 320px;
+$maxWidth: 1920;
+$maxWidthContainer: 1270;
+$containerWidth: 1270px;
+$md1: $maxWidthContainer + 12;
+$md2: 991.98;
+$md3: 767.98;
+$md4: 479.98;
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  font-family: $fontFamily, sans-serif;
+  font-size: rem($fontSize);
+  font-weight: 400;
+  --color-light: #fff;
+  --color-text: #c7c7c7;
+  --color-black: #000;
+}
+
+.container {
+  padding: 0 rem(15);
+  margin: 0 auto;
+  max-width: $containerWidth;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  font-weight: 400;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  color: var(--color-light);
+  background-color: var(--color-black);
+}
+
+button {
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+.paragraph {
+  color: var(--color-text);
+  line-height: math.div(34, 24);
+  @include adaptiveValue("font-size", 20, 16);
+}
+
+.heading2 {
+  @include adaptiveValue("font-size", 72, 40);
+  line-height: math.div(86, 72);
+  color: var(--color-light);
+}
+
+.heading3 {
+  @include adaptiveValue("font-size", 24, 20);
+  line-height: math.div(34, 24);
+  color: var(--color-light);
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1 1 auto;
+}

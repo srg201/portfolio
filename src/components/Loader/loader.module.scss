@@ -1,0 +1,27 @@
+.wrap {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+    z-index: 11;
+
+    img {
+        width: 100px;
+        height: 100px;  
+        animation: anim 11s infinite;
+    }
+}
+
+
+@keyframes anim {
+    0% {
+        transform: rotate(0deg);
+    } 100% {
+        transform: rotate(360deg);
+    }
+}

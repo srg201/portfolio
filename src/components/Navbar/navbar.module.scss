@@ -1,0 +1,26 @@
+@use "sass:math";
+@import "../../scss/mixins.scss";
+
+.wrap {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  @include adaptiveValue("padding", 30, 15);
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: space-between;
+
+  ul {
+    display: flex;
+    align-items: center;
+    gap: rem(10);
+
+    li {
+         width: 100%;
+          height: 100%;
+          object-fit: contain;
+          width: rem(25);
+          height: rem(25);
+    }
+  }
+}

@@ -1,0 +1,21 @@
+@use "sass:math";
+@import "../../scss/mixins.scss";
+
+.wrap {
+  @include adaptiveValue("padding-top", 100, 30);
+  @include adaptiveValue("padding-bottom", 100, 30);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(280px, 1fr));
+  align-items: center;
+
+  @media (max-width: 767px) {
+    grid-template-columns: repeat(1, minmax(280px, 1fr));
+    gap: rem(10);
+  }
+}
+
+.title {
+  @include adaptiveValue("font-size", 115, 55);
+  line-height: math.div(128, 115);
+  color: var(--color-light);
+}
