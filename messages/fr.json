@@ -122,5 +122,15 @@
     "title": "Page introuvable",
     "description": "Cette page n'a pas encore été déployée.",
     "backHome": "Retour à l'accueil"
+  },
+  "Footer": {
+    "label": "Prochaine étape",
+    "title": "Construisons-le ensemble",
+    "text": "Vous avez un projet en tête ? Parlez-m'en et voyons comment je peux vous aider.",
+    "cta": "Parlons de votre projet",
+    "email": "E-mail",
+    "elsewhere": "Ailleurs",
+    "backToTop": "Haut de page",
+    "newTab": "s'ouvre dans un nouvel onglet"
   }
 }

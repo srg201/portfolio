@@ -122,5 +122,15 @@
     "title": "Seite nicht gefunden",
     "description": "Diese Seite wurde noch nicht deployt.",
     "backHome": "Zur Startseite"
+  },
+  "Footer": {
+    "label": "Nächster Schritt",
+    "title": "Lass es uns gemeinsam bauen",
+    "text": "Sie haben ein Projekt im Kopf? Erzählen Sie mir davon, und wir schauen, wie ich helfen kann.",
+    "cta": "Projekt besprechen",
+    "email": "E-Mail",
+    "elsewhere": "Außerdem",
+    "backToTop": "Nach oben",
+    "newTab": "öffnet in einem neuen Tab"
   }
 }

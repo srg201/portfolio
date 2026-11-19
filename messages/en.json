@@ -122,5 +122,15 @@
     "title": "Page not found",
     "description": "This page hasn't been deployed yet.",
     "backHome": "Back to home"
+  },
+  "Footer": {
+    "label": "Next step",
+    "title": "Let's build it together",
+    "text": "Have a project in mind? Tell me about it and let's see how I can help.",
+    "cta": "Discuss a project",
+    "email": "Email",
+    "elsewhere": "Elsewhere",
+    "backToTop": "Back to top",
+    "newTab": "opens in a new tab"
   }
 }

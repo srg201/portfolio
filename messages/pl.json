@@ -122,5 +122,15 @@
     "title": "Nie znaleziono strony",
     "description": "Ta strona nie została jeszcze wdrożona.",
     "backHome": "Wróć na stronę główną"
+  },
+  "Footer": {
+    "label": "Następny krok",
+    "title": "Zbudujmy to razem",
+    "text": "Masz pomysł na projekt? Opowiedz mi o nim, a zobaczymy, jak mogę pomóc.",
+    "cta": "Porozmawiajmy o projekcie",
+    "email": "E-mail",
+    "elsewhere": "Gdzie jeszcze",
+    "backToTop": "Do góry",
+    "newTab": "otwiera się w nowej karcie"
   }
 }

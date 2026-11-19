@@ -122,5 +122,15 @@
     "title": "Pagina non trovata",
     "description": "Questa pagina non è ancora stata pubblicata.",
     "backHome": "Torna alla home"
+  },
+  "Footer": {
+    "label": "Prossimo passo",
+    "title": "Costruiamolo insieme",
+    "text": "Hai un progetto in mente? Raccontamelo e vediamo come posso aiutarti.",
+    "cta": "Parliamo del progetto",
+    "email": "Email",
+    "elsewhere": "Altrove",
+    "backToTop": "Torna su",
+    "newTab": "si apre in una nuova scheda"
   }
 }

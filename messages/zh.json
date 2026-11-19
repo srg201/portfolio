@@ -122,5 +122,15 @@
     "title": "页面未找到",
     "description": "这个页面还没有部署。",
     "backHome": "返回首页"
+  },
+  "Footer": {
+    "label": "下一步",
+    "title": "一起把它做出来",
+    "text": "有项目想法吗？跟我聊聊，看看我能怎么帮你。",
+    "cta": "聊聊你的项目",
+    "email": "邮箱",
+    "elsewhere": "其他平台",
+    "backToTop": "回到顶部",
+    "newTab": "在新标签页中打开"
   }
 }

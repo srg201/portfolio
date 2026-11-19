@@ -122,5 +122,15 @@
     "title": "Sayfa bulunamadı",
     "description": "Bu sayfa henüz yayına alınmadı.",
     "backHome": "Ana sayfaya dön"
+  },
+  "Footer": {
+    "label": "Sonraki adım",
+    "title": "Birlikte inşa edelim",
+    "text": "Aklınızda bir proje mi var? Bana anlatın, nasıl yardımcı olabileceğime bakalım.",
+    "cta": "Projeyi konuşalım",
+    "email": "E-posta",
+    "elsewhere": "Diğer kanallar",
+    "backToTop": "Başa dön",
+    "newTab": "yeni sekmede açılır"
   }
 }

@@ -6,6 +6,7 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { LocaleStage } from "@/components/motion/locale-stage";
 import { Providers } from "@/components/providers";
+import { Footer } from "@/components/sections/footer";
 import { Dock } from "@/components/ui/dock";
 import { MistBackground } from "@/components/webgl/mist-background";
 import { getDirection, routing } from "@/i18n/routing";
@@ -61,7 +62,10 @@ export default async function LocaleLayout({
         <NextIntlClientProvider>
           <Providers direction={getDirection(locale)}>
             <MistBackground />
-            <LocaleStage>{children}</LocaleStage>
+            <LocaleStage>
+              {children}
+              <Footer />
+            </LocaleStage>
             <Dock />
           </Providers>
         </NextIntlClientProvider>
