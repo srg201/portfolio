@@ -25,7 +25,7 @@ export async function Dock() {
   return (
     <nav
       aria-label={t("label")}
-      className="fixed inset-x-3 bottom-3 z-40 mx-auto flex max-w-6xl items-center justify-between gap-2 rounded-full border bg-background/70 p-1.5 shadow-xl shadow-foreground/5 backdrop-blur-xl sm:inset-x-6 sm:bottom-5"
+      className="fixed inset-x-3 bottom-3 z-40 animate-[dock-in_900ms_cubic-bezier(0.22,1,0.36,1)_1.1s_both] mx-auto flex max-w-6xl items-center justify-between gap-2 rounded-full border bg-background/70 p-1.5 shadow-xl shadow-foreground/5 backdrop-blur-xl sm:inset-x-6 sm:bottom-5"
     >
       <Link
         href="/"

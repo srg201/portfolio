@@ -28,7 +28,7 @@ export function Providers({
     <DirectionProvider direction={direction}>
       <ThemeProvider
         attribute="class"
-        defaultTheme="system"
+        defaultTheme="dark"
         enableSystem
         disableTransitionOnChange
         scriptProps={scriptProps}

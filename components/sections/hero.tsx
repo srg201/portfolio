@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { buttonVariants } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
+import { HeroMotion } from "./hero-motion";
 
 /** Иероглифы и хангыль заметно шире латиницы и кириллицы */
 const WIDE_SCRIPT = /[぀-ヿ㐀-鿿가-힯]/;
@@ -37,74 +38,94 @@ export async function Hero() {
     >
       <HeroBackdrop />
 
-      {/* Верхняя строка: кто и для кого + статус */}
-      <div
-        className={cn(
-          meta,
-          "flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-6",
-        )}
-      >
-        <p className="leading-relaxed">
-          <span className="block">{common("role")}</span>
-          <span className="block text-muted-foreground">{t("tagline")}</span>
-        </p>
-        <p className="flex shrink-0 items-center gap-2 leading-relaxed text-muted-foreground">
-          <span aria-hidden className="relative flex size-2">
-            <span className="absolute inset-0 animate-ping rounded-full bg-success opacity-60 motion-reduce:hidden" />
-            <span className="relative size-2 rounded-full bg-success" />
-          </span>
-          {t("available")}
-        </p>
-      </div>
-
-      {/* Имя на всю ширину */}
-      <div className="flex flex-1 flex-col justify-center py-10 md:py-8">
-        {/* Меняющееся слово (анимация появится на шаге 2) */}
-        <p aria-hidden className={cn(meta, "mb-4 text-brand sm:mb-6")}>
-          ( <span data-hero-word>{words[0]}</span> )
-        </p>
-        <h1
-          id="hero-title"
-          className="flex flex-col leading-[0.84] font-semibold tracking-[-0.045em] uppercase"
-          style={{ fontSize: nameFontSize(lines) }}
+      <HeroMotion words={words}>
+        {/* Верхняя строка: кто и для кого + статус */}
+        <div
+          className={cn(
+            meta,
+            "flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-6",
+          )}
         >
-          {lines.map((line, index) => (
-            <span
-              key={line}
-              // Чётные строки прижаты к концу: диагональная композиция
-              className={cn("block", index % 2 === 1 && "text-end")}
-            >
-              {line}
+          <p data-reveal className="leading-relaxed">
+            <span className="block">{common("role")}</span>
+            <span className="block text-muted-foreground">{t("tagline")}</span>
+          </p>
+          <p
+            data-reveal
+            className="flex shrink-0 items-center gap-2 leading-relaxed text-muted-foreground"
+          >
+            <span aria-hidden className="relative flex size-2">
+              <span className="absolute inset-0 animate-ping rounded-full bg-success opacity-60 motion-reduce:hidden" />
+              <span className="relative size-2 rounded-full bg-success" />
             </span>
-          ))}
-        </h1>
-      </div>
+            {t("available")}
+          </p>
+        </div>
 
-      {/* Нижняя строка: манифест, шоурил, CTA */}
-      <div className="grid items-end gap-6 lg:grid-cols-[1fr_auto_1fr] lg:gap-10">
-        <p className="max-w-sm text-base text-pretty text-muted-foreground sm:text-lg">
-          {t("manifesto")}
-        </p>
-
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4 lg:contents">
-          <ReelPreview label={t("showreel")} status={t("soon")} />
-
-          <div className="flex lg:justify-end">
-            <Link
-              href="/contact"
-              className={cn(
-                buttonVariants({ size: "lg" }),
-                "group/cta h-12 w-full justify-between gap-3 rounded-full ps-6 pe-1.5 text-base sm:w-auto",
-              )}
-            >
-              {t("cta")}
-              <span className="grid size-9 place-items-center rounded-full bg-primary-foreground text-primary transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover/cta:rotate-45 rtl:-scale-x-100">
-                <ArrowUpRight aria-hidden className="size-4" />
+        {/* Имя на всю ширину */}
+        <div className="flex flex-1 flex-col justify-center py-10 md:py-8">
+          {/* Меняющееся слово: перебор символов в hero-motion.tsx */}
+          <p
+            data-reveal
+            aria-hidden
+            className={cn(meta, "mb-4 text-brand sm:mb-6")}
+          >
+            ( <span data-hero-word>{words[0]}</span> )
+          </p>
+          <h1
+            id="hero-title"
+            data-hero-name
+            className="flex flex-col leading-[0.84] font-semibold tracking-[-0.045em] uppercase"
+            style={{ fontSize: nameFontSize(lines) }}
+          >
+            {lines.map((line, index) => (
+              <span
+                key={line}
+                // Чётные строки прижаты к концу: диагональная композиция
+                className={cn("block", index % 2 === 1 && "text-end")}
+              >
+                {line}
               </span>
-            </Link>
+            ))}
+          </h1>
+        </div>
+
+        {/* Нижняя строка: манифест, шоурил, CTA */}
+        <div className="grid items-end gap-6 lg:grid-cols-[1fr_auto_1fr] lg:gap-10">
+          <p
+            data-reveal
+            className="max-w-sm text-base text-pretty text-muted-foreground sm:text-lg"
+          >
+            {t("manifesto")}
+          </p>
+
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4 lg:contents">
+            <ReelPreview label={t("showreel")} status={t("soon")} />
+
+            <div data-reveal className="flex lg:justify-end">
+              <Link
+                href="/contact"
+                className={cn(
+                  buttonVariants({ size: "lg" }),
+                  "group/cta h-12 w-full justify-between gap-3 rounded-full ps-6 pe-1.5 text-base sm:w-auto",
+                )}
+              >
+                {t("cta")}
+                <span className="grid size-9 place-items-center rounded-full bg-primary-foreground text-primary transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover/cta:rotate-45 rtl:-scale-x-100">
+                  <ArrowUpRight aria-hidden className="size-4" />
+                </span>
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
+      </HeroMotion>
+
+      {/* Без JS анимация не запустится: показываем всё сразу */}
+      <noscript>
+        <style>
+          {"[data-hero-name],[data-reveal]{visibility:visible!important}"}
+        </style>
+      </noscript>
     </section>
   );
 }
@@ -112,7 +133,10 @@ export async function Hero() {
 /** Превью шоурила. Пока записей нет: живой градиент вместо видео */
 function ReelPreview({ label, status }: { label: string; status: string }) {
   return (
-    <div className="flex items-center gap-3 self-start rounded-full border bg-background/60 p-1.5 pe-5 backdrop-blur sm:self-auto lg:justify-self-center">
+    <div
+      data-reveal
+      className="flex items-center gap-3 self-start rounded-full border bg-background/60 p-1.5 pe-5 backdrop-blur sm:self-auto lg:justify-self-center"
+    >
       <div
         aria-hidden
         className="relative grid h-11 w-18 place-items-center overflow-hidden rounded-full bg-muted"

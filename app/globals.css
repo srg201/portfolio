@@ -191,6 +191,14 @@
 
 /* ---------- Hero (главный экран) ---------- */
 
+/* До запуска анимации входа (hero-motion.tsx) элементы скрыты, чтобы не мигали */
+@media (prefers-reduced-motion: no-preference) {
+  [data-hero-name],
+  [data-reveal] {
+    visibility: hidden;
+  }
+}
+
 /* Сетка точек, гаснущая к краям */
 .hero-dots {
   background-image: radial-gradient(
@@ -217,6 +225,14 @@
 @keyframes hero-reel-spin {
   to {
     rotate: 1turn;
+  }
+}
+
+/* Плашка Dock въезжает снизу после входа hero (components/ui/dock.tsx) */
+@keyframes dock-in {
+  from {
+    opacity: 0;
+    translate: 0 150%;
   }
 }
 

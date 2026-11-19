@@ -11,7 +11,7 @@
 - ORM: Drizzle (1.0 RC). Схема и RLS-политики в `lib/db/schema.ts`, миграции через `pnpm db:generate` / `db:migrate` в папку `drizzle/`. Drizzle на сервере обходит RLS, поэтому публичные запросы сами фильтруют `is_published`. supabase-js используется для Auth и Storage.
 - Supabase Auth-сессия обновляется в `proxy.ts` только для `/admin`; публичный сайт статический и cookies не читает.
 - next-intl, 15 языков: en, zh, es, hi, ar (RTL), pt, ru, fr, de, ja, ko, pl, tr, it, uk; fallback `en`. Язык определяется автоматически по `Accept-Language`, ручной выбор хранится в cookie. URL с префиксом `/{locale}`.
-- next-themes: светлая и тёмная тема плюс system. Цвета только через CSS-переменные.
+- next-themes: светлая и тёмная тема плюс system, по умолчанию тёмная. Цвета только через CSS-переменные.
 - Анимации: Motion (UI), GSAP + ScrollTrigger + SplitText (скролл), Lenis (плавный скролл), R3F/OGL (WebGL-туман).
 - Админка `/admin` с автопереводом контента через Claude API.
 - Деплой на Vercel.
