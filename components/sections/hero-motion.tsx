@@ -13,11 +13,77 @@ const WORD_HOLD = 1.8;
 const PARALLAX_SHIFT = { x: 28, y: 18 };
 
 /**
+ * clip-path, вырезающий из полноэкранного слоя ровно миниатюру шоурила.
+ * Координаты считаются относительно липкой сцены, которая всегда на экране.
+ */
+function thumbInset(root: HTMLElement) {
+  const stage = root.querySelector<HTMLElement>("[data-hero-stage]");
+  const thumb = root.querySelector<HTMLElement>("[data-reel-thumb]");
+  if (!stage || !thumb) return "inset(50% round 999px)";
+  const s = stage.getBoundingClientRect();
+  const t = thumb.getBoundingClientRect();
+  return `inset(${t.top - s.top}px ${s.right - t.right}px ${s.bottom - t.bottom}px ${t.left - s.left}px round ${t.height / 2}px)`;
+}
+
+/**
+ * Скролл-сцена шоурила (scrub): миниатюра раскрывается на весь экран,
+ * контент hero уходит назад, затем короткая пауза на полном экране.
+ */
+function createReelScroll(root: HTMLElement, layer: HTMLElement) {
+  const scene = root.closest<HTMLElement>("[data-hero-scene]") ?? root;
+  const content = root.querySelector<HTMLElement>("[data-hero-content]");
+  const caption = root.querySelector<HTMLElement>("[data-reel-caption]");
+
+  const timeline = gsap.timeline({
+    defaults: { ease: "none" },
+    scrollTrigger: {
+      trigger: scene,
+      start: "top top",
+      end: "bottom bottom",
+      scrub: 0.8,
+      invalidateOnRefresh: true,
+    },
+  });
+
+  timeline.fromTo(
+    layer,
+    { clipPath: () => thumbInset(root) },
+    {
+      clipPath: "inset(0px 0px 0px 0px round 0px)",
+      ease: "power2.inOut",
+      duration: 0.6,
+    },
+    0,
+  );
+  if (content) {
+    timeline.to(
+      content,
+      {
+        autoAlpha: 0,
+        scale: 0.94,
+        yPercent: -4,
+        ease: "power2.in",
+        duration: 0.45,
+      },
+      0,
+    );
+  }
+  if (caption) {
+    timeline.to(caption, { autoAlpha: 1, duration: 0.12 }, 0.5);
+  }
+  // Пауза на полноэкранном видео перед тем, как сцена уедет
+  timeline.to({}, { duration: 0.35 });
+
+  return timeline;
+}
+
+/**
  * Анимация входа hero. Разметку рендерит сервер (hero.tsx), здесь только движение:
  * - [data-hero-name]: буквы имени поднимаются из-под маски строк;
  * - [data-reveal]: подписи, манифест, шоурил и CTA проявляются по очереди;
  * - [data-hero-word]: слово по кругу меняется перебором символов;
- * - [data-depth]: слои смещаются за курсором (параллакс), только мышь.
+ * - [data-depth]: слои смещаются за курсором (параллакс), только мышь;
+ * - [data-reel-layer]: при скролле сцены шоурил растёт от миниатюры до экрана.
  * До запуска элементы скрыты CSS-ом (globals.css, блок Hero), но только при
  * prefers-reduced-motion: no-preference; иначе всё видно сразу и без движения.
  */
@@ -89,8 +155,22 @@ export function HeroMotion({
           });
         }
 
+        // Шоурил: после входа слой с видео проявляется поверх миниатюры,
+        // и сцена начинает реагировать на скролл. Раньше нельзя: миниатюра
+        // ещё едет в анимации входа, и её позиция была бы неверной
+        let reel: gsap.core.Timeline | undefined;
+        const layer = root.querySelector<HTMLElement>("[data-reel-layer]");
+        if (layer) {
+          gsap.set(layer, { clipPath: () => thumbInset(root) });
+          intro.to(layer, { autoAlpha: 1, duration: 0.6 }).call(() => {
+            reel = createReelScroll(root, layer);
+          });
+        }
+
         return () => {
           cycle?.kill();
+          reel?.scrollTrigger?.kill();
+          reel?.kill();
           split.revert();
         };
       });
