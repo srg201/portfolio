@@ -29,6 +29,13 @@
     "projects": "projects shipped",
     "years": "years in development"
   },
+  "Work": {
+    "label": "Selected work",
+    "title": "Things I've built",
+    "intro": "Products I designed, built and shipped end to end, from the first sketch to production.",
+    "visit": "Visit site",
+    "newTab": "opens in a new tab"
+  },
   "Dock": {
     "label": "Site navigation",
     "home": "Home"

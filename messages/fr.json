@@ -29,6 +29,13 @@
     "projects": "projets livrés",
     "years": "années de développement"
   },
+  "Work": {
+    "label": "Projets choisis",
+    "title": "Ce que j'ai construit",
+    "intro": "Des produits que j'ai conçus, développés et mis en ligne de bout en bout, du premier croquis à la production.",
+    "visit": "Voir le site",
+    "newTab": "s'ouvre dans un nouvel onglet"
+  },
   "Dock": {
     "label": "Navigation du site",
     "home": "Accueil"

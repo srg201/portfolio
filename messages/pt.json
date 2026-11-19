@@ -29,6 +29,13 @@
     "projects": "projetos entregues",
     "years": "anos desenvolvendo"
   },
+  "Work": {
+    "label": "Trabalhos selecionados",
+    "title": "O que eu construí",
+    "intro": "Produtos que projetei, desenvolvi e lancei de ponta a ponta, do primeiro esboço à produção.",
+    "visit": "Ver site",
+    "newTab": "abre em uma nova aba"
+  },
   "Dock": {
     "label": "Navegação do site",
     "home": "Início"

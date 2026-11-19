@@ -29,6 +29,13 @@
     "projects": "tamamlanan proje",
     "years": "yıllık geliştirme deneyimi"
   },
+  "Work": {
+    "label": "Seçili işler",
+    "title": "Neler geliştirdim",
+    "intro": "İlk eskizden canlıya kadar baştan sona tasarlayıp geliştirdiğim ve yayına aldığım ürünler.",
+    "visit": "Siteyi aç",
+    "newTab": "yeni sekmede açılır"
+  },
   "Dock": {
     "label": "Site gezinmesi",
     "home": "Ana sayfa"

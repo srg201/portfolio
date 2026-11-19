@@ -29,6 +29,13 @@
     "projects": "progetti realizzati",
     "years": "anni di sviluppo"
   },
+  "Work": {
+    "label": "Lavori selezionati",
+    "title": "Cosa ho realizzato",
+    "intro": "Prodotti che ho progettato, sviluppato e lanciato dall'inizio alla fine, dal primo schizzo alla produzione.",
+    "visit": "Visita il sito",
+    "newTab": "si apre in una nuova scheda"
+  },
   "Dock": {
     "label": "Navigazione del sito",
     "home": "Home"

@@ -29,6 +29,13 @@
     "projects": "umgesetzte Projekte",
     "years": "Jahre Entwicklung"
   },
+  "Work": {
+    "label": "Ausgewählte Arbeiten",
+    "title": "Was ich gebaut habe",
+    "intro": "Produkte, die ich von der ersten Skizze bis zum Livegang konzipiert, entwickelt und veröffentlicht habe.",
+    "visit": "Website ansehen",
+    "newTab": "öffnet in einem neuen Tab"
+  },
   "Dock": {
     "label": "Seitennavigation",
     "home": "Startseite"

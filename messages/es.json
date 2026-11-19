@@ -29,6 +29,13 @@
     "projects": "proyectos lanzados",
     "years": "años desarrollando"
   },
+  "Work": {
+    "label": "Trabajos destacados",
+    "title": "Lo que he construido",
+    "intro": "Productos que diseñé, desarrollé y lancé de principio a fin, del primer boceto a producción.",
+    "visit": "Ver sitio",
+    "newTab": "se abre en una pestaña nueva"
+  },
   "Dock": {
     "label": "Navegación del sitio",
     "home": "Inicio"

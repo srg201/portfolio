@@ -25,7 +25,7 @@ export async function Stats() {
   return (
     <section
       aria-labelledby="stats-title"
-      className="relative z-20 -mt-[45svh] rounded-t-[2rem] border-t bg-background px-4 pt-16 pb-36 min-[400px]:px-5 sm:rounded-t-[3rem] sm:px-6 sm:pt-24 md:px-10 md:pt-32 motion-reduce:mt-0"
+      className="relative z-20 -mt-[45svh] rounded-[2rem] border-y bg-background px-4 pt-16 pb-20 min-[400px]:px-5 sm:rounded-[3rem] sm:px-6 sm:pt-24 sm:pb-28 md:px-10 md:pt-32 motion-reduce:mt-0"
     >
       <StatsMotion locale={locale}>
         <div className="mx-auto flex max-w-7xl flex-col gap-16 md:gap-24">

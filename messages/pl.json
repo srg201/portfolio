@@ -29,6 +29,13 @@
     "projects": "wdrożonych projektów",
     "years": "lat w programowaniu"
   },
+  "Work": {
+    "label": "Wybrane projekty",
+    "title": "Co zbudowałem",
+    "intro": "Produkty, które zaprojektowałem, zbudowałem i wdrożyłem od początku do końca: od pierwszego szkicu po produkcję.",
+    "visit": "Zobacz stronę",
+    "newTab": "otwiera się w nowej karcie"
+  },
   "Dock": {
     "label": "Nawigacja strony",
     "home": "Strona główna"

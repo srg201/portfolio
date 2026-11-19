@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { locale as rootLocale } from "next/root-params";
 import { hasLocale } from "next-intl";
+import { FeaturedWork } from "@/components/sections/featured-work";
 import { Hero } from "@/components/sections/hero";
 import { Stats } from "@/components/sections/stats";
 import { routing } from "@/i18n/routing";
@@ -18,6 +19,7 @@ export default function HomePage() {
     <main id="main" className="flex flex-1 flex-col">
       <Hero />
       <Stats />
+      <FeaturedWork />
     </main>
   );
 }
