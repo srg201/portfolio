@@ -21,6 +21,14 @@
     "available": "Disponible para nuevos proyectos",
     "showreel": "Showreel"
   },
+  "Stats": {
+    "label": "En cifras",
+    "days": "días escribiendo código",
+    "title": "Creo productos para equipos ambiciosos desde {year}.",
+    "thanks": "Gracias a cada cliente y compañero en este camino.",
+    "projects": "proyectos lanzados",
+    "years": "años desarrollando"
+  },
   "Dock": {
     "label": "Navegación del sitio",
     "home": "Inicio"

@@ -21,6 +21,14 @@
     "available": "可承接新项目",
     "showreel": "作品集锦"
   },
+  "Stats": {
+    "label": "数字一览",
+    "days": "天在写代码",
+    "title": "自 {year} 年起，我为有抱负的团队打造产品。",
+    "thanks": "感谢一路同行的每一位客户和伙伴。",
+    "projects": "个已上线项目",
+    "years": "年开发经验"
+  },
   "Dock": {
     "label": "网站导航",
     "home": "首页"

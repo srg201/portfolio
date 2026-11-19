@@ -21,6 +21,14 @@
     "available": "Offen für neue Projekte",
     "showreel": "Showreel"
   },
+  "Stats": {
+    "label": "In Zahlen",
+    "days": "Tage im Code",
+    "title": "Ich entwickle seit {year} Produkte für ambitionierte Teams.",
+    "thanks": "Danke an alle Kundinnen, Kunden und Teammitglieder auf diesem Weg.",
+    "projects": "umgesetzte Projekte",
+    "years": "Jahre Entwicklung"
+  },
   "Dock": {
     "label": "Seitennavigation",
     "home": "Startseite"

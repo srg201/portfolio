@@ -21,6 +21,14 @@
     "available": "Yeni projelere açığım",
     "showreel": "Showreel"
   },
+  "Stats": {
+    "label": "Rakamlarla",
+    "days": "gün kod yazarak",
+    "title": "{year} yılından beri iddialı ekipler için ürünler geliştiriyorum.",
+    "thanks": "Bu yolda birlikte çalıştığım her müşteriye ve ekip arkadaşıma teşekkürler.",
+    "projects": "tamamlanan proje",
+    "years": "yıllık geliştirme deneyimi"
+  },
   "Dock": {
     "label": "Site gezinmesi",
     "home": "Ana sayfa"

@@ -21,6 +21,14 @@
     "available": "Otwarty na nowe projekty",
     "showreel": "Showreel"
   },
+  "Stats": {
+    "label": "W liczbach",
+    "days": "dni z kodem",
+    "title": "Tworzę produkty dla ambitnych zespołów od {year} roku.",
+    "thanks": "Dziękuję każdemu klientowi i współpracownikowi na tej drodze.",
+    "projects": "wdrożonych projektów",
+    "years": "lat w programowaniu"
+  },
   "Dock": {
     "label": "Nawigacja strony",
     "home": "Strona główna"

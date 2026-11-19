@@ -21,6 +21,14 @@
     "available": "Available for new projects",
     "showreel": "Showreel"
   },
+  "Stats": {
+    "label": "In numbers",
+    "days": "days writing code",
+    "title": "Building products for ambitious teams since {year}.",
+    "thanks": "Thank you to every client and teammate along the way.",
+    "projects": "projects shipped",
+    "years": "years in development"
+  },
   "Dock": {
     "label": "Site navigation",
     "home": "Home"
