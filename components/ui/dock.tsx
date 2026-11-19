@@ -29,6 +29,9 @@ export async function Dock() {
     >
       <Link
         href="/"
+        // Явное имя: соседние sr-only-фрагменты склеивались без пробела.
+        // Начинается с видимого текста (WCAG 2.5.3 «label in name»)
+        aria-label={`${name}, ${t("home")}`}
         className="group flex items-center gap-3 rounded-full pe-1 sm:pe-3"
       >
         <span
@@ -40,7 +43,6 @@ export async function Dock() {
         <span className="sr-only text-sm font-medium sm:not-sr-only">
           {name}
         </span>
-        <span className="sr-only">{t("home")}</span>
       </Link>
 
       <div className="flex items-center gap-1.5 sm:gap-2">

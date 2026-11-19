@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useSyncExternalStore } from "react";
+import { cn } from "@/lib/utils";
 
 const REDUCED = "(prefers-reduced-motion: reduce)";
 
@@ -18,6 +19,14 @@ function useReducedMotion() {
   );
 }
 
+/** Network Information API есть не во всех браузерах и не в lib.dom */
+function saveData() {
+  const connection = (
+    navigator as Navigator & { connection?: { saveData?: boolean } }
+  ).connection;
+  return connection?.saveData === true;
+}
+
 /**
  * Видео шоурила.
  * - Не мешает первой загрузке: файл начинает грузиться только после load
@@ -26,6 +35,7 @@ function useReducedMotion() {
  * - На вертикальных экранах берётся вертикальная версия: горизонтальная
  *   при object-cover обрезалась бы до узкой полосы.
  * - prefers-reduced-motion: без автозапуска, со стандартными контролами.
+ * - Save-Data (экономия трафика): видео не грузится, виден только постер.
  */
 export function ShowreelVideo({
   src,
@@ -45,7 +55,13 @@ export function ShowreelVideo({
 
   useEffect(() => {
     const video = ref.current;
-    if (!video || reduced) return;
+    if (!video) return;
+    // Без анимаций: обычный блок 16:10 под hero, всегда горизонтальная версия.
+    // Постер ставим явно: первый рендер (до чтения медиазапроса) мог подменить его
+    if (reduced) {
+      video.poster = poster;
+      return;
+    }
 
     let observer: IntersectionObserver | undefined;
     let idle = 0;
@@ -54,6 +70,8 @@ export function ShowreelVideo({
 
     const portrait = matchMedia("(orientation: portrait)").matches;
     video.poster = portrait ? posterMobile : poster;
+    // Включена экономия трафика: ~2 МБ видео не грузим, остаётся постер
+    if (saveData()) return;
 
     const start = () => {
       video.src = portrait ? srcMobile : src;
@@ -93,7 +111,10 @@ export function ShowreelVideo({
       preload="none"
       controls={reduced}
       src={reduced ? src : undefined}
-      className="size-full object-cover portrait:object-contain"
+      className={cn(
+        "size-full object-cover",
+        !reduced && "portrait:object-contain",
+      )}
     />
   );
 }

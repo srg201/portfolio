@@ -25,4 +25,11 @@
 - Секреты только в `.env.local` (он в `.gitignore`), в репозиторий и в чат не попадают; переменные описываются в `.env.example`.
 
 ## Текущий статус
-Этап 1 (каркас) готов локально: Next.js, next-intl (15 локалей, proxy, RTL, cookie), next-themes, Supabase-клиенты, Drizzle, `.env.example`. Осталось: заполнить `.env.local` ключами Supabase и задеплоить на Vercel. Дальше этап 2 (дизайн-система). Цвета в `app/globals.css` и шрифт Geist временные.
+- Этап 1 (каркас) готов: Next.js, next-intl (15 локалей, proxy, RTL, cookie), next-themes, Supabase-клиенты, Drizzle, `.env.example`. Не сделано: `.env.local` с ключами Supabase и деплой на Vercel.
+- Сделаны:
+  - тема shadcn от фирменного оранжевого и WebGL-туман;
+  - Dock с переключателями языка и темы;
+  - главная: hero → шоурил на весь экран при скролле → секция цифр (`components/sections/`);
+  - полировка: reduced motion, клавиатура, hreflang/canonical (`lib/seo.ts`), LCP.
+- Данные пока моковые: `lib/mock/projects.ts`, `lib/career.ts`. Шоурил собирается командами `pnpm showcases` и `pnpm showreel`.
+- Шрифт Geist временный.

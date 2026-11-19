@@ -9,6 +9,7 @@ import { Providers } from "@/components/providers";
 import { Dock } from "@/components/ui/dock";
 import { MistBackground } from "@/components/webgl/mist-background";
 import { getDirection, routing } from "@/i18n/routing";
+import { siteUrl } from "@/lib/seo";
 import "../globals.css";
 
 // Шрифты временные: типографика и Noto для CJK/Devanagari/Arabic подключаются на этапе 2
@@ -29,6 +30,7 @@ export function generateStaticParams() {
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Metadata");
   return {
+    metadataBase: siteUrl,
     title: { default: t("title"), template: `%s — ${t("title")}` },
     description: t("description"),
   };

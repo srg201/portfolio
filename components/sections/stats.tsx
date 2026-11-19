@@ -35,10 +35,10 @@ export async function Stats() {
 
           {/* Главное число: дни в коде */}
           <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-10">
-            <p className="flex flex-col gap-3">
+            <p className="flex flex-col gap-5">
               <span
                 data-count={days}
-                className="text-[clamp(4.5rem,19vw,16rem)] leading-[0.8] font-semibold tracking-[-0.05em] tabular-nums"
+                className="text-[clamp(4.5rem,19vw,16rem)] leading-none font-semibold tracking-[-0.05em] tabular-nums"
               >
                 {format.number(days)}
               </span>

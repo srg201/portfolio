@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
-import { useSyncExternalStore, type MouseEvent } from "react";
+import { useSyncExternalStore, type KeyboardEvent } from "react";
 import { flushSync } from "react-dom";
 
 const themes = ["light", "dark", "system"] as const;
@@ -62,7 +62,7 @@ export function ThemeSwitcher() {
     ? Math.max(0, themes.indexOf((theme ?? "system") as ThemeValue))
     : -1;
 
-  function select(value: ThemeValue, event: MouseEvent<HTMLButtonElement>) {
+  function select(value: ThemeValue, button: HTMLElement) {
     if (value === theme) return;
 
     const nextResolved = value === "system" ? systemTheme : value;
@@ -78,7 +78,7 @@ export function ThemeSwitcher() {
     }
 
     // Новая тема разливается кругом из центра нажатой кнопки
-    const rect = event.currentTarget.getBoundingClientRect();
+    const rect = button.getBoundingClientRect();
     const x = rect.left + rect.width / 2;
     const y = rect.top + rect.height / 2;
     const radius = Math.hypot(
@@ -89,10 +89,40 @@ export function ThemeSwitcher() {
     revealTheme(() => flushSync(() => setTheme(value)), x, y, radius);
   }
 
+  /**
+   * Клавиатура как у radiogroup: один Tab-стоп, стрелки двигают выбор
+   * (в RTL влево и вправо зеркально), Home/End к краям.
+   */
+  function onKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+    const rtl = getComputedStyle(event.currentTarget).direction === "rtl";
+    const current = Math.max(activeIndex, 0);
+    const step: Record<string, number> = {
+      ArrowRight: rtl ? -1 : 1,
+      ArrowLeft: rtl ? 1 : -1,
+      ArrowDown: 1,
+      ArrowUp: -1,
+    };
+    let next: number;
+    if (event.key in step) {
+      next = (current + step[event.key]! + themes.length) % themes.length;
+    } else if (event.key === "Home") next = 0;
+    else if (event.key === "End") next = themes.length - 1;
+    else return;
+
+    event.preventDefault();
+    const button = event.currentTarget.querySelectorAll<HTMLElement>(
+      '[role="radio"]',
+    )[next];
+    if (!button) return;
+    button.focus();
+    select(themes[next]!, button);
+  }
+
   return (
     <div
       role="radiogroup"
       aria-label={t("label")}
+      onKeyDown={onKeyDown}
       className="relative inline-grid grid-cols-3 rounded-full border bg-background/60 p-1 backdrop-blur"
     >
       {/* Плашка активного варианта; логическое смещение работает и в RTL */}
@@ -106,15 +136,18 @@ export function ThemeSwitcher() {
       />
       {themes.map((value, index) => {
         const checked = index === activeIndex;
+        // До гидрации выбор неизвестен: Tab-стоп на первой кнопке
+        const tabbable = activeIndex < 0 ? index === 0 : checked;
         return (
           <button
             key={value}
             type="button"
             role="radio"
             aria-checked={checked}
+            tabIndex={tabbable ? 0 : -1}
             aria-label={t(value)}
             title={t(value)}
-            onClick={(event) => select(value, event)}
+            onClick={(event) => select(value, event.currentTarget)}
             className="group relative z-10 grid size-8 place-items-center rounded-full text-muted-foreground transition-colors duration-300 hover:text-foreground aria-checked:text-background"
           >
             <ThemeIcon value={value} />
