@@ -16,10 +16,9 @@ function media(slug: string) {
 }
 
 /**
- * Избранные работы: продолжение сцены hero.
- * Секция заезжает на последний экран сцены (motion-safe:-mt-[100svh]),
- * и карточка первой работы [data-work-handoff] принимает перелетевшую
- * из спирали копию (hero-motion.tsx). Первая работа большой карточкой,
+ * Избранные работы: сразу за hero. Карточка первой работы
+ * [data-work-handoff] принимает копию, перелетевшую из карусели hero
+ * (hero-motion.tsx). Первая работа большой карточкой,
  * дальше пары в две колонки, между ними фраза о работах.
  * Ссылки пока ведут на живые сайты: страницы кейсов появятся на этапе 6.
  */
@@ -44,7 +43,7 @@ export async function FeaturedWork() {
     <section
       id="work"
       aria-labelledby="work-title"
-      className="relative z-10 px-4 pt-[12svh] pb-24 min-[400px]:px-5 sm:px-6 md:px-[11vw] md:pb-32 motion-safe:-mt-[100svh]"
+      className="relative z-10 px-4 pt-16 pb-24 min-[400px]:px-5 sm:px-6 md:px-[11vw] md:pt-24 md:pb-32"
     >
       <h2 id="work-title" className="sr-only">
         {t("title")}

@@ -18,18 +18,7 @@
     ],
     "manifesto": "Ich konzipiere und entwickle schnelle, schöne Websites und Web-Apps — von der ersten Skizze bis zur Produktion.",
     "cta": "Projekt besprechen",
-    "available": "Offen für neue Projekte",
-    "showreel": "Showreel",
-    "playReel": "Showreel abspielen"
-  },
-  "Stats": {
-    "days": "Tage im Code",
-    "thanks": "Danke an alle Kundinnen, Kunden und Teammitglieder auf diesem Weg.",
-    "projects": "umgesetzte Projekte",
-    "years": "Jahre Entwicklung",
-    "lead": "Seit {year} baue ich Produkte für",
-    "accent": "ambitionierte Teams",
-    "cta": "Arbeiten ansehen"
+    "available": "Offen für neue Projekte"
   },
   "Work": {
     "label": "Ausgewählte Arbeiten",

@@ -12,219 +12,21 @@ const SCRAMBLE_CHARS = "01<>/#*+=_";
 const WORD_HOLD = 1.8;
 /** Максимальный сдвиг слоя с data-depth="1" при курсоре у края экрана, px */
 const PARALLAX_SHIFT = { x: 28, y: 18 };
-
-type Box = { top: number; right: number; bottom: number; left: number };
-
-/** Прямоугольник элемента относительно липкой сцены (она всегда на экране) */
-function boxIn(root: HTMLElement, selector: string): Box | null {
-  const stage = root.querySelector<HTMLElement>("[data-hero-stage]");
-  const element = root.querySelector<HTMLElement>(selector);
-  if (!stage || !element) return null;
-  const s = stage.getBoundingClientRect();
-  const e = element.getBoundingClientRect();
-  return {
-    top: e.top - s.top,
-    right: s.right - e.right,
-    bottom: s.bottom - e.bottom,
-    left: e.left - s.left,
-  };
-}
+/** Скорость вращения карусели, оборотов в секунду */
+const DRIFT = 0.01;
+/** Сколько оборота добавляет прокрутка на один экран */
+const SCROLL_SPIN = 0.2;
 
 /**
- * Первая карточка спирали (шоурил) в положении shift = 0, перед зрителем:
- * в неё сжимается видео. Сдвиг на время замера обнуляем.
+ * Вращение карусели: дрейф плюс прокрутка. Крутится, только пока
+ * карусель на экране и не разлетается.
  */
-function ringReelBox(root: HTMLElement, ring: Ring): Box {
-  const previous = ring.state.shift;
-  ring.state.shift = 0;
-  ring.apply();
-  const box = boxIn(root, "[data-ring-reel] [data-ring-inner]");
-  ring.state.shift = previous;
-  ring.apply();
-  return box ?? cardBox();
-}
-
-/** Окно шоурила на оси: из полноэкранного слоя вырезаем ровно его */
-function thumbBox(root: HTMLElement): Box {
-  return (
-    boxIn(root, "[data-reel-thumb]") ?? {
-      top: innerHeight / 2,
-      right: innerWidth / 2,
-      bottom: innerHeight / 2,
-      left: innerWidth / 2,
-    }
-  );
-}
-
-/** Раскрытая карточка: поля по краям, снизу место под Dock */
-function cardBox(): Box {
-  const width = innerWidth;
-  const height = innerHeight;
-  const side = Math.max(16, width * 0.07);
-  return {
-    top: Math.max(72, height * 0.12),
-    right: side,
-    bottom: Math.max(104, height * 0.15),
-    left: side,
-  };
-}
-
-const inset = (box: Box, radius: number) =>
-  `inset(${box.top}px ${box.right}px ${box.bottom}px ${box.left}px round ${radius}px)`;
-
-/** Сдвиг центра прямоугольника от центра сцены: туда ставим HUD с кнопкой */
-const centerOffset = (box: Box) => ({
-  x: (box.left - box.right) / 2,
-  y: (box.top - box.bottom) / 2,
-});
-
-/**
- * Скролл-сцена (scrub): окно на оси растёт в большую карточку, HUD с кнопкой
- * play едет за центром окна, контент hero уходит назад. Потом карточка
- * сжимается в спираль проектов, и скролл двигает карточки по спирали.
- */
-function createReelScroll(root: HTMLElement, layer: HTMLElement) {
-  const scene = root.closest<HTMLElement>("[data-hero-scene]") ?? root;
-  const content = root.querySelector<HTMLElement>("[data-hero-content]");
-  const hud = root.querySelector<HTMLElement>("[data-reel-hud]");
-  const captions = root.querySelectorAll<HTMLElement>("[data-reel-caption]");
-  const handoffTarget = document.querySelector<HTMLElement>(
-    "[data-work-handoff] [data-work-media]",
-  );
-
-  const timeline = gsap.timeline({
-    defaults: { ease: "none" },
-    scrollTrigger: {
-      trigger: scene,
-      start: "top top",
-      // Сцена спирали кончается там, где начинается перелёт в работы
-      ...(handoffTarget
-        ? { endTrigger: handoffTarget, end: "top bottom" }
-        : { end: "bottom bottom" }),
-      scrub: 0.8,
-      invalidateOnRefresh: true,
-    },
-  });
-
-  timeline.fromTo(
-    layer,
-    { clipPath: () => inset(thumbBox(root), 12) },
-    {
-      clipPath: () => inset(cardBox(), 28),
-      ease: "power2.inOut",
-      duration: 0.6,
-    },
-    0,
-  );
-  if (hud) {
-    timeline.fromTo(
-      hud,
-      {
-        x: () => centerOffset(thumbBox(root)).x,
-        y: () => centerOffset(thumbBox(root)).y,
-      },
-      {
-        x: () => centerOffset(cardBox()).x,
-        y: () => centerOffset(cardBox()).y,
-        ease: "power2.inOut",
-        duration: 0.6,
-      },
-      0,
-    );
-  }
-  if (content) {
-    timeline.to(
-      content,
-      {
-        autoAlpha: 0,
-        scale: 0.94,
-        ease: "power2.in",
-        duration: 0.45,
-      },
-      0,
-    );
-  }
-  if (captions.length) {
-    timeline.to(captions, { autoAlpha: 1, duration: 0.12 }, 0.45);
-  }
-
-  // Карточка шоурила сжимается в первую карточку спирали проектов
-  const ring = createRing(root);
-  const reelCard = root.querySelector<HTMLElement>(
-    "[data-ring-reel] [data-ring-inner]",
-  );
-  const texts = root.querySelectorAll<HTMLElement>("[data-ring-text]");
-  const corners = root.querySelectorAll<HTMLElement>("[data-ring-corner]");
-  const spin = { scroll: 0, drift: 0, driftOn: 0 };
-
-  if (ring) {
-    const others = ring.cards
-      .map((card) => card.querySelector<HTMLElement>("[data-ring-inner]"))
-      .filter((inner): inner is HTMLElement => !!inner && inner !== reelCard);
-    const SHRINK = 0.9;
-    timeline.to(
-      layer,
-      {
-        clipPath: () => inset(ringReelBox(root, ring), 6),
-        ease: "power2.inOut",
-        duration: 0.5,
-      },
-      SHRINK,
-    );
-    if (hud) timeline.to(hud, { autoAlpha: 0, duration: 0.15 }, SHRINK);
-    timeline
-      .to(ring.stage, { autoAlpha: 1, duration: 0.2 }, SHRINK)
-      // Остальные карточки прилетают из глубины по очереди
-      .fromTo(
-        others,
-        { autoAlpha: 0, scale: 0.4 },
-        { autoAlpha: 1, scale: 1, duration: 0.5, stagger: 0.025 },
-        SHRINK + 0.1,
-      );
-    if (reelCard) {
-      timeline.fromTo(
-        reelCard,
-        { autoAlpha: 0 },
-        { autoAlpha: 1, duration: 0.05 },
-        SHRINK + 0.42,
-      );
-    }
-    timeline
-      .to(layer, { autoAlpha: 0, duration: 0.08 }, SHRINK + 0.47)
-      .fromTo(
-        texts,
-        { autoAlpha: 0, y: 30 },
-        { autoAlpha: 1, y: 0, duration: 0.35, stagger: 0.06 },
-        SHRINK + 0.45,
-      )
-      .fromTo(
-        corners,
-        { autoAlpha: 0 },
-        { autoAlpha: 1, duration: 0.3 },
-        SHRINK + 0.5,
-      )
-      // Скролл двигает карточки по спирали, после сборки включается дрейф
-      .to(spin, { scroll: 0.45, duration: 1.6 }, SHRINK + 0.5)
-      .to(spin, { driftOn: 1, duration: 0.3 }, SHRINK + 0.5);
-  } else {
-    timeline.to({}, { duration: 0.35 });
-  }
-
-  return { timeline, spin, ring };
-}
-
-/** Медленный дрейф спирали, пока она на экране и не разлетается */
-function startRingSpin(
-  ring: Ring,
-  spin: { scroll: number; drift: number; driftOn: number },
-) {
-  const DRIFT = 0.008; // доля пути в секунду
-
+function startRingSpin(ring: Ring) {
+  let drift = 0;
   const tick = (_time: number, deltaMs: number) => {
-    if (Number(gsap.getProperty(ring.stage, "autoAlpha")) <= 0) return;
     if (ring.stage.getBoundingClientRect().bottom <= 0) return;
-    if (ring.state.scatter === 0) spin.drift += (DRIFT * deltaMs) / 1000;
-    ring.state.shift = spin.scroll + spin.drift * spin.driftOn;
+    if (ring.state.scatter === 0) drift += (DRIFT * deltaMs) / 1000;
+    ring.state.shift = drift + (window.scrollY / window.innerHeight) * SCROLL_SPIN;
     ring.apply();
   };
   gsap.ticker.add(tick);
@@ -232,13 +34,11 @@ function startRingSpin(
 }
 
 /**
- * Перелёт в секцию работ. Секция работ заезжает на последний экран сцены
- * (отрицательный отступ, featured-work.tsx), и пока её первая карточка
- * поднимается от низа экрана до своего места, спираль разлетается на камеру,
- * тексты уходят, а копия карточки первой работы [data-ring-proxy] летит из
- * спирали ровно в эту карточку. Оба прямоугольника меряются каждый кадр,
- * поэтому стык точный при любой скорости скролла. В конце копия прячется,
- * видна настоящая карточка.
+ * Перелёт в секцию работ. Пока первая карточка работ [data-work-handoff]
+ * поднимается от низа экрана, карусель разлетается, а копия карточки первой
+ * работы [data-ring-proxy] летит из карусели ровно в эту карточку. Оба
+ * прямоугольника меряются каждый кадр, поэтому стык точный при любой
+ * скорости скролла. В конце копия прячется, видна настоящая карточка.
  */
 function createHandoff(root: HTMLElement, ring: Ring) {
   const scene = root.closest<HTMLElement>("[data-hero-scene]");
@@ -246,33 +46,18 @@ function createHandoff(root: HTMLElement, ring: Ring) {
   const target = document.querySelector<HTMLElement>(
     "[data-work-handoff] [data-work-media]",
   );
-  if (!scene || !proxy || !target) return null;
+  if (!proxy || !target) return () => {};
 
-  const fade = [
-    ...root.querySelectorAll<HTMLElement>("[data-ring-text]"),
-    ...root.querySelectorAll<HTMLElement>("[data-ring-corner]"),
-  ];
   const fly = gsap.parseEase("power2.inOut");
+  const spread = gsap.parseEase("power2.in");
   const radius = parseFloat(getComputedStyle(target).borderTopLeftRadius) || 0;
 
-  let faded = false;
   const update = (progress: number) => {
     const state = ring.state;
-    if (progress <= 0) {
-      state.handoff = null;
-    } else if (!state.handoff) {
-      state.handoff = pickHandoff(ring);
-    }
-    state.scatter = gsap.parseEase("power2.in")(Math.min(1, progress / 0.85));
+    if (progress <= 0) state.handoff = null;
+    else if (!state.handoff) state.handoff = pickHandoff(ring);
+    state.scatter = spread(Math.min(1, progress / 0.5));
     ring.apply();
-
-    // Тексты гаснут в начале перелёта. До него ими управляет сцена:
-    // трогаем их, только если перелёт уже начинался
-    if (progress > 0 || faded) {
-      const out = Math.min(1, progress / 0.3);
-      gsap.set(fade, { autoAlpha: 1 - out, y: -24 * out });
-      faded = progress > 0;
-    }
 
     const card = state.handoff?.querySelector<HTMLElement>("[data-ring-inner]");
     if (!card || progress <= 0 || progress >= 1) {
@@ -298,8 +83,7 @@ function createHandoff(root: HTMLElement, ring: Ring) {
   const trigger = ScrollTrigger.create({
     trigger: target,
     start: "top bottom",
-    endTrigger: scene,
-    end: "bottom bottom",
+    end: "top 12%",
     invalidateOnRefresh: true,
     onUpdate: (self) => update(self.progress),
     onRefresh: (self) => update(self.progress),
@@ -314,16 +98,14 @@ function createHandoff(root: HTMLElement, ring: Ring) {
 
 /**
  * Анимация hero. Разметку рендерит сервер (hero.tsx), здесь только движение:
- * - [data-hero-intro]: орбита, ось и метки появляются первыми;
+ * - [data-hero-intro]: орбита и метки появляются первыми;
  * - [data-hero-name]: буквы имени поднимаются из-под маски строк;
- * - [data-reveal]: подписи, слово, окно шоурила и CTA проявляются по очереди;
+ * - [data-reveal]: подписи, слово и CTA проявляются по очереди;
  * - [data-hero-word]: слово по кругу меняется перебором символов;
- * - [data-depth]: слои смещаются за курсором (параллакс), только мышь;
- * - [data-hero-coord]: числа на оси следуют за курсором;
- * - [data-reel-layer]: при скролле окно шоурила растёт в карточку,
- *   затем сжимается в первую карточку спирали проектов [data-ring];
- *   спираль движется скроллом и дрейфом, в конце разлетается, а карточка
- *   первой работы перелетает в секцию работ (createHandoff).
+ * - [data-ring]: карточки карусели прилетают из глубины, кольцо вращается
+ *   (дрейф и скролл), при уходе со сцены разлетается, и карточка первой
+ *   работы перелетает в секцию работ;
+ * - [data-depth]: слои смещаются за курсором (параллакс), только мышь.
  * До запуска элементы скрыты CSS-ом (globals.css, блок Hero), но только при
  * prefers-reduced-motion: no-preference; иначе всё видно сразу и без движения.
  */
@@ -344,7 +126,6 @@ export function HeroMotion({
       const name = root.querySelector<HTMLElement>("[data-hero-name]");
       const reveals = root.querySelectorAll<HTMLElement>("[data-reveal]");
       const intros = root.querySelectorAll<HTMLElement>("[data-hero-intro]");
-      const lines = root.querySelectorAll<HTMLElement>("[data-hero-line]");
       const orbit = root.querySelector<HTMLElement>("[data-hero-orbit]");
       const word = root.querySelector<HTMLElement>("[data-hero-word]");
       if (!name) return;
@@ -356,19 +137,18 @@ export function HeroMotion({
           type: "lines,chars",
           mask: "lines",
         });
+        const ring = createRing(root);
+        const inners = ring
+          ? ring.cards
+              .map((card) => card.querySelector<HTMLElement>("[data-ring-inner]"))
+              .filter((inner): inner is HTMLElement => !!inner)
+          : [];
 
         const intro = gsap.timeline({ defaults: { ease: ease.out } });
 
         intro
           .set([...intros], { autoAlpha: 1 })
-          .from(lines, { scaleX: 0, duration: 1.4, ease: ease.inOut }, 0)
-          .from(
-            [...intros].filter(
-              (element) => !element.hasAttribute("data-hero-line"),
-            ),
-            { autoAlpha: 0, duration: 1, stagger: 0.05 },
-            0.2,
-          );
+          .from(intros, { autoAlpha: 0, duration: 1, stagger: 0.05 }, 0.2);
         if (orbit) {
           intro.from(
             orbit,
@@ -393,6 +173,13 @@ export function HeroMotion({
             { autoAlpha: 0, y: 24 },
             { autoAlpha: 1, y: 0, duration: 1, stagger: 0.08 },
             0.45,
+          )
+          // Карточки карусели прилетают из глубины по очереди
+          .fromTo(
+            inners,
+            { autoAlpha: 0, scale: 0.5 },
+            { autoAlpha: 1, scale: 1, duration: 1.2, stagger: 0.06 },
+            0.5,
           );
 
         let cycle: gsap.core.Timeline | undefined;
@@ -417,39 +204,18 @@ export function HeroMotion({
           });
         }
 
-        // Шоурил: после входа слой с видео проявляется поверх окна,
-        // и сцена начинает реагировать на скролл. Раньше нельзя: окно
-        // ещё едет в анимации входа, и его позиция была бы неверной
-        let reel: gsap.core.Timeline | undefined;
-        let stopSpin = () => {};
-        const layer = root.querySelector<HTMLElement>("[data-reel-layer]");
-        if (layer) {
-          intro
-            .call(() => {
-              const scene = createReelScroll(root, layer);
-              reel = scene.timeline;
-              if (scene.ring) {
-                const stop = startRingSpin(scene.ring, scene.spin);
-                const stopHandoff = createHandoff(root, scene.ring);
-                stopSpin = () => {
-                  stop();
-                  stopHandoff?.();
-                };
-              }
-            })
-            .to(layer, { autoAlpha: 1, duration: 0.6 });
-        }
+        const stopSpin = ring ? startRingSpin(ring) : () => {};
+        const stopHandoff = ring ? createHandoff(root, ring) : () => {};
 
         return () => {
           cycle?.kill();
           stopSpin();
-          reel?.scrollTrigger?.kill();
-          reel?.kill();
+          stopHandoff();
           split.revert();
         };
       });
 
-      // Мышь: параллакс слоёв и координаты на оси
+      // Мышь: параллакс слоёв
       mm.add(FINE_POINTER, () => {
         const layers = [
           ...root.querySelectorAll<HTMLElement>("[data-depth]"),
@@ -463,31 +229,6 @@ export function HeroMotion({
           };
         });
 
-        // Числа у концов оси: широта по вертикали курсора, долгота по горизонтали.
-        // Пишем в существующий текстовый узел: он принадлежит React
-        const coords = [
-          ...root.querySelectorAll<HTMLElement>("[data-hero-coord]"),
-        ];
-        const value = { x: 0, y: 0 };
-        const writeCoords = () => {
-          for (const element of coords) {
-            const node = element.firstChild;
-            if (node?.nodeType !== Node.TEXT_NODE) continue;
-            const v = element.dataset.heroCoord === "x" ? value.x : value.y;
-            node.nodeValue = v.toFixed(4);
-          }
-        };
-        const coordX = gsap.quickTo(value, "x", {
-          duration: 1.2,
-          ease: "power3.out",
-          onUpdate: writeCoords,
-        });
-        const coordY = gsap.quickTo(value, "y", {
-          duration: 1.2,
-          ease: "power3.out",
-          onUpdate: writeCoords,
-        });
-
         const onMove = (event: PointerEvent) => {
           const nx = (event.clientX / window.innerWidth) * 2 - 1;
           const ny = (event.clientY / window.innerHeight) * 2 - 1;
@@ -495,8 +236,6 @@ export function HeroMotion({
             layer.x(nx * layer.depth * PARALLAX_SHIFT.x);
             layer.y(ny * layer.depth * PARALLAX_SHIFT.y);
           }
-          coordX(nx * 180);
-          coordY(-ny * 90);
         };
 
         window.addEventListener("pointermove", onMove);
@@ -505,7 +244,7 @@ export function HeroMotion({
 
       mm.add("(prefers-reduced-motion: reduce)", () => {
         gsap.set([name, ...reveals, ...intros], { autoAlpha: 1 });
-        // Статичная спираль: раскладываем один раз и при смене размера
+        // Статичное кольцо: раскладываем сразу и при смене размера
         const ring = createRing(root);
         if (!ring) return;
         window.addEventListener("resize", ring.apply);

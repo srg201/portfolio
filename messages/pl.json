@@ -18,18 +18,7 @@
     ],
     "manifesto": "Projektuję i tworzę szybkie, piękne strony i aplikacje webowe — od pierwszego szkicu po produkcję.",
     "cta": "Porozmawiajmy o projekcie",
-    "available": "Otwarty na nowe projekty",
-    "showreel": "Showreel",
-    "playReel": "Odtwórz showreel"
-  },
-  "Stats": {
-    "days": "dni z kodem",
-    "thanks": "Dziękuję każdemu klientowi i współpracownikowi na tej drodze.",
-    "projects": "wdrożonych projektów",
-    "years": "lat w programowaniu",
-    "lead": "Od {year} roku tworzę produkty dla",
-    "accent": "ambitnych zespołów",
-    "cta": "Zobacz projekty"
+    "available": "Otwarty na nowe projekty"
   },
   "Work": {
     "label": "Wybrane projekty",

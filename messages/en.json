@@ -18,18 +18,7 @@
     ],
     "manifesto": "I design and build fast, beautiful websites and web apps — from the first sketch to production.",
     "cta": "Discuss a project",
-    "available": "Available for new projects",
-    "showreel": "Showreel",
-    "playReel": "Play showreel"
-  },
-  "Stats": {
-    "days": "days writing code",
-    "thanks": "Thank you to every client and teammate along the way.",
-    "projects": "projects shipped",
-    "years": "years in development",
-    "lead": "Since {year}, building products for",
-    "accent": "ambitious teams",
-    "cta": "See the work"
+    "available": "Available for new projects"
   },
   "Work": {
     "label": "Selected work",

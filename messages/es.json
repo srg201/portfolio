@@ -18,18 +18,7 @@
     ],
     "manifesto": "Diseño y desarrollo sitios web y aplicaciones web rápidos y bonitos, desde el primer boceto hasta producción.",
     "cta": "Hablemos de tu proyecto",
-    "available": "Disponible para nuevos proyectos",
-    "showreel": "Showreel",
-    "playReel": "Ver showreel"
-  },
-  "Stats": {
-    "days": "días escribiendo código",
-    "thanks": "Gracias a cada cliente y compañero en este camino.",
-    "projects": "proyectos lanzados",
-    "years": "años desarrollando",
-    "lead": "Desde {year} creo productos para",
-    "accent": "equipos ambiciosos",
-    "cta": "Ver trabajos"
+    "available": "Disponible para nuevos proyectos"
   },
   "Work": {
     "label": "Trabajos destacados",

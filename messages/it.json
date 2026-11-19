@@ -18,18 +18,7 @@
     ],
     "manifesto": "Progetto e sviluppo siti e web app veloci e belli, dal primo schizzo alla produzione.",
     "cta": "Parliamo del progetto",
-    "available": "Disponibile per nuovi progetti",
-    "showreel": "Showreel",
-    "playReel": "Guarda lo showreel"
-  },
-  "Stats": {
-    "days": "giorni a scrivere codice",
-    "thanks": "Grazie a ogni cliente e collega lungo il percorso.",
-    "projects": "progetti realizzati",
-    "years": "anni di sviluppo",
-    "lead": "Dal {year} creo prodotti per",
-    "accent": "team ambiziosi",
-    "cta": "Guarda i lavori"
+    "available": "Disponibile per nuovi progetti"
   },
   "Work": {
     "label": "Lavori selezionati",

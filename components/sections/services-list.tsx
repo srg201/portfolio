@@ -29,8 +29,9 @@ const meta = "font-mono text-[0.7rem] tracking-[0.14em] uppercase sm:text-xs";
 /**
  * Список услуг.
  * - Аккордеон shadcn (Base UI): клавиатура, aria, анимация высоты.
- * - Мышь (cursor-preview): над списком за курсором плывёт карточка
- *   с примером услуги под указателем; картинки сменяются шторкой.
+ * - Мышь (cursor-preview): рядом с курсором (сбоку, не под ним) плывёт
+ *   небольшая карточка с примером услуги и подписью; картинки сменяются
+ *   шторкой.
  * - Тач и reduced motion: пример внутри раскрытой услуги.
  */
 export function ServicesList({ items }: { items: ServiceItem[] }) {
@@ -46,7 +47,7 @@ export function ServicesList({ items }: { items: ServiceItem[] }) {
       const mm = gsap.matchMedia();
 
       mm.add(FINE_POINTER, () => {
-        gsap.set(card, { xPercent: -50, yPercent: -50, scale: 0, autoAlpha: 0 });
+        gsap.set(card, { yPercent: -50, scale: 0.6, autoAlpha: 0 });
         const x = gsap.quickTo(card, "x", { duration: 0.6, ease: "power3" });
         const y = gsap.quickTo(card, "y", { duration: 0.6, ease: "power3" });
         // Лёгкий наклон по горизонтальной скорости курсора
@@ -56,17 +57,25 @@ export function ServicesList({ items }: { items: ServiceItem[] }) {
         });
         let lastX = 0;
 
+        // Карточка сбоку от курсора, а не под ним: указатель всегда виден.
+        // В правой части экрана перескакивает на левую сторону
+        const GAP = 28;
+        const besideX = (clientX: number) =>
+          clientX > window.innerWidth * 0.6
+            ? clientX - GAP - card.offsetWidth
+            : clientX + GAP;
+
         const move = (event: PointerEvent) => {
           if (event.pointerType !== "mouse") return;
-          x(event.clientX);
+          x(besideX(event.clientX));
           y(event.clientY);
-          tilt(gsap.utils.clamp(-8, 8, (event.clientX - lastX) * 0.4));
+          tilt(gsap.utils.clamp(-4, 4, (event.clientX - lastX) * 0.25));
           lastX = event.clientX;
         };
         const enter = (event: PointerEvent) => {
           if (event.pointerType !== "mouse") return;
-          // Первое появление сразу под курсором, без пролёта из угла
-          gsap.set(card, { x: event.clientX, y: event.clientY });
+          // Первое появление сразу у курсора, без пролёта из угла
+          gsap.set(card, { x: besideX(event.clientX), y: event.clientY });
           lastX = event.clientX;
           gsap.to(card, {
             scale: 1,
@@ -78,10 +87,10 @@ export function ServicesList({ items }: { items: ServiceItem[] }) {
         };
         const leave = () => {
           gsap.to(card, {
-            scale: 0,
+            scale: 0.6,
             autoAlpha: 0,
             rotate: 0,
-            duration: 0.4,
+            duration: 0.3,
             ease: "power3.in",
             overwrite: "auto",
           });
@@ -178,16 +187,16 @@ export function ServicesList({ items }: { items: ServiceItem[] }) {
         ref={preview}
         aria-hidden
         // left-0, а не start-0: координаты курсора физические и в RTL
-        className="pointer-events-none fixed top-0 left-0 z-30 hidden w-80 cursor-preview:block lg:w-96"
+        className="pointer-events-none fixed top-0 left-0 z-30 hidden w-56 cursor-preview:block lg:w-64"
       >
-        <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border bg-muted shadow-2xl">
+        <div className="relative aspect-[16/10] overflow-hidden rounded-xl border bg-muted shadow-xl">
           {items.map((item) => (
             <div
               key={item.slug}
               data-active={hovered === item.slug || undefined}
               className="absolute inset-0 transition-[clip-path] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] [clip-path:inset(100%_0_0_0)] data-active:[clip-path:inset(0)]"
             >
-              <PreviewMedia item={item} sizes="24rem" bare />
+              <PreviewMedia item={item} sizes="16rem" bare />
             </div>
           ))}
         </div>

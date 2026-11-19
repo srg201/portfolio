@@ -18,18 +18,7 @@
     ],
     "manifesto": "Je conçois et développe des sites et des applications web rapides et beaux, du premier croquis à la production.",
     "cta": "Parler de votre projet",
-    "available": "Disponible pour de nouveaux projets",
-    "showreel": "Showreel",
-    "playReel": "Voir le showreel"
-  },
-  "Stats": {
-    "days": "jours à coder",
-    "thanks": "Merci à chaque client et coéquipier rencontré en chemin.",
-    "projects": "projets livrés",
-    "years": "années de développement",
-    "lead": "Depuis {year}, je crée des produits pour",
-    "accent": "des équipes ambitieuses",
-    "cta": "Voir les projets"
+    "available": "Disponible pour de nouveaux projets"
   },
   "Work": {
     "label": "Projets choisis",

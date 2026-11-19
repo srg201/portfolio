@@ -1,21 +1,21 @@
 /**
- * Спираль проектов: раскладка карточек (project-ring.tsx) в 3D.
+ * Карусель проектов в hero: раскладка карточек (project-ring.tsx) в 3D.
  *
- * Каждая карточка стоит в точке t ∈ [0, 1) пути. Путь: виток спирали,
- * который начинается слева, проходит внизу перед зрителем, поднимается
- * справа и уходит вдаль к верху экрана. Сдвиг `shift` двигает все
- * карточки по пути (скролл и медленный дрейф), у концов пути они гаснут,
- * поэтому перескок с конца в начало не виден.
+ * Карточки стоят по горизонтальному кольцу, на которое смотрим чуть сверху:
+ * передние ниже и крупнее, задние выше, мельче и тусклее. Размер карточек
+ * и радиусы считаются от полосы, в которой стоит кольцо, так что карусель
+ * целиком помещается между верхним рядом hero и именем и не заходит на текст.
+ * `shift` (доля оборота) вращает кольцо: дрейф и скролл.
  *
- * `scatter` (0..1): спираль разлетается на камеру перед карточками работ.
+ * `scatter` (0..1): кольцо разлетается в стороны при уходе со сцены.
  * Карточка `handoff` при этом скрыта: вместо неё летит копия (hero-motion.tsx).
  */
 
-/** Угол начала и длина витка, градусы */
-const START = -110;
-const SWEEP = 310;
-/** Где на пути стоит карточка 0 при shift = 0: ровно перед зрителем (угол 0) */
-const FRONT = -START / SWEEP;
+/** Перспектива сцены, px: как .ring-stage в globals.css */
+const PERSPECTIVE = 1400;
+/** Глубина кольца, px: передняя карточка ближе к зрителю на столько */
+const DEPTH = 220;
+const FRONT_SCALE = PERSPECTIVE / (PERSPECTIVE - DEPTH);
 
 export type RingState = {
   shift: number;
@@ -30,9 +30,6 @@ export type Ring = {
   apply: () => void;
 };
 
-const clamp01 = (value: number) => Math.min(1, Math.max(0, value));
-const fract = (value: number) => value - Math.floor(value);
-
 export function createRing(root: HTMLElement): Ring | null {
   const stage = root.querySelector<HTMLElement>("[data-ring]");
   if (!stage) return null;
@@ -42,36 +39,42 @@ export function createRing(root: HTMLElement): Ring | null {
   const apply = () => {
     const width = stage.clientWidth;
     const height = stage.clientHeight;
-    const narrow = width < 768;
-    // В RTL спираль зеркальна: начинается справа
+    // В RTL вращение в другую сторону
     const dir = getComputedStyle(stage).direction === "rtl" ? -1 : 1;
-    const radius = narrow ? width * 0.58 : Math.min(width * 0.4, height * 0.62);
-    const tilt = height * (narrow ? 0.24 : 0.2);
+
+    // Карточка 16:10: по высоте полосы, но не шире трети экрана
+    let cardWidth = Math.min(height * 0.42 * 1.6, width * 0.3, 300);
+    const cardHeight = cardWidth / 1.6;
+    // Наклон: передняя карточка касается низа полосы, но не выходит за него
+    // Наклон мягкий: кольцо читается как ровная лента, а не как веер
+    const tilt = Math.max(0, (height / 2 / FRONT_SCALE - cardHeight / 2) * 0.55);
+    const radius = Math.max(0, width / 2 - cardWidth * 0.55 - 8);
+    if (radius === 0) cardWidth = 0;
+
     const count = cards.length;
     const scatter = state.scatter;
 
     cards.forEach((card, index) => {
-      const t = fract(FRONT + index / count - state.shift);
-      const angle = ((START + SWEEP * t) * Math.PI) / 180;
+      const angle = 2 * Math.PI * (index / count - state.shift) * dir;
       const sin = Math.sin(angle);
       const cos = Math.cos(angle);
 
-      let x = sin * radius * dir;
-      // Наклон витка плюс подъём вдоль пути: дальний конец уходит вверх
-      let y = cos * tilt + (0.1 - 0.32 * t) * height;
-      let z = cos * radius * 0.9 - radius * 0.25;
-      let opacity =
-        clamp01(t / 0.1) * clamp01((1 - t) / 0.15) * (0.35 + 0.65 * ((cos + 1) / 2));
+      let x = sin * radius;
+      const y = cos * tilt;
+      let z = cos * DEPTH;
+      // Задние карточки тусклые, передние полностью видны
+      let opacity = 0.18 + 0.82 * ((cos + 1) / 2) ** 1.5;
 
       if (card === state.handoff && scatter > 0) {
         opacity = 0;
       } else if (scatter > 0) {
-        x *= 1 + scatter * 1.4;
-        y *= 1 + scatter;
-        z += scatter * 600;
-        opacity *= (1 - scatter) ** 2;
+        // Разлёт в стороны, в пределах своей полосы: на текст не заходит
+        x *= 1 + scatter * 1.6;
+        z += scatter * 160;
+        opacity *= (1 - scatter) ** 3;
       }
 
+      card.style.width = `${cardWidth.toFixed(1)}px`;
       card.style.transform = `translate(-50%, -50%) translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, ${z.toFixed(1)}px)`;
       card.style.opacity = opacity.toFixed(3);
     });
@@ -81,7 +84,7 @@ export function createRing(root: HTMLElement): Ring | null {
   return { stage, cards, state, apply };
 }
 
-/** Карточка-кандидат для перелёта, которая сейчас виднее остальных */
+/** Карточка-кандидат для перелёта, которая сейчас ближе всех к зрителю */
 export function pickHandoff(ring: Ring) {
   let best: HTMLElement | null = null;
   let bestOpacity = -1;

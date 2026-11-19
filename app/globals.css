@@ -222,20 +222,20 @@
 }
 
 /*
- * Спираль проектов (components/sections/project-ring.tsx).
- * Позицию и прозрачность каждой карточки считает JS (ring-motion.ts):
- * спираль идёт слева, проходит внизу перед зрителем и уходит вдаль вверх.
- * До запуска JS карточки скрыты.
+ * Карусель проектов в hero (components/sections/project-ring.tsx).
+ * Ширину, позицию и прозрачность карточек считает JS (ring-motion.ts)
+ * от размера полосы, где стоит кольцо. До запуска JS карточки скрыты.
  */
 .ring-stage {
-  --ring-card: clamp(7rem, 27vw, 10rem);
   perspective: 1400px;
-}
-
-@media (min-width: 768px) {
-  .ring-stage {
-    --ring-card: clamp(9rem, 14vw, 15rem);
-  }
+  /* Края кольца растворяются, а не обрезаются краем экрана */
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 14%,
+    black 86%,
+    transparent
+  );
 }
 
 .ring-scene {
@@ -246,7 +246,6 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: var(--ring-card);
   aspect-ratio: 16 / 10;
   opacity: 0;
   will-change: transform, opacity;
@@ -260,25 +259,6 @@
   );
   background-size: 22px 22px;
   mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, black 20%, transparent 75%);
-}
-
-/* Заглушка шоурила, пока нет записей: медленно вращающийся фирменный градиент */
-.hero-reel-placeholder {
-  background: conic-gradient(
-    from 0deg,
-    var(--brand),
-    var(--chart-3),
-    var(--chart-2),
-    var(--brand)
-  );
-  filter: blur(6px);
-  animation: hero-reel-spin 6s linear infinite;
-}
-
-@keyframes hero-reel-spin {
-  to {
-    rotate: 1turn;
-  }
 }
 
 /* Плашка Dock въезжает снизу после входа hero (components/ui/dock.tsx) */

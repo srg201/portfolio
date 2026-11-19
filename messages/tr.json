@@ -18,18 +18,7 @@
     ],
     "manifesto": "İlk eskizden canlıya kadar hızlı ve güzel web siteleri ile web uygulamaları tasarlıyor ve geliştiriyorum.",
     "cta": "Projeyi konuşalım",
-    "available": "Yeni projelere açığım",
-    "showreel": "Showreel",
-    "playReel": "Showreel'i izle"
-  },
-  "Stats": {
-    "days": "gün kod yazarak",
-    "thanks": "Bu yolda birlikte çalıştığım her müşteriye ve ekip arkadaşıma teşekkürler.",
-    "projects": "tamamlanan proje",
-    "years": "yıllık geliştirme deneyimi",
-    "lead": "{year} yılından beri ürünler geliştiriyorum:",
-    "accent": "iddialı ekipler için",
-    "cta": "İşleri gör"
+    "available": "Yeni projelere açığım"
   },
   "Work": {
     "label": "Seçili işler",
