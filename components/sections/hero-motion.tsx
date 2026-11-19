@@ -29,6 +29,19 @@ function boxIn(root: HTMLElement, selector: string): Box | null {
   };
 }
 
+/**
+ * Первая карточка кольца (шоурил) в положении, где кольцо не повёрнуто:
+ * в неё сжимается видео. Поворот на время замера обнуляем.
+ */
+function ringReelBox(root: HTMLElement): Box {
+  const scene = root.querySelector<HTMLElement>("[data-ring-scene]");
+  const previous = scene?.style.getPropertyValue("--spin") ?? "";
+  scene?.style.setProperty("--spin", "0deg");
+  const box = boxIn(root, "[data-ring-reel] [data-ring-inner]");
+  if (scene) scene.style.setProperty("--spin", previous);
+  return box ?? cardBox();
+}
+
 /** Окно шоурила на оси: из полноэкранного слоя вырезаем ровно его */
 function thumbBox(root: HTMLElement): Box {
   return (
@@ -64,9 +77,9 @@ const centerOffset = (box: Box) => ({
 });
 
 /**
- * Скролл-сцена шоурила (scrub): окно на оси растёт в большую карточку,
- * HUD с кнопкой play едет за центром окна, контент hero уходит назад,
- * затем короткая пауза на карточке.
+ * Скролл-сцена (scrub): окно на оси растёт в большую карточку, HUD с кнопкой
+ * play едет за центром окна, контент hero уходит назад. Потом карточка
+ * сжимается в кольцо проектов, кольцо вращается и расходится.
  */
 function createReelScroll(root: HTMLElement, layer: HTMLElement) {
   const scene = root.closest<HTMLElement>("[data-hero-scene]") ?? root;
@@ -126,10 +139,108 @@ function createReelScroll(root: HTMLElement, layer: HTMLElement) {
   if (captions.length) {
     timeline.to(captions, { autoAlpha: 1, duration: 0.12 }, 0.45);
   }
-  // Пауза на карточке перед тем, как наедет следующая секция
-  timeline.to({}, { duration: 0.35 });
 
-  return timeline;
+  // Карточка шоурила сжимается в первую карточку кольца проектов
+  const ring = root.querySelector<HTMLElement>("[data-ring]");
+  const orbit = root.querySelector<HTMLElement>("[data-ring-orbit]");
+  const reelCard = root.querySelector<HTMLElement>(
+    "[data-ring-reel] [data-ring-inner]",
+  );
+  const others = [
+    ...root.querySelectorAll<HTMLElement>("[data-ring-inner]"),
+  ].filter((element) => element !== reelCard);
+  const texts = root.querySelectorAll<HTMLElement>("[data-ring-text]");
+  const corners = root.querySelectorAll<HTMLElement>("[data-ring-corner]");
+  const spin = { scroll: 0, drift: 0, driftAmount: 0 };
+
+  if (ring) {
+    const SHRINK = 0.9;
+    timeline.to(
+      layer,
+      {
+        clipPath: () => inset(ringReelBox(root), 8),
+        ease: "power2.inOut",
+        duration: 0.5,
+      },
+      SHRINK,
+    );
+    if (hud) timeline.to(hud, { autoAlpha: 0, duration: 0.15 }, SHRINK);
+    timeline
+      .to(ring, { autoAlpha: 1, duration: 0.2 }, SHRINK)
+      .fromTo(
+        others,
+        { autoAlpha: 0, scale: 0.4 },
+        { autoAlpha: 1, scale: 1, duration: 0.5, stagger: 0.02 },
+        SHRINK + 0.15,
+      );
+    if (reelCard) {
+      timeline.fromTo(
+        reelCard,
+        { autoAlpha: 0 },
+        { autoAlpha: 1, duration: 0.05 },
+        SHRINK + 0.42,
+      );
+    }
+    timeline
+      .to(layer, { autoAlpha: 0, duration: 0.08 }, SHRINK + 0.47)
+      .fromTo(
+        texts,
+        { autoAlpha: 0, y: 30 },
+        { autoAlpha: 1, y: 0, duration: 0.35, stagger: 0.06 },
+        SHRINK + 0.45,
+      )
+      .fromTo(
+        corners,
+        { autoAlpha: 0 },
+        { autoAlpha: 1, duration: 0.3 },
+        SHRINK + 0.5,
+      )
+      // Вращение: скролл крутит кольцо, дрейф включается после сборки
+      .to(spin, { scroll: -240, duration: 1.8 }, SHRINK + 0.5)
+      .to(spin, { driftAmount: 1, duration: 0.3 }, SHRINK + 0.5)
+      // Выход: тексты уходят, кольцо раскрывается
+      .to(
+        [...texts, ...corners],
+        { autoAlpha: 0, y: -20, duration: 0.3, stagger: 0.03 },
+        SHRINK + 2.1,
+      );
+    // Кольцо не гаснет: раскрывается и уезжает вверх вместе со сценой,
+    // снизу сразу поднимаются карточки работ (без пустого экрана)
+    if (orbit) {
+      timeline.to(
+        orbit,
+        { scale: 1.25, duration: 0.4, ease: "power1.in" },
+        SHRINK + 2.1,
+      );
+    }
+  } else {
+    // Без кольца: пауза на карточке перед следующей секцией
+    timeline.to({}, { duration: 0.35 });
+  }
+
+  return { timeline, spin, ring };
+}
+
+/** Медленный дрейф кольца, пока оно на экране; пишет --spin сцене кольца */
+function startRingSpin(
+  root: HTMLElement,
+  spin: { scroll: number; drift: number; driftAmount: number },
+) {
+  const scene = root.querySelector<HTMLElement>("[data-ring-scene]");
+  const ring = root.querySelector<HTMLElement>("[data-ring]");
+  if (!scene || !ring) return () => {};
+  const DRIFT = 4; // градусов в секунду
+
+  const tick = (_time: number, deltaMs: number) => {
+    // Крутим, только пока кольцо проявлено и не уехало за верх экрана
+    if (Number(gsap.getProperty(ring, "autoAlpha")) <= 0) return;
+    if (ring.getBoundingClientRect().bottom <= 0) return;
+    spin.drift -= (DRIFT * deltaMs) / 1000;
+    const angle = spin.scroll + spin.drift * spin.driftAmount;
+    scene.style.setProperty("--spin", `${angle.toFixed(2)}deg`);
+  };
+  gsap.ticker.add(tick);
+  return () => gsap.ticker.remove(tick);
 }
 
 /**
@@ -140,7 +251,9 @@ function createReelScroll(root: HTMLElement, layer: HTMLElement) {
  * - [data-hero-word]: слово по кругу меняется перебором символов;
  * - [data-depth]: слои смещаются за курсором (параллакс), только мышь;
  * - [data-hero-coord]: числа на оси следуют за курсором;
- * - [data-reel-layer]: при скролле окно шоурила растёт в карточку.
+ * - [data-reel-layer]: при скролле окно шоурила растёт в карточку,
+ *   затем сжимается в первую карточку кольца проектов [data-ring];
+ *   кольцо крутится скроллом и дрейфом и расходится перед работами.
  * До запуска элементы скрыты CSS-ом (globals.css, блок Hero), но только при
  * prefers-reduced-motion: no-preference; иначе всё видно сразу и без движения.
  */
@@ -238,17 +351,21 @@ export function HeroMotion({
         // и сцена начинает реагировать на скролл. Раньше нельзя: окно
         // ещё едет в анимации входа, и его позиция была бы неверной
         let reel: gsap.core.Timeline | undefined;
+        let stopSpin = () => {};
         const layer = root.querySelector<HTMLElement>("[data-reel-layer]");
         if (layer) {
           intro
             .call(() => {
-              reel = createReelScroll(root, layer);
+              const scene = createReelScroll(root, layer);
+              reel = scene.timeline;
+              stopSpin = startRingSpin(root, scene.spin);
             })
             .to(layer, { autoAlpha: 1, duration: 0.6 });
         }
 
         return () => {
           cycle?.kill();
+          stopSpin();
           reel?.scrollTrigger?.kill();
           reel?.kill();
           split.revert();

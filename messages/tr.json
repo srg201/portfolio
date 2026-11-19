@@ -23,12 +23,13 @@
     "playReel": "Showreel'i izle"
   },
   "Stats": {
-    "label": "Rakamlarla",
     "days": "gün kod yazarak",
-    "title": "{year} yılından beri iddialı ekipler için ürünler geliştiriyorum.",
     "thanks": "Bu yolda birlikte çalıştığım her müşteriye ve ekip arkadaşıma teşekkürler.",
     "projects": "tamamlanan proje",
-    "years": "yıllık geliştirme deneyimi"
+    "years": "yıllık geliştirme deneyimi",
+    "lead": "{year} yılından beri ürünler geliştiriyorum:",
+    "accent": "iddialı ekipler için",
+    "cta": "İşleri gör"
   },
   "Work": {
     "label": "Seçili işler",

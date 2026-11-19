@@ -5,6 +5,7 @@ import { Link } from "@/i18n/navigation";
 import { showreel } from "@/lib/showreel";
 import { cn } from "@/lib/utils";
 import { HeroMotion } from "./hero-motion";
+import { ProjectRing } from "./project-ring";
 import { ReelPlayButton } from "./reel-play-button";
 import { ShowreelVideo } from "./showreel-video";
 
@@ -21,8 +22,9 @@ function formatDuration(seconds: number) {
  * - По центру орбита и горизонтальная ось с HUD-подписями, на оси узкое
  *   окно шоурила с кнопкой play (полноэкранное видео).
  * - Сверху справа роль, меняющееся слово и CTA; снизу слева имя (h1).
- * - Скролл: окно растёт в большую карточку с видео, контент уходит назад
- *   (hero-motion.tsx), затем наезжает секция цифр.
+ * - Скролл (hero-motion.tsx): окно растёт в большую карточку с видео,
+ *   затем карточка сжимается и встаёт в кольцо проектов (project-ring.tsx),
+ *   кольцо вращается скроллом и расходится перед карточками работ.
  * Без анимаций: обычный hero и видео под ним.
  */
 export async function Hero() {
@@ -40,7 +42,7 @@ export async function Hero() {
     <section
       aria-labelledby="hero-title"
       data-hero-scene
-      className="relative h-[260svh] motion-reduce:h-auto"
+      className="relative h-[640svh] motion-reduce:h-auto"
     >
       <HeroMotion words={words}>
         <div
@@ -138,14 +140,15 @@ export async function Hero() {
           </div>
 
           <ShowreelLayer label={t("showreel")} play={t("playReel")} duration={duration} />
+          <ProjectRing />
         </div>
       </HeroMotion>
 
-      {/* Без JS анимация не запустится: показываем всё сразу, слой шоурила прячем */}
+      {/* Без JS сцена не запустится: показываем hero одним экраном, слои шоурила и кольца прячем */}
       <noscript>
         <style>
           {
-            "[data-hero-name],[data-reveal],[data-hero-intro]{visibility:visible!important}[data-reel-layer]{display:none}"
+            "[data-hero-name],[data-reveal],[data-hero-intro]{visibility:visible!important}[data-reel-layer],[data-ring]{display:none}[data-hero-scene]{height:auto}"
           }
         </style>
       </noscript>

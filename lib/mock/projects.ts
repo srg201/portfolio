@@ -19,6 +19,8 @@ export type MockProject = {
   liveUrl: string;
   repoUrl: string;
   isFeatured: boolean;
+  /** Обложка крутится в кольце проектов после шоурила (hero) */
+  inCarousel: boolean;
   /** Сценарий записи шоукейса */
   showcase: {
     /** Доля высоты страницы, которую проматываем (0..1) */
@@ -43,6 +45,7 @@ export const projects: MockProject[] = [
     liveUrl: "https://outpost-gray.vercel.app",
     repoUrl: "https://github.com/srg201/outpost",
     isFeatured: true,
+    inCarousel: true,
     showcase: { scrollDepth: 0.7, scrollSeconds: 10 },
   },
   {
@@ -57,6 +60,7 @@ export const projects: MockProject[] = [
     liveUrl: "https://healthcare-platform-fawn.vercel.app",
     repoUrl: "https://github.com/srg201/healthcare-platform",
     isFeatured: true,
+    inCarousel: true,
     showcase: { scrollDepth: 0.8, scrollSeconds: 10 },
   },
   {
@@ -71,6 +75,7 @@ export const projects: MockProject[] = [
     liveUrl: "https://nextpro-rho.vercel.app",
     repoUrl: "https://github.com/srg201/nextpro",
     isFeatured: true,
+    inCarousel: true,
     showcase: { scrollDepth: 0.8, scrollSeconds: 9 },
   },
   {
@@ -85,6 +90,7 @@ export const projects: MockProject[] = [
     liveUrl: "https://xplanelabs.nz",
     repoUrl: "https://github.com/srg201/x-plane",
     isFeatured: true,
+    inCarousel: true,
     // На живом сайте нет <meta name="viewport">: телефон показывает десктоп в 980px,
     // мобильную запись не делаем, пока это не исправят
     showcase: { scrollDepth: 0.8, scrollSeconds: 11, mobile: false },
@@ -101,6 +107,7 @@ export const projects: MockProject[] = [
     liveUrl: "https://www.fatfish.co.il/campaign/2025audit",
     repoUrl: "https://github.com/srg201/fatfish",
     isFeatured: true,
+    inCarousel: true,
     showcase: { scrollDepth: 0.85, scrollSeconds: 11 },
   },
   {
@@ -117,6 +124,7 @@ export const projects: MockProject[] = [
     // В блоке «Explainer Video» на живом сайте стоит чужое YouTube-демо:
     // не показываем, пока его не заменят роликом клиента
     isFeatured: false,
+    inCarousel: false,
     showcase: { scrollDepth: 0.85, scrollSeconds: 10 },
   },
   {
@@ -133,6 +141,7 @@ export const projects: MockProject[] = [
     // На живом сайте в блоке услуг остались заглушки «Card Title»: не показываем,
     // пока их не заменят реальным контентом
     isFeatured: false,
+    inCarousel: false,
     showcase: { scrollDepth: 0.85, scrollSeconds: 10 },
   },
   {
@@ -146,6 +155,7 @@ export const projects: MockProject[] = [
     liveUrl: "https://hoo-bank-rouge-five.vercel.app",
     repoUrl: "https://github.com/srg201/HooBank",
     isFeatured: false,
+    inCarousel: true,
     showcase: { scrollDepth: 0.85, scrollSeconds: 9 },
   },
   {
@@ -159,6 +169,7 @@ export const projects: MockProject[] = [
     liveUrl: "https://gpt3-landing-peach.vercel.app",
     repoUrl: "https://github.com/srg201/gpt3-landing",
     isFeatured: false,
+    inCarousel: true,
     showcase: { scrollDepth: 0.85, scrollSeconds: 9 },
   },
 ];

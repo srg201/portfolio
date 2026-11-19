@@ -4,9 +4,11 @@
  *   pnpm covers
  *
  * Записи шоукейсов тяжёлые и лежат в .gitignore. Отсюда в репозиторий
- * попадают лёгкие версии для избранных проектов, public/work/{slug}/:
- * - cover.jpg: кадр 1280×800, next/image сам отдаст WebP/AVIF нужной ширины;
- * - preview.mp4: петля ~6 с, 960×600, без звука, играет при наведении.
+ * попадают лёгкие версии, public/work/{slug}/:
+ * - cover.jpg: кадр 1280×800 для избранных и для кольца проектов (inCarousel),
+ *   next/image сам отдаст WebP/AVIF нужной ширины;
+ * - preview.mp4: петля ~6 с, 960×600, без звука, только у избранных,
+ *   играет при наведении на карточку.
  */
 import { execFileSync } from "node:child_process";
 import { existsSync } from "node:fs";
@@ -27,10 +29,14 @@ function ffmpeg(args: string[]) {
   });
 }
 
-async function main() {
-  const featured = projects.filter((project) => project.isFeatured);
+const kb = async (file: string) => Math.round((await stat(file)).size / 1024);
 
-  for (const { slug } of featured) {
+async function main() {
+  const withCover = projects.filter(
+    (project) => project.isFeatured || project.inCarousel,
+  );
+
+  for (const { slug, isFeatured } of withCover) {
     const source = path.join(SHOWCASES, slug, "desktop.mp4");
     if (!existsSync(source)) {
       console.warn(`– ${slug}: нет записи, сначала pnpm showcases ${slug}`);
@@ -41,6 +47,11 @@ async function main() {
 
     const cover = path.join(dir, "cover.jpg");
     ffmpeg(["-ss", String(COVER_AT), "-i", source, "-frames:v", "1", "-q:v", "3", cover]);
+
+    if (!isFeatured) {
+      console.log(`✓ ${slug}: cover ${await kb(cover)} КБ`);
+      continue;
+    }
 
     const preview = path.join(dir, "preview.mp4");
     ffmpeg([
@@ -53,7 +64,6 @@ async function main() {
       preview,
     ]);
 
-    const kb = async (file: string) => Math.round((await stat(file)).size / 1024);
     console.log(`✓ ${slug}: cover ${await kb(cover)} КБ, preview ${await kb(preview)} КБ`);
   }
 }

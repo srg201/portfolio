@@ -23,12 +23,13 @@
     "playReel": "Voir le showreel"
   },
   "Stats": {
-    "label": "En chiffres",
     "days": "jours à coder",
-    "title": "Je crée des produits pour des équipes ambitieuses depuis {year}.",
     "thanks": "Merci à chaque client et coéquipier rencontré en chemin.",
     "projects": "projets livrés",
-    "years": "années de développement"
+    "years": "années de développement",
+    "lead": "Depuis {year}, je crée des produits pour",
+    "accent": "des équipes ambitieuses",
+    "cta": "Voir les projets"
   },
   "Work": {
     "label": "Projets choisis",

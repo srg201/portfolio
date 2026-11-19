@@ -6,7 +6,6 @@ import { FeaturedWork } from "@/components/sections/featured-work";
 import { Hero } from "@/components/sections/hero";
 import { Process } from "@/components/sections/process";
 import { Services } from "@/components/sections/services";
-import { Stats } from "@/components/sections/stats";
 import { TechStack } from "@/components/sections/tech-stack";
 import { routing } from "@/i18n/routing";
 import { localeAlternates } from "@/lib/seo";
@@ -21,7 +20,6 @@ export default function HomePage() {
   return (
     <main id="main" className="flex flex-1 flex-col">
       <Hero />
-      <Stats />
       <FeaturedWork />
       <Services />
       <TechStack />
