@@ -160,7 +160,7 @@ function ReelPreview({ label, status }: { label: string; status: string }) {
 }
 
 /**
- * Фон: сетка точек и мягкое свечение фирменного цвета. WebGL-туман заменит его на шаге 4.
+ * Сетка точек поверх WebGL-тумана (components/webgl/mist-background.tsx).
  * data-depth: сила и направление параллакса за курсором (hero-motion.tsx)
  */
 function HeroBackdrop() {
@@ -170,14 +170,6 @@ function HeroBackdrop() {
       className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
     >
       <div data-depth="0.15" className="hero-dots absolute -inset-8" />
-      <div
-        data-depth="-1.2"
-        className="absolute -top-1/3 -end-1/4 size-[70vmax] rounded-full bg-brand/15 blur-[120px] dark:bg-brand/20"
-      />
-      <div
-        data-depth="1"
-        className="absolute -bottom-1/2 -start-1/4 size-[50vmax] rounded-full bg-chart-3/10 blur-[120px]"
-      />
     </div>
   );
 }

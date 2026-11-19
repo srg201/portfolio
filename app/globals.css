@@ -189,6 +189,25 @@
   }
 }
 
+/* ---------- Фон (components/webgl/mist-background.tsx) ---------- */
+
+/* Пока WebGL грузится, если он недоступен или выключен: статичные свечения в цветах темы */
+.mist-background {
+  background:
+    radial-gradient(60vmax 60vmax at 100% 0%, color-mix(in oklch, var(--brand) 22%, transparent), transparent 70%),
+    radial-gradient(50vmax 50vmax at 0% 100%, color-mix(in oklch, var(--chart-3) 12%, transparent), transparent 70%),
+    var(--background);
+}
+
+.mist-background canvas {
+  opacity: 0;
+  transition: opacity 1.2s ease-out;
+}
+
+.mist-background[data-ready] canvas {
+  opacity: 1;
+}
+
 /* ---------- Hero (главный экран) ---------- */
 
 /* До запуска анимации входа (hero-motion.tsx) элементы скрыты, чтобы не мигали */
