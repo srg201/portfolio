@@ -78,6 +78,33 @@
     "pause": "Animation anhalten",
     "play": "Animation abspielen"
   },
+  "Process": {
+    "label": "Ablauf",
+    "title": "So arbeiten wir zusammen",
+    "intro": "Ein klarer Ablauf ohne Überraschungen: Sie wissen immer, was gerade passiert und was als Nächstes kommt.",
+    "steps": {
+      "brief": {
+        "title": "Briefing",
+        "description": "Wir sprechen über Ziele, Zielgruppe und Rahmenbedingungen. Danach bekommen Sie einen klaren Umfang, Zeitplan und eine Schätzung."
+      },
+      "design": {
+        "title": "Design",
+        "description": "Zuerst die Struktur, dann ein visuelles Design in Figma, das Sie durchklicken können, bevor Code entsteht."
+      },
+      "build": {
+        "title": "Entwicklung",
+        "description": "Ich arbeite in kurzen Iterationen mit Live-Vorschau: Sie sehen alle paar Tage Fortschritt und können früh gegensteuern."
+      },
+      "launch": {
+        "title": "Launch",
+        "description": "Tests auf echten Geräten, Performance- und SEO-Checks, dann Veröffentlichung auf Ihrer Domain mit eingerichteter Analyse."
+      },
+      "support": {
+        "title": "Betreuung",
+        "description": "Nach dem Launch behebe ich Fehler, ergänze Funktionen und halte Abhängigkeiten aktuell, damit das Produkt schnell und sicher bleibt."
+      }
+    }
+  },
   "Dock": {
     "label": "Seitennavigation",
     "home": "Startseite"

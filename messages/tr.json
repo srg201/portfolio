@@ -78,6 +78,33 @@
     "pause": "Animasyonu duraklat",
     "play": "Animasyonu oynat"
   },
+  "Process": {
+    "label": "Süreç",
+    "title": "Birlikte nasıl çalışacağız",
+    "intro": "Sürprizsiz, net bir süreç: neler olduğunu ve sırada ne olduğunu her zaman bilirsiniz.",
+    "steps": {
+      "brief": {
+        "title": "Brif",
+        "description": "Hedeflerinizi, kitlenizi ve kısıtları konuşuruz. Net bir kapsam, takvim ve fiyat tahminiyle dönerim."
+      },
+      "design": {
+        "title": "Tasarım",
+        "description": "Önce yapı, sonra kod yazılmadan önce tıklayarak gezebileceğiniz bir Figma tasarımı."
+      },
+      "build": {
+        "title": "Geliştirme",
+        "description": "Canlı önizleme bağlantısıyla kısa döngülerde çalışırım: birkaç günde bir ilerlemeyi görür, erkenden yön verebilirsiniz."
+      },
+      "launch": {
+        "title": "Yayın",
+        "description": "Gerçek cihazlarda testler, performans ve SEO kontrolleri, ardından analitik kurulu şekilde alan adınızda yayın."
+      },
+      "support": {
+        "title": "Destek",
+        "description": "Yayından sonra hataları düzeltir, özellik ekler ve bağımlılıkları güncel tutarım; ürün hızlı ve güvenli kalır."
+      }
+    }
+  },
   "Dock": {
     "label": "Site gezinmesi",
     "home": "Ana sayfa"

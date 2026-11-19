@@ -78,6 +78,33 @@
     "pause": "Zatrzymaj animację",
     "play": "Uruchom animację"
   },
+  "Process": {
+    "label": "Proces",
+    "title": "Jak będziemy współpracować",
+    "intro": "Jasny proces bez niespodzianek: zawsze wiesz, co się dzieje i co będzie dalej.",
+    "steps": {
+      "brief": {
+        "title": "Brief",
+        "description": "Rozmawiamy o celach, odbiorcach i ograniczeniach. Wracam z jasnym zakresem, harmonogramem i wyceną."
+      },
+      "design": {
+        "title": "Projekt",
+        "description": "Najpierw struktura, potem projekt graficzny w Figmie, który możesz przeklikać, zanim powstanie pierwsza linijka kodu."
+      },
+      "build": {
+        "title": "Programowanie",
+        "description": "Pracuję w krótkich iteracjach z linkiem do podglądu: co kilka dni widzisz postępy i możesz wcześnie korygować kierunek."
+      },
+      "launch": {
+        "title": "Wdrożenie",
+        "description": "Testy na prawdziwych urządzeniach, sprawdzenie wydajności i SEO, a potem publikacja na Twojej domenie z podpiętą analityką."
+      },
+      "support": {
+        "title": "Wsparcie",
+        "description": "Po starcie naprawiam błędy, dodaję funkcje i aktualizuję zależności, żeby produkt pozostał szybki i bezpieczny."
+      }
+    }
+  },
   "Dock": {
     "label": "Nawigacja strony",
     "home": "Strona główna"

@@ -78,6 +78,33 @@
     "pause": "Mettre l'animation en pause",
     "play": "Lancer l'animation"
   },
+  "Process": {
+    "label": "Méthode",
+    "title": "Comment nous allons travailler",
+    "intro": "Une méthode claire, sans surprise : vous savez toujours où en est le projet et ce qui vient ensuite.",
+    "steps": {
+      "brief": {
+        "title": "Brief",
+        "description": "Nous parlons de vos objectifs, de votre public et de vos contraintes. Je reviens avec un périmètre, un planning et une estimation clairs."
+      },
+      "design": {
+        "title": "Design",
+        "description": "D'abord la structure, puis une maquette visuelle sur Figma que vous pouvez parcourir avant la moindre ligne de code."
+      },
+      "build": {
+        "title": "Développement",
+        "description": "Je travaille par itérations courtes avec un lien de prévisualisation : vous voyez l'avancement tous les quelques jours et pouvez ajuster tôt."
+      },
+      "launch": {
+        "title": "Mise en ligne",
+        "description": "Tests sur de vrais appareils, contrôle des performances et du SEO, puis déploiement sur votre domaine avec l'analytique en place."
+      },
+      "support": {
+        "title": "Suivi",
+        "description": "Après le lancement, je corrige les bugs, ajoute des fonctionnalités et tiens les dépendances à jour pour que le produit reste rapide et sûr."
+      }
+    }
+  },
   "Dock": {
     "label": "Navigation du site",
     "home": "Accueil"

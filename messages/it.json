@@ -78,6 +78,33 @@
     "pause": "Metti in pausa l'animazione",
     "play": "Avvia l'animazione"
   },
+  "Process": {
+    "label": "Processo",
+    "title": "Come lavoreremo insieme",
+    "intro": "Un processo chiaro e senza sorprese: sai sempre cosa sta succedendo e cosa viene dopo.",
+    "steps": {
+      "brief": {
+        "title": "Brief",
+        "description": "Parliamo di obiettivi, pubblico e vincoli. Torno con un perimetro, una tempistica e una stima chiari."
+      },
+      "design": {
+        "title": "Design",
+        "description": "Prima la struttura, poi un design visivo in Figma che puoi navigare prima che venga scritta una riga di codice."
+      },
+      "build": {
+        "title": "Sviluppo",
+        "description": "Lavoro per iterazioni brevi con un link di anteprima: vedi i progressi ogni pochi giorni e puoi correggere la rotta per tempo."
+      },
+      "launch": {
+        "title": "Lancio",
+        "description": "Test su dispositivi reali, controlli di prestazioni e SEO, poi pubblicazione sul tuo dominio con l'analisi già attiva."
+      },
+      "support": {
+        "title": "Supporto",
+        "description": "Dopo il lancio correggo i problemi, aggiungo funzioni e aggiorno le dipendenze, così il prodotto resta veloce e sicuro."
+      }
+    }
+  },
   "Dock": {
     "label": "Navigazione del sito",
     "home": "Home"

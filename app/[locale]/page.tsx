@@ -4,6 +4,7 @@ import { locale as rootLocale } from "next/root-params";
 import { hasLocale } from "next-intl";
 import { FeaturedWork } from "@/components/sections/featured-work";
 import { Hero } from "@/components/sections/hero";
+import { Process } from "@/components/sections/process";
 import { Services } from "@/components/sections/services";
 import { Stats } from "@/components/sections/stats";
 import { TechStack } from "@/components/sections/tech-stack";
@@ -24,6 +25,7 @@ export default function HomePage() {
       <FeaturedWork />
       <Services />
       <TechStack />
+      <Process />
     </main>
   );
 }

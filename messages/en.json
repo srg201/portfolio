@@ -78,6 +78,33 @@
     "pause": "Pause animation",
     "play": "Play animation"
   },
+  "Process": {
+    "label": "Process",
+    "title": "How we'll work together",
+    "intro": "A clear process with no surprises: you always know what is happening and what comes next.",
+    "steps": {
+      "brief": {
+        "title": "Brief",
+        "description": "We talk through your goals, audience and constraints. I come back with a clear scope, timeline and estimate."
+      },
+      "design": {
+        "title": "Design",
+        "description": "Structure first, then a visual design in Figma that you can click through before any code is written."
+      },
+      "build": {
+        "title": "Development",
+        "description": "I build in short iterations with a live preview link, so you see progress every few days and can steer early."
+      },
+      "launch": {
+        "title": "Launch",
+        "description": "Testing on real devices, performance and SEO checks, then deployment to your domain with analytics in place."
+      },
+      "support": {
+        "title": "Support",
+        "description": "After launch I fix issues, add features and keep dependencies up to date, so the product stays fast and secure."
+      }
+    }
+  },
   "Dock": {
     "label": "Site navigation",
     "home": "Home"
