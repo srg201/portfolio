@@ -36,6 +36,35 @@
     "visit": "访问网站",
     "newTab": "在新标签页中打开"
   },
+  "Services": {
+    "label": "服务",
+    "title": "我能为你做什么",
+    "intro": "一位开发者负责整个产品：界面、服务器、数据库和上线。",
+    "example": "示例",
+    "thisSite": "本网站",
+    "items": {
+      "frontend": {
+        "title": "前端开发",
+        "description": "使用 React 和 Next.js 打造快速、无障碍的界面，像素级还原 Figma 设计，动效自然得体。"
+      },
+      "backend": {
+        "title": "后端与 API",
+        "description": "数据库、身份验证、支付与集成：可靠的服务端逻辑，随产品一起成长。"
+      },
+      "fullstack": {
+        "title": "全栈产品",
+        "description": "从想法到上线：我规划架构、完整开发产品并部署到生产环境。"
+      },
+      "motion": {
+        "title": "WebGL 与动效网站",
+        "description": "通过滚动场景、着色器和微交互打造沉浸式网站，让品牌令人难忘。"
+      },
+      "ecommerce": {
+        "title": "电商",
+        "description": "拥有快速商品目录、购物车和支付的在线商店：为销售而生，易于管理。"
+      }
+    }
+  },
   "Dock": {
     "label": "网站导航",
     "home": "首页"

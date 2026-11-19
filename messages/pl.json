@@ -36,6 +36,35 @@
     "visit": "Zobacz stronę",
     "newTab": "otwiera się w nowej karcie"
   },
+  "Services": {
+    "label": "Usługi",
+    "title": "W czym mogę pomóc",
+    "intro": "Jeden programista do całego produktu: interfejs, serwer, baza danych i wdrożenie.",
+    "example": "Przykład",
+    "thisSite": "Ta strona",
+    "items": {
+      "frontend": {
+        "title": "Frontend",
+        "description": "Szybkie i dostępne interfejsy w React i Next.js, wierne projektom z Figmy, z animacjami, które po prostu działają."
+      },
+      "backend": {
+        "title": "Backend i API",
+        "description": "Bazy danych, uwierzytelnianie, płatności i integracje: niezawodna logika serwera, która rośnie razem z produktem."
+      },
+      "fullstack": {
+        "title": "Produkty full-stack",
+        "description": "Od pomysłu do startu: projektuję architekturę, buduję cały produkt i wdrażam go na produkcję."
+      },
+      "motion": {
+        "title": "Strony WebGL i motion",
+        "description": "Immersyjne strony ze scenami przewijania, shaderami i mikrointerakcjami, które zapadają w pamięć."
+      },
+      "ecommerce": {
+        "title": "E-commerce",
+        "description": "Sklepy internetowe z szybkim katalogiem, koszykiem i płatnościami: sprzedają i łatwo nimi zarządzać."
+      }
+    }
+  },
   "Dock": {
     "label": "Nawigacja strony",
     "home": "Strona główna"

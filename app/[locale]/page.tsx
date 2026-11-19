@@ -4,6 +4,7 @@ import { locale as rootLocale } from "next/root-params";
 import { hasLocale } from "next-intl";
 import { FeaturedWork } from "@/components/sections/featured-work";
 import { Hero } from "@/components/sections/hero";
+import { Services } from "@/components/sections/services";
 import { Stats } from "@/components/sections/stats";
 import { routing } from "@/i18n/routing";
 import { localeAlternates } from "@/lib/seo";
@@ -20,6 +21,7 @@ export default function HomePage() {
       <Hero />
       <Stats />
       <FeaturedWork />
+      <Services />
     </main>
   );
 }

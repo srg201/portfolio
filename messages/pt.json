@@ -36,6 +36,35 @@
     "visit": "Ver site",
     "newTab": "abre em uma nova aba"
   },
+  "Services": {
+    "label": "Serviços",
+    "title": "Como posso ajudar",
+    "intro": "Um só desenvolvedor para o produto inteiro: interface, servidor, banco de dados e lançamento.",
+    "example": "Exemplo",
+    "thisSite": "Este site",
+    "items": {
+      "frontend": {
+        "title": "Desenvolvimento frontend",
+        "description": "Interfaces rápidas e acessíveis em React e Next.js, fiéis ao Figma, com animações que parecem naturais."
+      },
+      "backend": {
+        "title": "Backend e APIs",
+        "description": "Bancos de dados, autenticação, pagamentos e integrações: lógica de servidor confiável que cresce com o produto."
+      },
+      "fullstack": {
+        "title": "Produtos full-stack",
+        "description": "Da ideia ao lançamento: planejo a arquitetura, construo o produto de ponta a ponta e coloco em produção."
+      },
+      "motion": {
+        "title": "Sites WebGL e motion",
+        "description": "Sites imersivos com cenas de rolagem, shaders e microinterações que tornam uma marca memorável."
+      },
+      "ecommerce": {
+        "title": "E-commerce",
+        "description": "Lojas online com catálogo rápido, checkout e pagamentos: feitas para vender e fáceis de gerenciar."
+      }
+    }
+  },
   "Dock": {
     "label": "Navegação do site",
     "home": "Início"

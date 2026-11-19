@@ -36,6 +36,35 @@
     "visit": "Website ansehen",
     "newTab": "öffnet in einem neuen Tab"
   },
+  "Services": {
+    "label": "Leistungen",
+    "title": "Wobei ich helfen kann",
+    "intro": "Ein Entwickler für das ganze Produkt: Oberfläche, Server, Datenbank und Launch.",
+    "example": "Beispiel",
+    "thisSite": "Diese Website",
+    "items": {
+      "frontend": {
+        "title": "Frontend-Entwicklung",
+        "description": "Schnelle, barrierearme Oberflächen mit React und Next.js, pixelgenau nach Figma, mit stimmigen Animationen."
+      },
+      "backend": {
+        "title": "Backend & APIs",
+        "description": "Datenbanken, Authentifizierung, Zahlungen und Integrationen: verlässliche Serverlogik, die mit dem Produkt wächst."
+      },
+      "fullstack": {
+        "title": "Full-Stack-Produkte",
+        "description": "Von der Idee bis zum Launch: Ich plane die Architektur, baue das Produkt komplett und bringe es live."
+      },
+      "motion": {
+        "title": "WebGL- & Motion-Websites",
+        "description": "Immersive Websites mit Scroll-Szenen, Shadern und Mikrointeraktionen, die im Gedächtnis bleiben."
+      },
+      "ecommerce": {
+        "title": "E-Commerce",
+        "description": "Onlineshops mit schnellem Katalog, Checkout und Zahlungen: verkaufsstark und einfach zu pflegen."
+      }
+    }
+  },
   "Dock": {
     "label": "Seitennavigation",
     "home": "Startseite"

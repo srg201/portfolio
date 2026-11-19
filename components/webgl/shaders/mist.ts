@@ -84,9 +84,13 @@ void main() {
   // Фирменное свечение в верхнем углу, как в статичной версии
   float corner = exp(-length(vUv - vec2(0.95, 1.05)) * 2.2);
 
+  // После hero туман спокойнее: под текстом секций он не мешает чтению
+  // (uScroll в высотах экрана; сцена hero с шоурилом занимает ~2,6)
+  float intensity = uIntensity * mix(1.0, 0.55, smoothstep(1.5, 3.0, uScroll));
+
   vec3 color = uBg;
-  color = mix(color, uCool, mist * 0.28 * uIntensity);
-  color = mix(color, uBrand, clamp((mist * mist * 0.38 + corner * 0.32 + glow * (0.12 + mist * 0.4)) * uIntensity, 0.0, 1.0));
+  color = mix(color, uCool, mist * 0.28 * intensity);
+  color = mix(color, uBrand, clamp((mist * mist * 0.38 + corner * 0.32 + glow * (0.12 + mist * 0.4)) * intensity, 0.0, 1.0));
 
   // Дизеринг против полос на плавных градиентах
   color += (hash(gl_FragCoord.xy + fract(uTime)) - 0.5) / 255.0;

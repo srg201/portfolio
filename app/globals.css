@@ -5,6 +5,8 @@
 
 /* Тёмная тема по классу .dark на <html> (next-themes, attribute="class") */
 @custom-variant dark (&:where(.dark, .dark *));
+/* Мышь и анимации разрешены: превью за курсором и магниты, то же условие, что FINE_POINTER в magnetic.tsx */
+@custom-variant cursor-preview (@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference));
 
 /*
  * Тема shadcn/ui, построенная от фирменного оранжевого (hue ≈ 37).

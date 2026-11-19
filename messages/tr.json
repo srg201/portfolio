@@ -36,6 +36,35 @@
     "visit": "Siteyi aç",
     "newTab": "yeni sekmede açılır"
   },
+  "Services": {
+    "label": "Hizmetler",
+    "title": "Neler yapabilirim",
+    "intro": "Tüm ürün için tek geliştirici: arayüz, sunucu, veritabanı ve yayına alma.",
+    "example": "Örnek",
+    "thisSite": "Bu site",
+    "items": {
+      "frontend": {
+        "title": "Frontend geliştirme",
+        "description": "React ve Next.js ile hızlı, erişilebilir arayüzler; Figma tasarımına birebir uygun ve doğal hissettiren animasyonlarla."
+      },
+      "backend": {
+        "title": "Backend ve API'ler",
+        "description": "Veritabanları, kimlik doğrulama, ödemeler ve entegrasyonlar: ürünle birlikte büyüyen güvenilir sunucu mantığı."
+      },
+      "fullstack": {
+        "title": "Full-stack ürünler",
+        "description": "Fikirden yayına: mimariyi planlıyor, ürünü baştan sona geliştiriyor ve canlıya alıyorum."
+      },
+      "motion": {
+        "title": "WebGL ve motion siteler",
+        "description": "Kaydırma sahneleri, shader'lar ve mikro etkileşimlerle markayı akılda kalıcı kılan etkileyici siteler."
+      },
+      "ecommerce": {
+        "title": "E-ticaret",
+        "description": "Hızlı katalog, sepet ve ödeme içeren online mağazalar: satış odaklı ve yönetimi kolay."
+      }
+    }
+  },
   "Dock": {
     "label": "Site gezinmesi",
     "home": "Ana sayfa"

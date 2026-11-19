@@ -36,6 +36,35 @@
     "visit": "Visit site",
     "newTab": "opens in a new tab"
   },
+  "Services": {
+    "label": "Services",
+    "title": "What I can do for you",
+    "intro": "One developer for the whole product: interface, server, database and launch.",
+    "example": "Example",
+    "thisSite": "This website",
+    "items": {
+      "frontend": {
+        "title": "Frontend development",
+        "description": "Fast, accessible interfaces in React and Next.js, pixel-perfect from Figma, with motion that feels right."
+      },
+      "backend": {
+        "title": "Backend & APIs",
+        "description": "Databases, authentication, payments and integrations: reliable server logic that grows with the product."
+      },
+      "fullstack": {
+        "title": "Full-stack products",
+        "description": "From idea to launch: I plan the architecture, build the product end to end and ship it to production."
+      },
+      "motion": {
+        "title": "WebGL & motion websites",
+        "description": "Immersive sites with scroll scenes, shaders and micro-interactions that make a brand memorable."
+      },
+      "ecommerce": {
+        "title": "E-commerce",
+        "description": "Online stores with a fast catalog, checkout and payments, built to sell and easy to manage."
+      }
+    }
+  },
   "Dock": {
     "label": "Site navigation",
     "home": "Home"
