@@ -215,7 +215,8 @@
 /* До запуска анимации входа (hero-motion.tsx) элементы скрыты, чтобы не мигали */
 @media (prefers-reduced-motion: no-preference) {
   [data-hero-name],
-  [data-reveal] {
+  [data-reveal],
+  [data-hero-intro] {
     visibility: hidden;
   }
 }

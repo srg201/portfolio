@@ -12,27 +12,67 @@ const WORD_HOLD = 1.8;
 /** Максимальный сдвиг слоя с data-depth="1" при курсоре у края экрана, px */
 const PARALLAX_SHIFT = { x: 28, y: 18 };
 
-/**
- * clip-path, вырезающий из полноэкранного слоя ровно миниатюру шоурила.
- * Координаты считаются относительно липкой сцены, которая всегда на экране.
- */
-function thumbInset(root: HTMLElement) {
+type Box = { top: number; right: number; bottom: number; left: number };
+
+/** Прямоугольник элемента относительно липкой сцены (она всегда на экране) */
+function boxIn(root: HTMLElement, selector: string): Box | null {
   const stage = root.querySelector<HTMLElement>("[data-hero-stage]");
-  const thumb = root.querySelector<HTMLElement>("[data-reel-thumb]");
-  if (!stage || !thumb) return "inset(50% round 999px)";
+  const element = root.querySelector<HTMLElement>(selector);
+  if (!stage || !element) return null;
   const s = stage.getBoundingClientRect();
-  const t = thumb.getBoundingClientRect();
-  return `inset(${t.top - s.top}px ${s.right - t.right}px ${s.bottom - t.bottom}px ${t.left - s.left}px round ${t.height / 2}px)`;
+  const e = element.getBoundingClientRect();
+  return {
+    top: e.top - s.top,
+    right: s.right - e.right,
+    bottom: s.bottom - e.bottom,
+    left: e.left - s.left,
+  };
 }
 
+/** Окно шоурила на оси: из полноэкранного слоя вырезаем ровно его */
+function thumbBox(root: HTMLElement): Box {
+  return (
+    boxIn(root, "[data-reel-thumb]") ?? {
+      top: innerHeight / 2,
+      right: innerWidth / 2,
+      bottom: innerHeight / 2,
+      left: innerWidth / 2,
+    }
+  );
+}
+
+/** Раскрытая карточка: поля по краям, снизу место под Dock */
+function cardBox(): Box {
+  const width = innerWidth;
+  const height = innerHeight;
+  const side = Math.max(16, width * 0.07);
+  return {
+    top: Math.max(72, height * 0.12),
+    right: side,
+    bottom: Math.max(104, height * 0.15),
+    left: side,
+  };
+}
+
+const inset = (box: Box, radius: number) =>
+  `inset(${box.top}px ${box.right}px ${box.bottom}px ${box.left}px round ${radius}px)`;
+
+/** Сдвиг центра прямоугольника от центра сцены: туда ставим HUD с кнопкой */
+const centerOffset = (box: Box) => ({
+  x: (box.left - box.right) / 2,
+  y: (box.top - box.bottom) / 2,
+});
+
 /**
- * Скролл-сцена шоурила (scrub): миниатюра раскрывается на весь экран,
- * контент hero уходит назад, затем короткая пауза на полном экране.
+ * Скролл-сцена шоурила (scrub): окно на оси растёт в большую карточку,
+ * HUD с кнопкой play едет за центром окна, контент hero уходит назад,
+ * затем короткая пауза на карточке.
  */
 function createReelScroll(root: HTMLElement, layer: HTMLElement) {
   const scene = root.closest<HTMLElement>("[data-hero-scene]") ?? root;
   const content = root.querySelector<HTMLElement>("[data-hero-content]");
-  const caption = root.querySelector<HTMLElement>("[data-reel-caption]");
+  const hud = root.querySelector<HTMLElement>("[data-reel-hud]");
+  const captions = root.querySelectorAll<HTMLElement>("[data-reel-caption]");
 
   const timeline = gsap.timeline({
     defaults: { ease: "none" },
@@ -47,43 +87,60 @@ function createReelScroll(root: HTMLElement, layer: HTMLElement) {
 
   timeline.fromTo(
     layer,
-    { clipPath: () => thumbInset(root) },
+    { clipPath: () => inset(thumbBox(root), 12) },
     {
-      clipPath: "inset(0px 0px 0px 0px round 0px)",
+      clipPath: () => inset(cardBox(), 28),
       ease: "power2.inOut",
       duration: 0.6,
     },
     0,
   );
+  if (hud) {
+    timeline.fromTo(
+      hud,
+      {
+        x: () => centerOffset(thumbBox(root)).x,
+        y: () => centerOffset(thumbBox(root)).y,
+      },
+      {
+        x: () => centerOffset(cardBox()).x,
+        y: () => centerOffset(cardBox()).y,
+        ease: "power2.inOut",
+        duration: 0.6,
+      },
+      0,
+    );
+  }
   if (content) {
     timeline.to(
       content,
       {
         autoAlpha: 0,
         scale: 0.94,
-        yPercent: -4,
         ease: "power2.in",
         duration: 0.45,
       },
       0,
     );
   }
-  if (caption) {
-    timeline.to(caption, { autoAlpha: 1, duration: 0.12 }, 0.5);
+  if (captions.length) {
+    timeline.to(captions, { autoAlpha: 1, duration: 0.12 }, 0.45);
   }
-  // Пауза на полноэкранном видео перед тем, как сцена уедет
+  // Пауза на карточке перед тем, как наедет следующая секция
   timeline.to({}, { duration: 0.35 });
 
   return timeline;
 }
 
 /**
- * Анимация входа hero. Разметку рендерит сервер (hero.tsx), здесь только движение:
+ * Анимация hero. Разметку рендерит сервер (hero.tsx), здесь только движение:
+ * - [data-hero-intro]: орбита, ось и метки появляются первыми;
  * - [data-hero-name]: буквы имени поднимаются из-под маски строк;
- * - [data-reveal]: подписи, манифест, шоурил и CTA проявляются по очереди;
+ * - [data-reveal]: подписи, слово, окно шоурила и CTA проявляются по очереди;
  * - [data-hero-word]: слово по кругу меняется перебором символов;
  * - [data-depth]: слои смещаются за курсором (параллакс), только мышь;
- * - [data-reel-layer]: при скролле сцены шоурил растёт от миниатюры до экрана.
+ * - [data-hero-coord]: числа на оси следуют за курсором;
+ * - [data-reel-layer]: при скролле окно шоурила растёт в карточку.
  * До запуска элементы скрыты CSS-ом (globals.css, блок Hero), но только при
  * prefers-reduced-motion: no-preference; иначе всё видно сразу и без движения.
  */
@@ -103,6 +160,9 @@ export function HeroMotion({
 
       const name = root.querySelector<HTMLElement>("[data-hero-name]");
       const reveals = root.querySelectorAll<HTMLElement>("[data-reveal]");
+      const intros = root.querySelectorAll<HTMLElement>("[data-hero-intro]");
+      const lines = root.querySelectorAll<HTMLElement>("[data-hero-line]");
+      const orbit = root.querySelector<HTMLElement>("[data-hero-orbit]");
       const word = root.querySelector<HTMLElement>("[data-hero-word]");
       if (!name) return;
 
@@ -117,13 +177,30 @@ export function HeroMotion({
         const intro = gsap.timeline({ defaults: { ease: ease.out } });
 
         intro
-          .set(name, { autoAlpha: 1 })
-          .from(split.chars, {
-            yPercent: 115,
-            rotate: 6,
-            duration: 1.1,
-            stagger: 0.03,
-          })
+          .set([...intros], { autoAlpha: 1 })
+          .from(lines, { scaleX: 0, duration: 1.4, ease: ease.inOut }, 0)
+          .from(
+            [...intros].filter(
+              (element) => !element.hasAttribute("data-hero-line"),
+            ),
+            { autoAlpha: 0, duration: 1, stagger: 0.05 },
+            0.2,
+          );
+        if (orbit) {
+          intro.from(
+            orbit,
+            { scale: 0.82, rotate: -30, duration: 1.8, ease: ease.out },
+            0,
+          );
+        }
+
+        intro
+          .set(name, { autoAlpha: 1 }, 0.15)
+          .from(
+            split.chars,
+            { yPercent: 115, rotate: 6, duration: 1.1, stagger: 0.03 },
+            0.15,
+          )
           // После входа возвращаем исходную разметку: чище DOM, нет обрезки диакритики масками.
           // Чуть раньше конца: expo.out к этому моменту прошёл 99,6%, скачок меньше пикселя,
           // а имя целиком (элемент LCP) появляется в DOM на ~0,2 с раньше
@@ -157,16 +234,17 @@ export function HeroMotion({
           });
         }
 
-        // Шоурил: после входа слой с видео проявляется поверх миниатюры,
-        // и сцена начинает реагировать на скролл. Раньше нельзя: миниатюра
-        // ещё едет в анимации входа, и её позиция была бы неверной
+        // Шоурил: после входа слой с видео проявляется поверх окна,
+        // и сцена начинает реагировать на скролл. Раньше нельзя: окно
+        // ещё едет в анимации входа, и его позиция была бы неверной
         let reel: gsap.core.Timeline | undefined;
         const layer = root.querySelector<HTMLElement>("[data-reel-layer]");
         if (layer) {
-          gsap.set(layer, { clipPath: () => thumbInset(root) });
-          intro.to(layer, { autoAlpha: 1, duration: 0.6 }).call(() => {
-            reel = createReelScroll(root, layer);
-          });
+          intro
+            .call(() => {
+              reel = createReelScroll(root, layer);
+            })
+            .to(layer, { autoAlpha: 1, duration: 0.6 });
         }
 
         return () => {
@@ -177,7 +255,7 @@ export function HeroMotion({
         };
       });
 
-      // Параллакс за курсором: слои с разной глубиной двигаются с разной силой
+      // Мышь: параллакс слоёв и координаты на оси
       mm.add(FINE_POINTER, () => {
         const layers = [
           ...root.querySelectorAll<HTMLElement>("[data-depth]"),
@@ -191,6 +269,31 @@ export function HeroMotion({
           };
         });
 
+        // Числа у концов оси: широта по вертикали курсора, долгота по горизонтали.
+        // Пишем в существующий текстовый узел: он принадлежит React
+        const coords = [
+          ...root.querySelectorAll<HTMLElement>("[data-hero-coord]"),
+        ];
+        const value = { x: 0, y: 0 };
+        const writeCoords = () => {
+          for (const element of coords) {
+            const node = element.firstChild;
+            if (node?.nodeType !== Node.TEXT_NODE) continue;
+            const v = element.dataset.heroCoord === "x" ? value.x : value.y;
+            node.nodeValue = v.toFixed(4);
+          }
+        };
+        const coordX = gsap.quickTo(value, "x", {
+          duration: 1.2,
+          ease: "power3.out",
+          onUpdate: writeCoords,
+        });
+        const coordY = gsap.quickTo(value, "y", {
+          duration: 1.2,
+          ease: "power3.out",
+          onUpdate: writeCoords,
+        });
+
         const onMove = (event: PointerEvent) => {
           const nx = (event.clientX / window.innerWidth) * 2 - 1;
           const ny = (event.clientY / window.innerHeight) * 2 - 1;
@@ -198,6 +301,8 @@ export function HeroMotion({
             layer.x(nx * layer.depth * PARALLAX_SHIFT.x);
             layer.y(ny * layer.depth * PARALLAX_SHIFT.y);
           }
+          coordX(nx * 180);
+          coordY(-ny * 90);
         };
 
         window.addEventListener("pointermove", onMove);
@@ -205,7 +310,7 @@ export function HeroMotion({
       });
 
       mm.add("(prefers-reduced-motion: reduce)", () => {
-        gsap.set([name, ...reveals], { autoAlpha: 1 });
+        gsap.set([name, ...reveals, ...intros], { autoAlpha: 1 });
       });
 
       return () => mm.revert();

@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useSyncExternalStore } from "react";
-import { cn } from "@/lib/utils";
 
 const REDUCED = "(prefers-reduced-motion: reduce)";
 
@@ -32,8 +31,8 @@ function saveData() {
  * - Не мешает первой загрузке: файл начинает грузиться только после load
  *   и паузы браузера, до этого виден постер.
  * - Играет без звука по кругу, пока виден, и встаёт на паузу вне экрана.
- * - На вертикальных экранах берётся вертикальная версия: горизонтальная
- *   при object-cover обрезалась бы до узкой полосы.
+ * - На вертикальных экранах берётся вертикальная версия: карточка шоурила
+ *   там вытянута по высоте, горизонтальное видео обрезалось бы до полосы.
  * - prefers-reduced-motion: без автозапуска, со стандартными контролами.
  * - Save-Data (экономия трафика): видео не грузится, виден только постер.
  */
@@ -111,10 +110,9 @@ export function ShowreelVideo({
       preload="none"
       controls={reduced}
       src={reduced ? src : undefined}
-      className={cn(
-        "size-full object-cover",
-        !reduced && "portrait:object-contain",
-      )}
+      // Для кнопки play: если ленивая загрузка ещё не подставила src
+      data-src={src}
+      className="size-full object-cover"
     />
   );
 }
