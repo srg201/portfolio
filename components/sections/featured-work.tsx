@@ -16,60 +16,62 @@ function media(slug: string) {
 }
 
 /**
- * Избранные работы: сюда расходится кольцо проектов из hero.
- * Первая работа большой карточкой на всю ширину, остальные сеткой
- * в две колонки (на мобиле в одну). Под обложкой название и строка
- * «год · стек». Движение в featured-work-motion.tsx.
+ * Избранные работы: продолжение сцены hero.
+ * Секция заезжает на последний экран сцены (motion-safe:-mt-[100svh]),
+ * и карточка первой работы [data-work-handoff] принимает перелетевшую
+ * из спирали копию (hero-motion.tsx). Первая работа большой карточкой,
+ * дальше пары в две колонки, между ними фраза о работах.
  * Ссылки пока ведут на живые сайты: страницы кейсов появятся на этапе 6.
  */
 export async function FeaturedWork() {
   const t = await getTranslations("Work");
   const locale = await getLocale();
-  const featured = projects.filter((project) => project.isFeatured);
-  const count = String(featured.length).padStart(2, "0");
+  const [first, ...rest] = projects.filter((project) => project.isFeatured);
   // Тексты проектов пока на английском: подсказываем это скринридеру
   const contentLang = locale === "en" ? undefined : "en";
+  const card = (project: MockProject, large = false) => (
+    <WorkCard
+      key={project.slug}
+      project={project}
+      large={large}
+      contentLang={contentLang}
+      visit={t("visit")}
+      newTab={t("newTab")}
+    />
+  );
 
   return (
     <section
       id="work"
       aria-labelledby="work-title"
-      className="relative scroll-mt-8 px-4 pt-16 pb-24 min-[400px]:px-5 sm:px-6 md:px-10 md:pt-24 md:pb-32"
+      className="relative z-10 px-4 pt-[12svh] pb-24 min-[400px]:px-5 sm:px-6 md:px-[11vw] md:pb-32 motion-safe:-mt-[100svh]"
     >
+      <h2 id="work-title" className="sr-only">
+        {t("title")}
+      </h2>
       <FeaturedWorkMotion>
-        <header className="mb-10 flex flex-col gap-6 md:mb-16 md:flex-row md:items-end md:justify-between md:gap-10">
-          <div className="flex flex-col gap-5">
-            <p data-work-reveal aria-hidden className={cn(meta, "text-brand")}>
-              ( {t("label")} ){" "}
-              <span className="text-muted-foreground tabular-nums">{count}</span>
-            </p>
-            <h2
-              id="work-title"
-              data-work-reveal
-              className="text-5xl leading-[0.9] font-semibold tracking-[-0.04em] text-balance sm:text-6xl lg:text-7xl"
-            >
-              {t("title")}
-            </h2>
-          </div>
-          <p
-            data-work-reveal
-            className="max-w-sm text-base text-pretty text-muted-foreground sm:text-lg md:text-end"
-          >
-            {t("intro")}
-          </p>
-        </header>
+        <div className="grid gap-x-6 gap-y-12 md:grid-cols-2 md:gap-x-5 md:gap-y-16">
+          {first && card(first, true)}
+          {rest.slice(0, 2).map((project) => card(project))}
 
-        <div className="grid gap-x-6 gap-y-14 md:grid-cols-2 md:gap-x-8 md:gap-y-20">
-          {featured.map((project, index) => (
-            <WorkCard
-              key={project.slug}
-              project={project}
-              large={index === 0}
-              contentLang={contentLang}
-              visit={t("visit")}
-              newTab={t("newTab")}
-            />
-          ))}
+          {/* Фраза между рядами */}
+          <div className="flex flex-col items-center gap-5 py-10 text-center md:col-span-2 md:py-20">
+            <p
+              data-work-reveal
+              aria-hidden
+              className={cn(meta, "text-muted-foreground")}
+            >
+              {t("label")}
+            </p>
+            <p
+              data-work-reveal
+              className="max-w-3xl text-2xl leading-tight font-light tracking-[-0.03em] text-balance sm:text-4xl"
+            >
+              {t("intro")}
+            </p>
+          </div>
+
+          {rest.slice(2).map((project) => card(project))}
         </div>
       </FeaturedWorkMotion>
     </section>
@@ -94,24 +96,33 @@ function WorkCard({
   return (
     <article
       data-work-card
+      data-work-handoff={large || undefined}
       className={cn(
-        "group/card relative flex flex-col gap-4 md:gap-5",
+        "group/card relative flex flex-col gap-3",
         large && "md:col-span-2",
       )}
     >
       <div
         data-work-media
-        className={cn(
-          "relative overflow-hidden rounded-2xl border bg-muted md:rounded-3xl",
-          large ? "aspect-[16/10] md:aspect-[21/9]" : "aspect-[16/10]",
-        )}
+        className="relative aspect-[16/10] overflow-hidden rounded-md bg-muted md:aspect-[2/1]"
       >
-        <div data-work-parallax className="absolute -inset-y-[6%] inset-x-0">
+        {/* У большой карточки без параллакса: в неё точно садится копия из спирали */}
+        <div
+          data-work-parallax={large ? undefined : ""}
+          className={cn(
+            "absolute inset-x-0",
+            large ? "inset-y-0" : "-inset-y-[6%]",
+          )}
+        >
           <Image
             src={cover}
             alt=""
             fill
-            sizes={large ? "100vw" : "(min-width: 768px) 50vw, 100vw"}
+            sizes={
+              large
+                ? "(min-width: 768px) 78vw, 100vw"
+                : "(min-width: 768px) 39vw, 100vw"
+            }
             className="object-cover object-top transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/card:scale-[1.03] motion-reduce:transition-none"
           />
           {/* Превью грузится только при наведении (featured-work-motion.tsx) */}
@@ -126,42 +137,37 @@ function WorkCard({
             className="absolute inset-0 size-full object-cover object-top opacity-0 transition-opacity duration-500 data-playing:opacity-100"
           />
         </div>
-        <span
-          aria-hidden
-          className="absolute end-4 top-4 grid size-11 place-items-center rounded-full bg-primary text-primary-foreground transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover/card:rotate-45 rtl:-scale-x-100"
-        >
-          <ArrowUpRight className="size-5" />
-        </span>
       </div>
 
-      <div lang={contentLang} className="flex flex-col gap-2">
-        <h3
-          className={cn(
-            "leading-none font-semibold tracking-[-0.03em]",
-            large ? "text-3xl sm:text-5xl" : "text-2xl sm:text-3xl",
-          )}
-        >
-          <a
-            href={project.liveUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            // Вся карточка кликабельна: ссылка растянута псевдоэлементом
-            className="rounded-sm after:absolute after:inset-0 after:rounded-3xl"
-          >
-            {project.title}
-            <span className="sr-only">
-              {" "}
-              ({visit}, {newTab})
+      <div className="flex items-start justify-between gap-4">
+        <div lang={contentLang} className="flex flex-col gap-1">
+          <h3 className="text-base leading-snug sm:text-lg">
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              // Вся карточка кликабельна: ссылка растянута псевдоэлементом
+              className="rounded-sm after:absolute after:inset-0"
+            >
+              {project.title}
+              <span className="sr-only">
+                {" "}
+                ({visit}, {newTab})
+              </span>
+            </a>
+          </h3>
+          <p className={cn(meta, "text-muted-foreground")}>
+            <span dir="ltr" className="tabular-nums">
+              {project.year}
             </span>
-          </a>
-        </h3>
-        <p className={cn(meta, "text-muted-foreground")}>
-          <span dir="ltr" className="tabular-nums">
-            {project.year}
-          </span>
-          {" · "}
-          {project.stack.slice(0, 3).join(" · ")}
-        </p>
+            {" · "}
+            {project.stack.slice(0, 3).join(" · ")}
+          </p>
+        </div>
+        <ArrowUpRight
+          aria-hidden
+          className="mt-1 size-4 shrink-0 text-muted-foreground transition-[rotate,color] duration-500 group-hover/card:rotate-45 group-hover/card:text-brand rtl:-scale-x-100"
+        />
       </div>
     </article>
   );

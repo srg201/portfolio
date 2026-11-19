@@ -5,7 +5,7 @@ import { Link } from "@/i18n/navigation";
 import { showreel } from "@/lib/showreel";
 import { cn } from "@/lib/utils";
 import { HeroMotion } from "./hero-motion";
-import { ProjectRing } from "./project-ring";
+import { ProjectRing, RingProxy } from "./project-ring";
 import { ReelPlayButton } from "./reel-play-button";
 import { ShowreelVideo } from "./showreel-video";
 
@@ -23,8 +23,9 @@ function formatDuration(seconds: number) {
  *   окно шоурила с кнопкой play (полноэкранное видео).
  * - Сверху справа роль, меняющееся слово и CTA; снизу слева имя (h1).
  * - Скролл (hero-motion.tsx): окно растёт в большую карточку с видео,
- *   затем карточка сжимается и встаёт в кольцо проектов (project-ring.tsx),
- *   кольцо вращается скроллом и расходится перед карточками работ.
+ *   затем карточка сжимается и встаёт в спираль проектов (project-ring.tsx),
+ *   спираль движется скроллом, разлетается, и карточка первой работы
+ *   перелетает в секцию работ.
  * Без анимаций: обычный hero и видео под ним.
  */
 export async function Hero() {
@@ -143,12 +144,13 @@ export async function Hero() {
           <ProjectRing />
         </div>
       </HeroMotion>
+      <RingProxy />
 
-      {/* Без JS сцена не запустится: показываем hero одним экраном, слои шоурила и кольца прячем */}
+      {/* Без JS сцена не запустится: показываем hero одним экраном, слои шоурила и спирали прячем, работы не наезжают на hero */}
       <noscript>
         <style>
           {
-            "[data-hero-name],[data-reveal],[data-hero-intro]{visibility:visible!important}[data-reel-layer],[data-ring]{display:none}[data-hero-scene]{height:auto}"
+            "[data-hero-name],[data-reveal],[data-hero-intro]{visibility:visible!important}[data-reel-layer],[data-ring]{display:none}[data-hero-scene]{height:auto}#work{margin-top:0!important}"
           }
         </style>
       </noscript>

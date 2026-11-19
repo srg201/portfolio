@@ -222,51 +222,34 @@
 }
 
 /*
- * Кольцо проектов (components/sections/project-ring.tsx).
- * Позиция карточки: угол --a плюс общий поворот --spin (его двигает JS).
- * Карточки всегда смотрят на зрителя: дальние мельче (перспектива) и тусклее.
+ * Спираль проектов (components/sections/project-ring.tsx).
+ * Позицию и прозрачность каждой карточки считает JS (ring-motion.ts):
+ * спираль идёт слева, проходит внизу перед зрителем и уходит вдаль вверх.
+ * До запуска JS карточки скрыты.
  */
 .ring-stage {
-  --ring-r: min(46vw, 62svh);
-  /* На узком экране дуга ниже: передние карточки не закрывают текст */
-  --ring-tilt: 25svh;
-  --ring-card: clamp(7.5rem, 28vw, 11rem);
+  --ring-card: clamp(7rem, 27vw, 10rem);
   perspective: 1400px;
 }
 
 @media (min-width: 768px) {
   .ring-stage {
-    --ring-r: min(38vw, 60svh);
-    --ring-tilt: min(14vw, 20svh);
-    --ring-card: clamp(9rem, 15vw, 16rem);
+    --ring-card: clamp(9rem, 14vw, 15rem);
   }
 }
 
-.ring-scene,
-.ring-orbit {
+.ring-scene {
   transform-style: preserve-3d;
 }
 
-/* Наклон кольца: ближняя сторона ниже и правее */
-.ring-orbit {
-  transform: rotateZ(-9deg);
-}
-
 .ring-card {
-  --angle: calc(var(--a) + var(--spin, 0deg));
   position: absolute;
   top: 50%;
   left: 50%;
   width: var(--ring-card);
   aspect-ratio: 16 / 10;
-  margin-top: calc(var(--ring-card) * -0.3125);
-  margin-left: calc(var(--ring-card) / -2);
-  transform: translate3d(
-    calc(sin(var(--angle)) * var(--ring-r)),
-    calc(cos(var(--angle)) * var(--ring-tilt)),
-    calc(cos(var(--angle)) * var(--ring-r))
-  );
-  opacity: calc(0.3 + 0.7 * (cos(var(--angle)) + 1) / 2);
+  opacity: 0;
+  will-change: transform, opacity;
 }
 
 /* Сетка точек, гаснущая к краям */

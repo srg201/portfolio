@@ -9,8 +9,9 @@ const MOTION = "(prefers-reduced-motion: no-preference)";
 
 /**
  * Движение секции работ.
- * - Заголовок проявляется, обложки раскрываются clip-path при появлении,
- *   картинка внутри едет с лёгким параллаксом.
+ * - Фраза проявляется, обложки раскрываются clip-path при появлении,
+ *   картинка внутри едет с лёгким параллаксом. Большая карточка без этого:
+ *   в неё садится копия из спирали hero.
  * - Мышь: при наведении на карточку играет превью (грузится в этот момент).
  * - prefers-reduced-motion: ничего, вёрстка статичная.
  */
@@ -23,7 +24,10 @@ export function FeaturedWorkMotion({ children }: { children: ReactNode }) {
       if (!root) return;
 
       const cards = gsap.utils.toArray<HTMLElement>("[data-work-card]", root);
-      const reveals = gsap.utils.toArray<HTMLElement>("[data-work-reveal]", root);
+      const reveals = gsap.utils.toArray<HTMLElement>(
+        "[data-work-reveal]",
+        root,
+      );
       const mm = gsap.matchMedia();
 
       mm.add(MOTION, () => {
@@ -33,18 +37,20 @@ export function FeaturedWorkMotion({ children }: { children: ReactNode }) {
           duration: 1,
           ease: ease.out,
           stagger: 0.1,
-          scrollTrigger: { trigger: root, start: "top 80%", once: true },
+          scrollTrigger: { trigger: reveals[0], start: "top 85%", once: true },
         });
 
         cards.forEach((card) => {
+          // Большая карточка принимает перелёт из спирали hero: без своего входа
+          if (card.hasAttribute("data-work-handoff")) return;
           const media = card.querySelector("[data-work-media]");
           const inner = card.querySelector("[data-work-parallax]");
           if (media) {
             gsap.fromTo(
               media,
-              { clipPath: "inset(10% 8% 10% 8% round 3rem)" },
+              { clipPath: "inset(10% 8% 10% 8% round 2rem)" },
               {
-                clipPath: "inset(0% 0% 0% 0% round 1.5rem)",
+                clipPath: "inset(0% 0% 0% 0% round 0.375rem)",
                 duration: 1.3,
                 ease: ease.out,
                 scrollTrigger: { trigger: card, start: "top 88%", once: true },
