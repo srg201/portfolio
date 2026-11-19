@@ -1,0 +1,28 @@
+{
+  "Metadata": {
+    "title": "Sergey Belyakov — Full-stack geliştirici",
+    "description": "Full-stack web geliştirici Sergey Belyakov'un portfolyosu: web siteleri, web uygulamaları ve hareketli deneyimler."
+  },
+  "Common": {
+    "name": "Sergey Belyakov",
+    "role": "Full-stack geliştirici",
+    "skipToContent": "İçeriğe geç"
+  },
+  "Home": {
+    "tagline": "Portfolyo yapım aşamasında."
+  },
+  "ThemeSwitcher": {
+    "label": "Tema",
+    "light": "Açık",
+    "dark": "Koyu",
+    "system": "Sistem"
+  },
+  "LocaleSwitcher": {
+    "label": "Dil"
+  },
+  "NotFound": {
+    "title": "Sayfa bulunamadı",
+    "description": "Bu sayfa henüz yayına alınmadı.",
+    "backHome": "Ana sayfaya dön"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "Metadata": {
+    "title": "Sergey Belyakov — مطوّر full-stack",
+    "description": "معرض أعمال Sergey Belyakov، مطوّر ويب full-stack: مواقع وتطبيقات ويب وتجارب تفاعلية متحركة."
+  },
+  "Common": {
+    "name": "Sergey Belyakov",
+    "role": "مطوّر full-stack",
+    "skipToContent": "تخطَّ إلى المحتوى"
+  },
+  "Home": {
+    "tagline": "معرض الأعمال قيد الإنشاء."
+  },
+  "ThemeSwitcher": {
+    "label": "المظهر",
+    "light": "فاتح",
+    "dark": "داكن",
+    "system": "النظام"
+  },
+  "LocaleSwitcher": {
+    "label": "اللغة"
+  },
+  "NotFound": {
+    "title": "الصفحة غير موجودة",
+    "description": "لم يتم نشر هذه الصفحة بعد.",
+    "backHome": "العودة إلى الرئيسية"
+  }
+}

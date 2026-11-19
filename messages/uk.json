@@ -1,0 +1,28 @@
+{
+  "Metadata": {
+    "title": "Сергій Бєляков — Full-stack розробник",
+    "description": "Портфоліо Сергія Бєлякова, full-stack веброзробника: сайти, вебзастосунки та motion-проєкти."
+  },
+  "Common": {
+    "name": "Сергій Бєляков",
+    "role": "Full-stack розробник",
+    "skipToContent": "Перейти до вмісту"
+  },
+  "Home": {
+    "tagline": "Портфоліо в розробці."
+  },
+  "ThemeSwitcher": {
+    "label": "Тема",
+    "light": "Світла",
+    "dark": "Темна",
+    "system": "Системна"
+  },
+  "LocaleSwitcher": {
+    "label": "Мова"
+  },
+  "NotFound": {
+    "title": "Сторінку не знайдено",
+    "description": "Цю сторінку ще не задеплоєно.",
+    "backHome": "На головну"
+  }
+}

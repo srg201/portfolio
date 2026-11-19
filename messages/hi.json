@@ -1,0 +1,28 @@
+{
+  "Metadata": {
+    "title": "Sergey Belyakov — फ़ुल-स्टैक डेवलपर",
+    "description": "फ़ुल-स्टैक वेब डेवलपर Sergey Belyakov का पोर्टफ़ोलियो: वेबसाइटें, वेब ऐप और मोशन अनुभव।"
+  },
+  "Common": {
+    "name": "Sergey Belyakov",
+    "role": "फ़ुल-स्टैक डेवलपर",
+    "skipToContent": "मुख्य सामग्री पर जाएँ"
+  },
+  "Home": {
+    "tagline": "पोर्टफ़ोलियो अभी बन रहा है।"
+  },
+  "ThemeSwitcher": {
+    "label": "थीम",
+    "light": "हल्की",
+    "dark": "गहरी",
+    "system": "सिस्टम"
+  },
+  "LocaleSwitcher": {
+    "label": "भाषा"
+  },
+  "NotFound": {
+    "title": "पेज नहीं मिला",
+    "description": "यह पेज अभी डिप्लॉय नहीं हुआ है।",
+    "backHome": "होम पर लौटें"
+  }
+}

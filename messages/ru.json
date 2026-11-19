@@ -1,0 +1,28 @@
+{
+  "Metadata": {
+    "title": "Сергей Беляков — Full-stack разработчик",
+    "description": "Портфолио Сергея Белякова, full-stack веб-разработчика: сайты, веб-приложения и motion-проекты."
+  },
+  "Common": {
+    "name": "Сергей Беляков",
+    "role": "Full-stack разработчик",
+    "skipToContent": "Перейти к содержимому"
+  },
+  "Home": {
+    "tagline": "Портфолио в разработке."
+  },
+  "ThemeSwitcher": {
+    "label": "Тема",
+    "light": "Светлая",
+    "dark": "Тёмная",
+    "system": "Системная"
+  },
+  "LocaleSwitcher": {
+    "label": "Язык"
+  },
+  "NotFound": {
+    "title": "Страница не найдена",
+    "description": "Эта страница ещё не задеплоена.",
+    "backHome": "На главную"
+  }
+}

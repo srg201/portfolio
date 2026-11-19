@@ -1,0 +1,28 @@
+{
+  "Metadata": {
+    "title": "Sergey Belyakov — 풀스택 개발자",
+    "description": "풀스택 웹 개발자 Sergey Belyakov의 포트폴리오: 웹사이트, 웹 앱, 모션 경험."
+  },
+  "Common": {
+    "name": "Sergey Belyakov",
+    "role": "풀스택 개발자",
+    "skipToContent": "본문으로 건너뛰기"
+  },
+  "Home": {
+    "tagline": "포트폴리오를 준비하고 있습니다."
+  },
+  "ThemeSwitcher": {
+    "label": "테마",
+    "light": "라이트",
+    "dark": "다크",
+    "system": "시스템"
+  },
+  "LocaleSwitcher": {
+    "label": "언어"
+  },
+  "NotFound": {
+    "title": "페이지를 찾을 수 없습니다",
+    "description": "이 페이지는 아직 배포되지 않았습니다.",
+    "backHome": "홈으로 돌아가기"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "Metadata": {
+    "title": "Sergey Belyakov — フルスタック開発者",
+    "description": "フルスタック Web 開発者 Sergey Belyakov のポートフォリオ：Web サイト、Web アプリ、モーション表現。"
+  },
+  "Common": {
+    "name": "Sergey Belyakov",
+    "role": "フルスタック開発者",
+    "skipToContent": "本文へスキップ"
+  },
+  "Home": {
+    "tagline": "ポートフォリオは準備中です。"
+  },
+  "ThemeSwitcher": {
+    "label": "テーマ",
+    "light": "ライト",
+    "dark": "ダーク",
+    "system": "システム"
+  },
+  "LocaleSwitcher": {
+    "label": "言語"
+  },
+  "NotFound": {
+    "title": "ページが見つかりません",
+    "description": "このページはまだデプロイされていません。",
+    "backHome": "ホームに戻る"
+  }
+}

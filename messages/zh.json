@@ -1,0 +1,28 @@
+{
+  "Metadata": {
+    "title": "Sergey Belyakov — 全栈开发者",
+    "description": "全栈 Web 开发者 Sergey Belyakov 的作品集：网站、Web 应用与动效体验。"
+  },
+  "Common": {
+    "name": "Sergey Belyakov",
+    "role": "全栈开发者",
+    "skipToContent": "跳到主要内容"
+  },
+  "Home": {
+    "tagline": "作品集正在建设中。"
+  },
+  "ThemeSwitcher": {
+    "label": "主题",
+    "light": "浅色",
+    "dark": "深色",
+    "system": "跟随系统"
+  },
+  "LocaleSwitcher": {
+    "label": "语言"
+  },
+  "NotFound": {
+    "title": "页面未找到",
+    "description": "这个页面还没有部署。",
+    "backHome": "返回首页"
+  }
+}

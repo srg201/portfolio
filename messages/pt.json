@@ -1,0 +1,28 @@
+{
+  "Metadata": {
+    "title": "Sergey Belyakov — Desenvolvedor full-stack",
+    "description": "Portfólio de Sergey Belyakov, desenvolvedor web full-stack: sites, aplicações web e experiências com animação."
+  },
+  "Common": {
+    "name": "Sergey Belyakov",
+    "role": "Desenvolvedor full-stack",
+    "skipToContent": "Pular para o conteúdo"
+  },
+  "Home": {
+    "tagline": "O portfólio está em construção."
+  },
+  "ThemeSwitcher": {
+    "label": "Tema",
+    "light": "Claro",
+    "dark": "Escuro",
+    "system": "Sistema"
+  },
+  "LocaleSwitcher": {
+    "label": "Idioma"
+  },
+  "NotFound": {
+    "title": "Página não encontrada",
+    "description": "Esta página ainda não foi publicada.",
+    "backHome": "Voltar ao início"
+  }
+}
