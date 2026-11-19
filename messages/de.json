@@ -65,6 +65,19 @@
       }
     }
   },
+  "Stack": {
+    "label": "Stack",
+    "title": "Meine Werkzeuge",
+    "intro": "Ein moderner, bewährter Stack. Ich wähle, was zum Produkt passt, nicht was gerade im Trend liegt.",
+    "categories": {
+      "frontend": "Frontend",
+      "backend": "Backend & Daten",
+      "motion": "Motion & 3D",
+      "infra": "Infrastruktur & Tools"
+    },
+    "pause": "Animation anhalten",
+    "play": "Animation abspielen"
+  },
   "Dock": {
     "label": "Seitennavigation",
     "home": "Startseite"

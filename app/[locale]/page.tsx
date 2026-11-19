@@ -6,6 +6,7 @@ import { FeaturedWork } from "@/components/sections/featured-work";
 import { Hero } from "@/components/sections/hero";
 import { Services } from "@/components/sections/services";
 import { Stats } from "@/components/sections/stats";
+import { TechStack } from "@/components/sections/tech-stack";
 import { routing } from "@/i18n/routing";
 import { localeAlternates } from "@/lib/seo";
 
@@ -22,6 +23,7 @@ export default function HomePage() {
       <Stats />
       <FeaturedWork />
       <Services />
+      <TechStack />
     </main>
   );
 }

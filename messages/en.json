@@ -65,6 +65,19 @@
       }
     }
   },
+  "Stack": {
+    "label": "Stack",
+    "title": "Tools I build with",
+    "intro": "A modern, proven stack. I choose what fits the product, not what's trendy.",
+    "categories": {
+      "frontend": "Frontend",
+      "backend": "Backend & data",
+      "motion": "Motion & 3D",
+      "infra": "Infrastructure & tools"
+    },
+    "pause": "Pause animation",
+    "play": "Play animation"
+  },
   "Dock": {
     "label": "Site navigation",
     "home": "Home"

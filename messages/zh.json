@@ -65,6 +65,19 @@
       }
     }
   },
+  "Stack": {
+    "label": "技术栈",
+    "title": "我使用的工具",
+    "intro": "现代且经过验证的技术栈。我选择适合产品的，而不是流行的。",
+    "categories": {
+      "frontend": "前端",
+      "backend": "后端与数据",
+      "motion": "动效与 3D",
+      "infra": "基础设施与工具"
+    },
+    "pause": "暂停动画",
+    "play": "播放动画"
+  },
   "Dock": {
     "label": "网站导航",
     "home": "首页"

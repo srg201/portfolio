@@ -65,6 +65,19 @@
       }
     }
   },
+  "Stack": {
+    "label": "Teknolojiler",
+    "title": "Kullandığım araçlar",
+    "intro": "Modern ve kanıtlanmış bir teknoloji yığını. Moda olanı değil, ürüne uyanı seçiyorum.",
+    "categories": {
+      "frontend": "Frontend",
+      "backend": "Backend ve veri",
+      "motion": "Animasyon ve 3D",
+      "infra": "Altyapı ve araçlar"
+    },
+    "pause": "Animasyonu duraklat",
+    "play": "Animasyonu oynat"
+  },
   "Dock": {
     "label": "Site gezinmesi",
     "home": "Ana sayfa"

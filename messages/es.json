@@ -65,6 +65,19 @@
       }
     }
   },
+  "Stack": {
+    "label": "Stack",
+    "title": "Con qué trabajo",
+    "intro": "Un stack moderno y probado. Elijo lo que encaja con el producto, no lo que está de moda.",
+    "categories": {
+      "frontend": "Frontend",
+      "backend": "Backend y datos",
+      "motion": "Animación y 3D",
+      "infra": "Infraestructura y herramientas"
+    },
+    "pause": "Pausar animación",
+    "play": "Reproducir animación"
+  },
   "Dock": {
     "label": "Navegación del sitio",
     "home": "Inicio"
