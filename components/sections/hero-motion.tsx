@@ -2,18 +2,22 @@
 
 import { useRef, type ReactNode } from "react";
 import { ease } from "@/lib/animations/easings";
+import { FINE_POINTER } from "@/components/motion/magnetic";
 import { gsap, SplitText, useGSAP } from "@/lib/animations/gsap";
 
 /** Символы перебора: ASCII, чтобы не выпадать из моноширинного шрифта */
 const SCRAMBLE_CHARS = "01<>/#*+=_";
 /** Пауза между сменами слова, с */
 const WORD_HOLD = 1.8;
+/** Максимальный сдвиг слоя с data-depth="1" при курсоре у края экрана, px */
+const PARALLAX_SHIFT = { x: 28, y: 18 };
 
 /**
  * Анимация входа hero. Разметку рендерит сервер (hero.tsx), здесь только движение:
  * - [data-hero-name]: буквы имени поднимаются из-под маски строк;
  * - [data-reveal]: подписи, манифест, шоурил и CTA проявляются по очереди;
- * - [data-hero-word]: слово по кругу меняется перебором символов.
+ * - [data-hero-word]: слово по кругу меняется перебором символов;
+ * - [data-depth]: слои смещаются за курсором (параллакс), только мышь.
  * До запуска элементы скрыты CSS-ом (globals.css, блок Hero), но только при
  * prefers-reduced-motion: no-preference; иначе всё видно сразу и без движения.
  */
@@ -89,6 +93,33 @@ export function HeroMotion({
           cycle?.kill();
           split.revert();
         };
+      });
+
+      // Параллакс за курсором: слои с разной глубиной двигаются с разной силой
+      mm.add(FINE_POINTER, () => {
+        const layers = [
+          ...root.querySelectorAll<HTMLElement>("[data-depth]"),
+        ].map((element) => {
+          const depth = Number(element.dataset.depth) || 0;
+          const move = { duration: 1.2, ease: "power3.out" };
+          return {
+            depth,
+            x: gsap.quickTo(element, "x", move),
+            y: gsap.quickTo(element, "y", move),
+          };
+        });
+
+        const onMove = (event: PointerEvent) => {
+          const nx = (event.clientX / window.innerWidth) * 2 - 1;
+          const ny = (event.clientY / window.innerHeight) * 2 - 1;
+          for (const layer of layers) {
+            layer.x(nx * layer.depth * PARALLAX_SHIFT.x);
+            layer.y(ny * layer.depth * PARALLAX_SHIFT.y);
+          }
+        };
+
+        window.addEventListener("pointermove", onMove);
+        return () => window.removeEventListener("pointermove", onMove);
       });
 
       mm.add("(prefers-reduced-motion: reduce)", () => {

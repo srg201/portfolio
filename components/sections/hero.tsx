@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { buttonVariants } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
+import { Magnetic } from "@/components/motion/magnetic";
 import { HeroMotion } from "./hero-motion";
 
 /** Иероглифы и хангыль заметно шире латиницы и кириллицы */
@@ -36,9 +37,9 @@ export async function Hero() {
       aria-labelledby="hero-title"
       className="@container relative isolate flex min-h-svh flex-col px-4 pt-5 pb-28 min-[400px]:px-5 sm:px-6 sm:pb-32 md:px-10 md:pt-8"
     >
-      <HeroBackdrop />
-
       <HeroMotion words={words}>
+        <HeroBackdrop />
+
         {/* Верхняя строка: кто и для кого + статус */}
         <div
           className={cn(
@@ -75,6 +76,7 @@ export async function Hero() {
           <h1
             id="hero-title"
             data-hero-name
+            data-depth="0.35"
             className="flex flex-col leading-[0.84] font-semibold tracking-[-0.045em] uppercase"
             style={{ fontSize: nameFontSize(lines) }}
           >
@@ -103,18 +105,23 @@ export async function Hero() {
             <ReelPreview label={t("showreel")} status={t("soon")} />
 
             <div data-reveal className="flex lg:justify-end">
-              <Link
-                href="/contact"
-                className={cn(
-                  buttonVariants({ size: "lg" }),
-                  "group/cta h-12 w-full justify-between gap-3 rounded-full ps-6 pe-1.5 text-base sm:w-auto",
-                )}
-              >
-                {t("cta")}
-                <span className="grid size-9 place-items-center rounded-full bg-primary-foreground text-primary transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover/cta:rotate-45 rtl:-scale-x-100">
-                  <ArrowUpRight aria-hidden className="size-4" />
-                </span>
-              </Link>
+              <Magnetic className="w-full sm:w-auto">
+                <Link
+                  href="/contact"
+                  className={cn(
+                    buttonVariants({ size: "lg" }),
+                    "group/cta h-12 w-full justify-between gap-3 rounded-full ps-6 pe-1.5 text-base sm:w-auto",
+                  )}
+                >
+                  {t("cta")}
+                  <span
+                    data-magnetic-inner
+                    className="grid size-9 place-items-center rounded-full bg-primary-foreground text-primary transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover/cta:rotate-45 rtl:-scale-x-100"
+                  >
+                    <ArrowUpRight aria-hidden className="size-4" />
+                  </span>
+                </Link>
+              </Magnetic>
             </div>
           </div>
         </div>
@@ -152,16 +159,25 @@ function ReelPreview({ label, status }: { label: string; status: string }) {
   );
 }
 
-/** Фон: сетка точек и мягкое свечение фирменного цвета. WebGL-туман заменит его на шаге 4 */
+/**
+ * Фон: сетка точек и мягкое свечение фирменного цвета. WebGL-туман заменит его на шаге 4.
+ * data-depth: сила и направление параллакса за курсором (hero-motion.tsx)
+ */
 function HeroBackdrop() {
   return (
     <div
       aria-hidden
       className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
     >
-      <div className="hero-dots absolute inset-0" />
-      <div className="absolute -top-1/3 -end-1/4 size-[70vmax] rounded-full bg-brand/15 blur-[120px] dark:bg-brand/20" />
-      <div className="absolute -bottom-1/2 -start-1/4 size-[50vmax] rounded-full bg-chart-3/10 blur-[120px]" />
+      <div data-depth="0.15" className="hero-dots absolute -inset-8" />
+      <div
+        data-depth="-1.2"
+        className="absolute -top-1/3 -end-1/4 size-[70vmax] rounded-full bg-brand/15 blur-[120px] dark:bg-brand/20"
+      />
+      <div
+        data-depth="1"
+        className="absolute -bottom-1/2 -start-1/4 size-[50vmax] rounded-full bg-chart-3/10 blur-[120px]"
+      />
     </div>
   );
 }

@@ -43,3 +43,6 @@ next-env.d.ts
 
 # next-intl: сгенерированные типы сообщений
 messages/*.d.json.ts
+
+# Записи шоукейсов (pnpm showcases): тяжёлые, переедут в Supabase Storage на этапе 5
+/public/showcases/
