@@ -3,6 +3,7 @@
 import { DirectionProvider } from "@base-ui/react/direction-provider";
 import { ThemeProvider } from "next-themes";
 import type { ReactNode } from "react";
+import { SmoothScroll } from "@/components/motion/smooth-scroll";
 
 /*
  * next-themes вставляет inline-<script>, который ставит класс темы до гидрации.
@@ -32,6 +33,7 @@ export function Providers({
         disableTransitionOnChange
         scriptProps={scriptProps}
       >
+        <SmoothScroll />
         {children}
       </ThemeProvider>
     </DirectionProvider>

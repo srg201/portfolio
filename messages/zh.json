@@ -8,8 +8,23 @@
     "role": "全栈开发者",
     "skipToContent": "跳到主要内容"
   },
-  "Home": {
-    "tagline": "作品集正在建设中。"
+  "Hero": {
+    "tagline": "为有抱负的产品",
+    "words": [
+      "构建",
+      "上线",
+      "扩展",
+      "打磨"
+    ],
+    "manifesto": "我设计并开发快速而美观的网站和 Web 应用——从第一张草图到正式上线。",
+    "cta": "聊聊你的项目",
+    "available": "可承接新项目",
+    "showreel": "作品集锦",
+    "soon": "即将上线"
+  },
+  "Dock": {
+    "label": "网站导航",
+    "home": "首页"
   },
   "ThemeSwitcher": {
     "label": "主题",

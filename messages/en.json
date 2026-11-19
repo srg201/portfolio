@@ -8,8 +8,23 @@
     "role": "Full-stack developer",
     "skipToContent": "Skip to content"
   },
-  "Home": {
-    "tagline": "The portfolio is under construction."
+  "Hero": {
+    "tagline": "for ambitious products",
+    "words": [
+      "build",
+      "launch",
+      "scale",
+      "craft"
+    ],
+    "manifesto": "I design and build fast, beautiful websites and web apps — from the first sketch to production.",
+    "cta": "Discuss a project",
+    "available": "Available for new projects",
+    "showreel": "Showreel",
+    "soon": "Coming soon"
+  },
+  "Dock": {
+    "label": "Site navigation",
+    "home": "Home"
   },
   "ThemeSwitcher": {
     "label": "Theme",

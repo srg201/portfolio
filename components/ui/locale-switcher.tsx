@@ -97,6 +97,8 @@ export function LocaleSwitcher() {
     }
   }
 
+  // Панель открывается вверх: переключатель живёт в нижней плашке (Dock).
+  // На мобиле она растягивается по ширине плашки, поэтому root без relative
   return (
     <div ref={rootRef} className="sm:relative">
       <button
@@ -109,7 +111,7 @@ export function LocaleSwitcher() {
         aria-busy={isPending}
         onClick={() => setOpen((value) => !value)}
         onKeyDown={(event) => {
-          if (event.key === "ArrowDown" && !open) {
+          if ((event.key === "ArrowUp" || event.key === "ArrowDown") && !open) {
             event.preventDefault();
             setOpen(true);
           }
@@ -156,7 +158,7 @@ export function LocaleSwitcher() {
         data-open={open || undefined}
         inert={!open}
         onKeyDown={onMenuKeyDown}
-        className="group/menu invisible absolute inset-x-4 top-full z-50 origin-top sm:inset-x-auto sm:end-0 sm:mt-2 sm:w-88 sm:origin-top-right scale-95 -translate-y-1 rounded-3xl border bg-popover/85 p-2 text-popover-foreground opacity-0 shadow-2xl shadow-foreground/10 backdrop-blur-xl transition-[opacity,scale,translate,visibility] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] sm:rtl:origin-top-left data-open:visible data-open:translate-y-0 data-open:scale-100 data-open:opacity-100"
+        className="group/menu invisible absolute inset-x-0 bottom-full z-50 mb-2 origin-bottom translate-y-1 scale-95 rounded-3xl border bg-popover/90 p-2 text-popover-foreground opacity-0 shadow-2xl shadow-foreground/10 backdrop-blur-xl transition-[opacity,scale,translate,visibility] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] sm:inset-x-auto sm:end-0 sm:mb-3 sm:w-88 sm:origin-bottom-right sm:rtl:origin-bottom-left data-open:visible data-open:translate-y-0 data-open:scale-100 data-open:opacity-100"
       >
         <ul className="grid grid-cols-2 gap-0.5">
           {routing.locales.map((value, index) => {

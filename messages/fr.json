@@ -8,8 +8,23 @@
     "role": "Développeur full-stack",
     "skipToContent": "Aller au contenu"
   },
-  "Home": {
-    "tagline": "Le portfolio est en construction."
+  "Hero": {
+    "tagline": "pour des produits ambitieux",
+    "words": [
+      "construire",
+      "lancer",
+      "faire grandir",
+      "façonner"
+    ],
+    "manifesto": "Je conçois et développe des sites et des applications web rapides et beaux, du premier croquis à la production.",
+    "cta": "Parler de votre projet",
+    "available": "Disponible pour de nouveaux projets",
+    "showreel": "Showreel",
+    "soon": "Bientôt"
+  },
+  "Dock": {
+    "label": "Navigation du site",
+    "home": "Accueil"
   },
   "ThemeSwitcher": {
     "label": "Thème",

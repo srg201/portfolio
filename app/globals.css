@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "lenis/dist/lenis.css";
 
 /* Тёмная тема по классу .dark на <html> (next-themes, attribute="class") */
 @custom-variant dark (&:where(.dark, .dark *));
@@ -185,6 +186,37 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- Hero (главный экран) ---------- */
+
+/* Сетка точек, гаснущая к краям */
+.hero-dots {
+  background-image: radial-gradient(
+    color-mix(in oklch, var(--foreground) 16%, transparent) 1px,
+    transparent 1.5px
+  );
+  background-size: 22px 22px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, black 20%, transparent 75%);
+}
+
+/* Заглушка шоурила, пока нет записей: медленно вращающийся фирменный градиент */
+.hero-reel-placeholder {
+  background: conic-gradient(
+    from 0deg,
+    var(--brand),
+    var(--chart-3),
+    var(--chart-2),
+    var(--brand)
+  );
+  filter: blur(6px);
+  animation: hero-reel-spin 6s linear infinite;
+}
+
+@keyframes hero-reel-spin {
+  to {
+    rotate: 1turn;
   }
 }
 

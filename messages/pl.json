@@ -8,8 +8,23 @@
     "role": "Full-stack developer",
     "skipToContent": "Przejdź do treści"
   },
-  "Home": {
-    "tagline": "Portfolio jest w budowie."
+  "Hero": {
+    "tagline": "dla ambitnych produktów",
+    "words": [
+      "tworzę",
+      "wdrażam",
+      "skaluję",
+      "projektuję"
+    ],
+    "manifesto": "Projektuję i tworzę szybkie, piękne strony i aplikacje webowe — od pierwszego szkicu po produkcję.",
+    "cta": "Porozmawiajmy o projekcie",
+    "available": "Otwarty na nowe projekty",
+    "showreel": "Showreel",
+    "soon": "Wkrótce"
+  },
+  "Dock": {
+    "label": "Nawigacja strony",
+    "home": "Strona główna"
   },
   "ThemeSwitcher": {
     "label": "Motyw",

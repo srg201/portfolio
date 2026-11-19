@@ -6,6 +6,7 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { LocaleStage } from "@/components/motion/locale-stage";
 import { Providers } from "@/components/providers";
+import { Dock } from "@/components/ui/dock";
 import { getDirection, routing } from "@/i18n/routing";
 import "../globals.css";
 
@@ -57,6 +58,7 @@ export default async function LocaleLayout({
         <NextIntlClientProvider>
           <Providers direction={getDirection(locale)}>
             <LocaleStage>{children}</LocaleStage>
+            <Dock />
           </Providers>
         </NextIntlClientProvider>
       </body>
