@@ -157,7 +157,9 @@ export function Quiz({ enabled, email }: { enabled: boolean; email: string | nul
       {/* Ловушка для ботов: людям не видна и не фокусируется */}
       <input
         type="text"
-        name="company"
+        name="hp_note"
+        data-1p-ignore
+        data-lpignore="true"
         tabIndex={-1}
         autoComplete="off"
         aria-hidden

@@ -36,15 +36,18 @@ function gmail() {
 }
 
 /**
- * Заявка из квиза. Проверка zod, ловушки для ботов (скрытое поле company
+ * Заявка из квиза. Проверка zod, ловушки для ботов (скрытое поле hp_note
  * и минимальное время заполнения), затем письмо владельцу через Gmail SMTP:
  * с его адреса на его же адрес, «Ответить» ведёт клиенту (reply-to).
  * Позже заявки будут ещё и сохраняться в Supabase (leads).
  */
 export async function submitLead(_previous: LeadState, form: FormData): Promise<LeadState> {
   // Бот заполнил скрытое поле или отправил мгновенно: делаем вид, что всё хорошо
+  // (имя поля не должно совпадать с тем, что браузер заполняет сам: company, address...)
   const startedAt = Number(form.get("startedAt"));
-  if (form.get("company") || !startedAt || Date.now() - startedAt < MIN_FILL_MS) {
+  const elapsed = Date.now() - startedAt;
+  if (form.get("hp_note") || !startedAt || elapsed < MIN_FILL_MS) {
+    console.warn("Lead dropped as bot:", form.get("hp_note") ? "honeypot filled" : `filled in ${elapsed} ms`);
     return { status: "sent" };
   }
 
@@ -57,7 +60,10 @@ export async function submitLead(_previous: LeadState, form: FormData): Promise<
   }
 
   const account = gmail();
-  if (!account) return { status: "unavailable" };
+  if (!account) {
+    console.error("Lead email: GMAIL_USER_NAME or GMAIL_APP_PASSWORD is not set");
+    return { status: "unavailable" };
+  }
 
   const lead = parsed.data;
   const t = await getTranslations({ locale: OWNER_LOCALE, namespace: "Contact" });
@@ -92,7 +98,7 @@ export async function submitLead(_previous: LeadState, form: FormData): Promise<
       greetingTimeout: 10_000,
       socketTimeout: 20_000,
     });
-    await transport.sendMail({
+    const info = await transport.sendMail({
       from: { name: "Портфолио", address: account.user },
       to: account.to,
       replyTo: { name: lead.name, address: lead.email },
@@ -100,9 +106,12 @@ export async function submitLead(_previous: LeadState, form: FormData): Promise<
       text,
       html,
     });
+    console.info("Lead email sent:", info.messageId);
     return { status: "sent" };
   } catch (error) {
-    console.error("Lead email:", error instanceof Error ? error.message : error);
+    // Код и ответ SMTP помогают понять причину (535 = неверный пароль приложения)
+    const smtp = error as { code?: string; responseCode?: number; message?: string };
+    console.error("Lead email failed:", smtp.code, smtp.responseCode ?? "", smtp.message ?? error);
     return { status: "error" };
   }
 }
