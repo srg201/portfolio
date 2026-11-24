@@ -1,21 +1,16 @@
 /**
  * Проверка почты для заявок: `pnpm mail:check`.
- * Отправляет тестовое письмо тем же способом, что и квиз (lib/mail.ts):
- * через Resend, если задан RESEND_API_KEY, иначе через Gmail SMTP.
- * Ключи и пароли не печатает.
+ * Отправляет тестовое письмо через Gmail SMTP тем же кодом, что и квиз
+ * (lib/mail.ts). Пароль не печатает.
  */
-import { MailError, mailProvider, mailRecipient, sendOwnerMail } from "../lib/mail";
+import { MailError, mailEnabled, mailRecipient, sendOwnerMail } from "../lib/mail";
 
 async function main() {
-  const provider = mailProvider();
-  if (!provider) {
-    console.error(
-      "✕ Почта не настроена: задайте в .env.local RESEND_API_KEY\n" +
-        "  или GMAIL_USER_NAME и GMAIL_APP_PASSWORD",
-    );
+  if (!mailEnabled()) {
+    console.error("✕ В .env.local не заданы GMAIL_USER_NAME и/или GMAIL_APP_PASSWORD");
     process.exit(1);
   }
-  console.log(`Способ: ${provider === "resend" ? "Resend (HTTPS)" : "Gmail SMTP"}, получатель: ${mailRecipient()}`);
+  console.log(`Gmail SMTP, получатель: ${mailRecipient()}`);
 
   try {
     const sent = await sendOwnerMail({
@@ -27,22 +22,14 @@ async function main() {
   } catch (error) {
     const code = error instanceof MailError ? error.code : "";
     console.error(`✕ ${code} ${error instanceof Error ? error.message : error}`);
-    if (code === "gmail-535" || code === "gmail-EAUTH") {
+    if (code === "535" || code === "EAUTH") {
       console.error(
         "  Gmail не принял логин или пароль. Нужен пароль приложения (не обычный пароль)\n" +
           "  при включённой двухэтапной проверке: https://myaccount.google.com/apppasswords",
       );
-    } else if (code === "gmail-ETIMEDOUT" || code === "gmail-ESOCKET") {
+    } else if (code === "ETIMEDOUT" || code === "ESOCKET") {
       console.error(
-        "  Нет связи с smtp.gmail.com: почтовые порты закрыты (часто их режет VPN).\n" +
-          "  Выход: RESEND_API_KEY в .env.local, Resend работает по HTTPS.",
-      );
-    } else if (code === "resend-401" || code === "resend-400") {
-      console.error("  Resend не принял ключ: проверьте RESEND_API_KEY (начинается с re_).");
-    } else if (code === "resend-403") {
-      console.error(
-        "  С отправителем onboarding@resend.dev можно писать только на адрес,\n" +
-          "  с которым заведён аккаунт Resend. Укажите его в LEADS_EMAIL.",
+        "  Нет связи с smtp.gmail.com: почтовые порты 465/587 закрыты (часто их режет VPN).",
       );
     }
     process.exit(1);

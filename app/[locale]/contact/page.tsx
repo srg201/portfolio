@@ -7,7 +7,7 @@ import { getTranslations } from "next-intl/server";
 import { Quiz } from "@/components/contact/quiz";
 import { PageIntro } from "@/components/sections/page-intro";
 import { routing } from "@/i18n/routing";
-import { mailProvider } from "@/lib/mail";
+import { mailEnabled } from "@/lib/mail";
 import { localeAlternates } from "@/lib/seo";
 import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
@@ -32,7 +32,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 /**
  * Контакты: квиз «Оценить проект» и прямые контакты.
- * Отправка включается, когда настроена почта (lib/mail.ts: Resend или Gmail),
+ * Отправка включается, когда настроена почта (lib/mail.ts, Gmail SMTP),
  * заявка приходит письмом владельцу. Без неё квиз открывает письмо
  * с ответами на публичный email, а если нет и его, честно говорит,
  * что заявки не подключены.
@@ -41,7 +41,7 @@ export default async function ContactPage() {
   await currentLocale();
   const t = await getTranslations("Contact");
   const footer = await getTranslations("Footer");
-  const enabled = mailProvider() !== null;
+  const enabled = mailEnabled();
 
   return (
     <main

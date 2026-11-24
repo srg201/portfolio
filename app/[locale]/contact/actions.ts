@@ -3,7 +3,7 @@
 import { getTranslations } from "next-intl/server";
 import { z } from "zod";
 import { renderLeadEmail } from "@/lib/lead-email";
-import { MailError, mailProvider, sendOwnerMail } from "@/lib/mail";
+import { MailError, mailEnabled, sendOwnerMail } from "@/lib/mail";
 import {
   leadBudgets,
   leadTimelines,
@@ -29,7 +29,7 @@ const schema = z.object({
 /**
  * Заявка из квиза. Проверка zod, ловушки для ботов (скрытое поле hp_note
  * и минимальное время заполнения), затем письмо владельцу (lib/mail.ts:
- * Resend или Gmail SMTP), «Ответить» ведёт клиенту (reply-to).
+ * Gmail SMTP), «Ответить» ведёт клиенту (reply-to).
  * Позже заявки будут ещё и сохраняться в Supabase (leads).
  */
 export async function submitLead(_previous: LeadState, form: FormData): Promise<LeadState> {
@@ -50,8 +50,8 @@ export async function submitLead(_previous: LeadState, form: FormData): Promise<
     };
   }
 
-  if (!mailProvider()) {
-    console.error("Lead email: neither RESEND_API_KEY nor GMAIL_USER_NAME + GMAIL_APP_PASSWORD is set");
+  if (!mailEnabled()) {
+    console.error("Lead email: GMAIL_USER_NAME or GMAIL_APP_PASSWORD is not set");
     return { status: "unavailable" };
   }
 
@@ -86,10 +86,10 @@ export async function submitLead(_previous: LeadState, form: FormData): Promise<
       text,
       replyTo: { name: lead.name, address: lead.email },
     });
-    console.info(`Lead email sent via ${sent.provider}:`, sent.id);
+    console.info("Lead email sent:", sent.id);
     return { status: "sent" };
   } catch (error) {
-    // Код помогает понять причину: gmail-535 (неверный пароль), gmail-ETIMEDOUT (закрыт порт), resend-403...
+    // Код помогает понять причину: 535 (неверный пароль), ETIMEDOUT (закрыт порт)
     console.error(
       "Lead email failed:",
       error instanceof MailError ? `${error.code}: ${error.message}` : error,

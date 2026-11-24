@@ -178,7 +178,7 @@ leads          (id, name, email, type, budget, timeline, message, locale, create
 - **Howler.js**: звуки
 - **Supabase** (`@supabase/ssr`): БД, Auth, Storage
 - **Claude API** (`@anthropic-ai/sdk`): автоперевод
-- **Resend**: email-уведомления о заявках
+- **Nodemailer + Gmail SMTP**: email-уведомления о заявках
 - **React Hook Form + Zod**: формы
 - **Vercel**: деплой
 
@@ -236,7 +236,7 @@ drizzle/                  ← SQL-миграции (drizzle-kit)
 6. **Работы и кейс** с shared-element переходами.
 7. **Меню, переходы страниц, звуки, 404.**
 8. **Админка** с автопереводом.
-9. **Квиз и контакты**, Resend.
+9. **Квиз и контакты**, письма через Gmail.
 10. **Полировка:** мобила, reduced-motion, SEO, производительность.
 
 ## Открытые вопросы
