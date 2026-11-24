@@ -45,12 +45,12 @@ export async function Dock() {
         aria-label={`${name}, ${t("home")}`}
         className="group flex items-center gap-3 rounded-full pe-1 sm:pe-3"
       >
+        {/* Инициалы рисуются через ::before: декор, не текст ссылки (WCAG 2.5.3) */}
         <span
           aria-hidden
-          className="grid size-10 place-items-center rounded-full bg-foreground font-mono text-xs font-semibold text-background uppercase transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:-rotate-12"
-        >
-          {initials(name)}
-        </span>
+          data-initials={initials(name)}
+          className="grid size-10 place-items-center rounded-full bg-foreground font-mono text-xs font-semibold text-background uppercase transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:-rotate-12 before:content-[attr(data-initials)]"
+        />
         <span className="sr-only text-sm font-medium sm:not-sr-only">
           {name}
         </span>

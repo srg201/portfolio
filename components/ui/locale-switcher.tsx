@@ -118,16 +118,18 @@ export function LocaleSwitcher() {
         }}
         className="group inline-flex h-10 items-center gap-1.5 rounded-full border bg-background/60 ps-1.5 pe-2.5 text-sm sm:gap-2 sm:ps-2 sm:pe-3 backdrop-blur transition-colors duration-300 hover:border-foreground/40"
       >
-        <span className="relative grid size-7 place-items-center overflow-hidden rounded-full bg-foreground text-[0.65rem] font-semibold tracking-wider text-background uppercase">
+        <span
+          aria-hidden
+          className="relative grid size-7 place-items-center overflow-hidden rounded-full bg-foreground text-[0.65rem] font-semibold tracking-wider text-background uppercase"
+        >
+          {/* Код языка через ::before: декор, имя кнопки содержит видимое название */}
           <span
             key={locale}
-            className="animate-[locale-code-in_500ms_cubic-bezier(0.34,1.56,0.64,1)]"
-          >
-            {locale}
-          </span>
+            data-code={locale}
+            className="animate-[locale-code-in_500ms_cubic-bezier(0.34,1.56,0.64,1)] before:content-[attr(data-code)]"
+          />
           {isPending && (
             <span
-              aria-hidden
               className="absolute inset-0 animate-spin rounded-full border-2 border-background/20 border-t-brand"
             />
           )}
