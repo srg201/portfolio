@@ -23,9 +23,7 @@
   "Work": {
     "label": "주요 작업",
     "title": "제가 만든 것들",
-    "intro": "첫 스케치부터 프로덕션까지, 처음부터 끝까지 직접 설계하고 개발해 출시한 프로덕트입니다.",
-    "visit": "사이트 보기",
-    "newTab": "새 탭에서 열립니다"
+    "intro": "첫 스케치부터 프로덕션까지, 처음부터 끝까지 직접 설계하고 개발해 출시한 프로덕트입니다."
   },
   "Services": {
     "label": "서비스",
@@ -123,5 +121,148 @@
     "elsewhere": "다른 채널",
     "backToTop": "맨 위로",
     "newTab": "새 탭에서 열립니다"
+  },
+  "Nav": {
+    "label": "주 메뉴",
+    "open": "메뉴",
+    "close": "메뉴 닫기",
+    "home": "홈",
+    "work": "작업",
+    "about": "소개",
+    "contact": "연락"
+  },
+  "WorkPage": {
+    "metaTitle": "작업",
+    "metaDescription": "Sergey Belyakov가 만든 웹사이트, 웹 앱, 랜딩 페이지.",
+    "label": "작업",
+    "title": "전체 프로젝트",
+    "intro": "실제로 운영 중인 사이트와 공개 코드가 있는 제품: 캠페인 랜딩 페이지부터 실시간 웹 앱까지.",
+    "filter": "프로젝트 유형",
+    "all": "전체",
+    "categories": {
+      "app": "웹 앱",
+      "website": "웹사이트",
+      "landing": "랜딩 페이지"
+    },
+    "view": "보기",
+    "grid": "그리드",
+    "list": "목록",
+    "projects": "개 프로젝트",
+    "open": "케이스 보기"
+  },
+  "Case": {
+    "back": "전체 작업",
+    "year": "연도",
+    "client": "클라이언트",
+    "personal": "개인 프로젝트",
+    "role": "역할",
+    "stack": "기술 스택",
+    "live": "라이브 사이트",
+    "code": "소스 코드",
+    "newTab": "새 탭에서 열림",
+    "highlights": "만든 것",
+    "showcase": "움직임으로 보기",
+    "desktop": "데스크톱",
+    "mobile": "모바일",
+    "next": "다음 프로젝트"
+  },
+  "About": {
+    "metaTitle": "소개",
+    "metaDescription": "풀스택 개발자 Sergey Belyakov: 일하는 방식과 만드는 것.",
+    "label": "소개",
+    "title": "안녕하세요, Sergey입니다",
+    "lead": "풀스택 개발자입니다. 웹사이트와 웹 앱을 인터페이스, 서버, 데이터베이스, 출시까지 처음부터 끝까지 설계하고 개발합니다.",
+    "story": "{year}년부터 웹을 만들어 왔습니다. 그동안 캠페인 랜딩 페이지부터 AI 기능을 갖춘 실시간 제품까지 {count}개 이상의 프로젝트를 출시했습니다.",
+    "statYears": "년의 개발 경력",
+    "statProjects": "개 프로젝트 출시",
+    "statSince": "개발 시작",
+    "valuesTitle": "중요하게 생각하는 것",
+    "values": {
+      "speed": {
+        "title": "속도",
+        "text": "빠른 페이지와 빠른 프로세스. 성능은 마지막 수정이 아니라 디자인의 일부입니다."
+      },
+      "craft": {
+        "title": "디테일",
+        "text": "인터페이스를 제대로 느끼게 하는 모션, 타이포그래피, 작은 디테일."
+      },
+      "ownership": {
+        "title": "책임감",
+        "text": "제품 전체를 한 사람이 맡습니다: 전달 과정이 줄고 모든 결정에 명확한 책임자가 있습니다."
+      }
+    },
+    "code": "GitHub 코드"
+  },
+  "Contact": {
+    "metaTitle": "연락",
+    "metaDescription": "Sergey Belyakov에게 프로젝트를 알려 주세요: 간단한 브리프는 1분이면 됩니다.",
+    "label": "연락",
+    "title": "프로젝트에 대해 알려 주세요",
+    "intro": "몇 가지 질문에 답해 주세요. 1분이면 됩니다. 다음 단계를 안내해 드리겠습니다.",
+    "step": "{total}단계 중 {current}단계",
+    "back": "이전",
+    "next": "다음",
+    "submit": "요청 보내기",
+    "sending": "보내는 중…",
+    "type": {
+      "question": "무엇을 만드나요?",
+      "options": {
+        "landing": "랜딩 페이지",
+        "website": "웹사이트",
+        "app": "웹 앱",
+        "ecommerce": "온라인 스토어",
+        "other": "기타"
+      }
+    },
+    "budget": {
+      "question": "예산은 어느 정도인가요?",
+      "options": {
+        "s": "$2k 미만",
+        "m": "$2k–5k",
+        "l": "$5k–15k",
+        "xl": "$15k 이상",
+        "unsure": "아직 모르겠어요"
+      }
+    },
+    "timeline": {
+      "question": "언제 필요한가요?",
+      "options": {
+        "asap": "최대한 빨리",
+        "month": "한 달 이내",
+        "quarter": "1–3개월 안에",
+        "flexible": "일정은 유연해요"
+      }
+    },
+    "details": {
+      "question": "어떻게 연락드릴까요?",
+      "name": "이름",
+      "email": "이메일",
+      "message": "더 하실 말씀이 있나요? (선택)",
+      "placeholder": "목표, 링크, 레퍼런스…"
+    },
+    "errors": {
+      "choice": "옵션을 선택하세요",
+      "name": "이름을 입력하세요",
+      "email": "올바른 이메일을 입력하세요",
+      "generic": "문제가 발생했습니다. 다시 시도해 주세요."
+    },
+    "success": {
+      "title": "감사합니다!",
+      "text": "요청이 전송되었습니다. 곧 연락드리겠습니다."
+    },
+    "unavailable": "온라인 요청은 아직 연결되지 않았습니다. 아래 링크로 연락해 주세요.",
+    "elsewhere": "또는 직접 연락하기"
+  },
+  "Preloader": {
+    "label": "로딩 중"
+  },
+  "NotFoundLog": {
+    "build": "경로 빌드 중",
+    "deploy": "배포 중",
+    "error": "오류: 경로를 찾을 수 없음",
+    "hint": "아직 아무것도 없습니다. 이곳은 어떠세요:"
+  },
+  "WorkMore": {
+    "all": "전체 프로젝트"
   }
 }

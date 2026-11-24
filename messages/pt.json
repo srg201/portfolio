@@ -23,9 +23,7 @@
   "Work": {
     "label": "Trabalhos selecionados",
     "title": "O que eu construí",
-    "intro": "Produtos que projetei, desenvolvi e lancei de ponta a ponta, do primeiro esboço à produção.",
-    "visit": "Ver site",
-    "newTab": "abre em uma nova aba"
+    "intro": "Produtos que projetei, desenvolvi e lancei de ponta a ponta, do primeiro esboço à produção."
   },
   "Services": {
     "label": "Serviços",
@@ -123,5 +121,148 @@
     "elsewhere": "Em outros lugares",
     "backToTop": "Voltar ao topo",
     "newTab": "abre em uma nova aba"
+  },
+  "Nav": {
+    "label": "Menu principal",
+    "open": "Menu",
+    "close": "Fechar menu",
+    "home": "Início",
+    "work": "Projetos",
+    "about": "Sobre",
+    "contact": "Contato"
+  },
+  "WorkPage": {
+    "metaTitle": "Projetos",
+    "metaDescription": "Sites, aplicações web e landing pages de Sergey Belyakov.",
+    "label": "Projetos",
+    "title": "Todos os projetos",
+    "intro": "Produtos reais com sites no ar e código aberto: de landing pages de campanha a aplicações web em tempo real.",
+    "filter": "Tipo de projeto",
+    "all": "Todos",
+    "categories": {
+      "app": "Aplicações web",
+      "website": "Sites",
+      "landing": "Landing pages"
+    },
+    "view": "Visualização",
+    "grid": "Grade",
+    "list": "Lista",
+    "projects": "projetos",
+    "open": "Ver case"
+  },
+  "Case": {
+    "back": "Todos os projetos",
+    "year": "Ano",
+    "client": "Cliente",
+    "personal": "Projeto próprio",
+    "role": "Função",
+    "stack": "Stack",
+    "live": "Site no ar",
+    "code": "Código-fonte",
+    "newTab": "abre em uma nova aba",
+    "highlights": "O que construí",
+    "showcase": "Em movimento",
+    "desktop": "Desktop",
+    "mobile": "Mobile",
+    "next": "Próximo projeto"
+  },
+  "About": {
+    "metaTitle": "Sobre",
+    "metaDescription": "Sergey Belyakov, desenvolvedor full-stack: como trabalho e o que construo.",
+    "label": "Sobre",
+    "title": "Olá, sou o Sergey",
+    "lead": "Sou desenvolvedor full-stack. Projeto e construo sites e aplicações web de ponta a ponta: interface, servidor, banco de dados e lançamento.",
+    "story": "Construo para a web desde {year}. Desde então lancei mais de {count} projetos, de landing pages de campanha a produtos em tempo real com recursos de IA.",
+    "statYears": "anos de desenvolvimento",
+    "statProjects": "projetos lançados",
+    "statSince": "desenvolvendo desde",
+    "valuesTitle": "O que importa para mim",
+    "values": {
+      "speed": {
+        "title": "Velocidade",
+        "text": "Páginas rápidas e um processo rápido. Desempenho faz parte do design, não é um ajuste no final."
+      },
+      "craft": {
+        "title": "Capricho",
+        "text": "Animação, tipografia e os pequenos detalhes que fazem uma interface parecer certa."
+      },
+      "ownership": {
+        "title": "Responsabilidade",
+        "text": "Uma pessoa para o produto inteiro: menos repasses e um responsável claro por cada decisão."
+      }
+    },
+    "code": "Código no GitHub"
+  },
+  "Contact": {
+    "metaTitle": "Contato",
+    "metaDescription": "Conte ao Sergey Belyakov sobre o seu projeto: o briefing leva um minuto.",
+    "label": "Contato",
+    "title": "Conte sobre o seu projeto",
+    "intro": "Responda algumas perguntas, leva um minuto. Volto com os próximos passos.",
+    "step": "Etapa {current} de {total}",
+    "back": "Voltar",
+    "next": "Próximo",
+    "submit": "Enviar pedido",
+    "sending": "Enviando…",
+    "type": {
+      "question": "O que vamos construir?",
+      "options": {
+        "landing": "Landing page",
+        "website": "Site",
+        "app": "Aplicação web",
+        "ecommerce": "Loja online",
+        "other": "Outra coisa"
+      }
+    },
+    "budget": {
+      "question": "Qual é o orçamento?",
+      "options": {
+        "s": "Até $2k",
+        "m": "$2k–5k",
+        "l": "$5k–15k",
+        "xl": "$15k+",
+        "unsure": "Ainda não sei"
+      }
+    },
+    "timeline": {
+      "question": "Para quando?",
+      "options": {
+        "asap": "O quanto antes",
+        "month": "Dentro de um mês",
+        "quarter": "Em 1–3 meses",
+        "flexible": "Sou flexível"
+      }
+    },
+    "details": {
+      "question": "Como falo com você?",
+      "name": "Nome",
+      "email": "E-mail",
+      "message": "Mais alguma coisa? (opcional)",
+      "placeholder": "Objetivos, links, referências…"
+    },
+    "errors": {
+      "choice": "Escolha uma opção",
+      "name": "Digite seu nome",
+      "email": "Digite um e-mail válido",
+      "generic": "Algo deu errado. Tente novamente."
+    },
+    "success": {
+      "title": "Obrigado!",
+      "text": "Seu pedido foi enviado. Responderei em breve."
+    },
+    "unavailable": "Os pedidos online ainda não estão conectados. Fale comigo pelos links abaixo.",
+    "elsewhere": "Ou fale comigo diretamente"
+  },
+  "Preloader": {
+    "label": "Carregando"
+  },
+  "NotFoundLog": {
+    "build": "Construindo rota",
+    "deploy": "Fazendo deploy",
+    "error": "Erro: rota não encontrada",
+    "hint": "Ainda não há nada aqui. Tente:"
+  },
+  "WorkMore": {
+    "all": "Todos os projetos"
   }
 }

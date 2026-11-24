@@ -1,14 +1,16 @@
 /**
- * Обложки и превью для карточек работ (сначала `pnpm showcases`).
+ * Обложки, превью и записи для карточек работ и кейсов (сначала `pnpm showcases`).
  *
  *   pnpm covers
  *
  * Записи шоукейсов тяжёлые и лежат в .gitignore. Отсюда в репозиторий
  * попадают лёгкие версии, public/work/{slug}/:
- * - cover.jpg: кадр 1280×800 для избранных и для кольца проектов (inCarousel),
+ * - cover.jpg: кадр 1280×800 для опубликованных проектов,
  *   next/image сам отдаст WebP/AVIF нужной ширины;
- * - preview.mp4: петля ~6 с, 960×600, без звука, только у избранных,
- *   играет при наведении на карточку.
+ * - preview.mp4: петля ~6 с, 960×600, без звука, играет при наведении
+ *   на карточку;
+ * - case.mp4 и case-mobile.mp4: вся запись (десктоп 1280×800 и телефон
+ *   540×920), без звука, для блока «В движении» на странице кейса.
  */
 import { execFileSync } from "node:child_process";
 import { existsSync } from "node:fs";
@@ -31,12 +33,20 @@ function ffmpeg(args: string[]) {
 
 const kb = async (file: string) => Math.round((await stat(file)).size / 1024);
 
-async function main() {
-  const withCover = projects.filter(
-    (project) => project.isFeatured || project.inCarousel,
-  );
+function encode(source: string, target: string, filter: string, args: string[] = []) {
+  ffmpeg([
+    ...args,
+    "-i", source,
+    "-vf", `fps=24,${filter},format=yuv420p`,
+    "-c:v", "libx264", "-preset", "slow", "-crf", "30",
+    "-movflags", "+faststart", "-an",
+    target,
+  ]);
+}
 
-  for (const { slug, isFeatured } of withCover) {
+async function main() {
+  for (const { slug, isPublished, showcase } of projects) {
+    if (!isPublished) continue;
     const source = path.join(SHOWCASES, slug, "desktop.mp4");
     if (!existsSync(source)) {
       console.warn(`– ${slug}: нет записи, сначала pnpm showcases ${slug}`);
@@ -48,23 +58,23 @@ async function main() {
     const cover = path.join(dir, "cover.jpg");
     ffmpeg(["-ss", String(COVER_AT), "-i", source, "-frames:v", "1", "-q:v", "3", cover]);
 
-    if (!isFeatured) {
-      console.log(`✓ ${slug}: cover ${await kb(cover)} КБ`);
-      continue;
-    }
-
     const preview = path.join(dir, "preview.mp4");
-    ffmpeg([
+    encode(source, preview, "scale=960:600:flags=lanczos", [
       "-ss", String(START),
       "-t", String(PREVIEW_LENGTH),
-      "-i", source,
-      "-vf", "fps=24,scale=960:600:flags=lanczos,format=yuv420p",
-      "-c:v", "libx264", "-preset", "slow", "-crf", "30",
-      "-movflags", "+faststart", "-an",
-      preview,
     ]);
 
-    console.log(`✓ ${slug}: cover ${await kb(cover)} КБ, preview ${await kb(preview)} КБ`);
+    const full = path.join(dir, "case.mp4");
+    encode(source, full, "scale=1280:800:flags=lanczos");
+
+    const sizes = [`cover ${await kb(cover)}`, `preview ${await kb(preview)}`, `case ${await kb(full)}`];
+    const mobileSource = path.join(SHOWCASES, slug, "mobile.mp4");
+    if (showcase.mobile !== false && existsSync(mobileSource)) {
+      const mobile = path.join(dir, "case-mobile.mp4");
+      encode(mobileSource, mobile, "scale=540:920:flags=lanczos");
+      sizes.push(`case-mobile ${await kb(mobile)}`);
+    }
+    console.log(`✓ ${slug}: ${sizes.join(", ")} КБ`);
   }
 }
 

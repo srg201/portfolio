@@ -23,9 +23,7 @@
   "Work": {
     "label": "Selected work",
     "title": "Things I've built",
-    "intro": "Products I designed, built and shipped end to end, from the first sketch to production.",
-    "visit": "Visit site",
-    "newTab": "opens in a new tab"
+    "intro": "Products I designed, built and shipped end to end, from the first sketch to production."
   },
   "Services": {
     "label": "Services",
@@ -123,5 +121,148 @@
     "elsewhere": "Elsewhere",
     "backToTop": "Back to top",
     "newTab": "opens in a new tab"
+  },
+  "Nav": {
+    "label": "Main menu",
+    "open": "Menu",
+    "close": "Close menu",
+    "home": "Home",
+    "work": "Work",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "WorkPage": {
+    "metaTitle": "Work",
+    "metaDescription": "Websites, web apps and landing pages built by Sergey Belyakov.",
+    "label": "Work",
+    "title": "All projects",
+    "intro": "Real products with live sites and open source code: from campaign landing pages to real-time web apps.",
+    "filter": "Project type",
+    "all": "All",
+    "categories": {
+      "app": "Web apps",
+      "website": "Websites",
+      "landing": "Landing pages"
+    },
+    "view": "Layout",
+    "grid": "Grid",
+    "list": "List",
+    "projects": "projects",
+    "open": "View case"
+  },
+  "Case": {
+    "back": "All work",
+    "year": "Year",
+    "client": "Client",
+    "personal": "Personal project",
+    "role": "Role",
+    "stack": "Stack",
+    "live": "Live site",
+    "code": "Source code",
+    "newTab": "opens in a new tab",
+    "highlights": "What I built",
+    "showcase": "In motion",
+    "desktop": "Desktop",
+    "mobile": "Mobile",
+    "next": "Next project"
+  },
+  "About": {
+    "metaTitle": "About",
+    "metaDescription": "Sergey Belyakov, full-stack developer: how I work and what I build.",
+    "label": "About",
+    "title": "Hi, I'm Sergey",
+    "lead": "I'm a full-stack developer. I design and build websites and web apps end to end: interface, server, database and launch.",
+    "story": "I've been building for the web since {year}. Since then I've shipped {count}+ projects, from campaign landing pages to real-time products with AI features.",
+    "statYears": "years in development",
+    "statProjects": "projects shipped",
+    "statSince": "building since",
+    "valuesTitle": "What I care about",
+    "values": {
+      "speed": {
+        "title": "Speed",
+        "text": "Fast pages and a fast process. Performance is part of the design, not a fix at the end."
+      },
+      "craft": {
+        "title": "Craft",
+        "text": "Motion, typography and the small details that make an interface feel right."
+      },
+      "ownership": {
+        "title": "Ownership",
+        "text": "One person for the whole product: fewer handoffs and a clear owner for every decision."
+      }
+    },
+    "code": "Code on GitHub"
+  },
+  "Contact": {
+    "metaTitle": "Contact",
+    "metaDescription": "Tell Sergey Belyakov about your project: a short brief takes a minute.",
+    "label": "Contact",
+    "title": "Tell me about your project",
+    "intro": "Answer a few questions, it takes a minute. I'll reply with next steps.",
+    "step": "Step {current} of {total}",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Send request",
+    "sending": "Sending…",
+    "type": {
+      "question": "What are we building?",
+      "options": {
+        "landing": "Landing page",
+        "website": "Website",
+        "app": "Web app",
+        "ecommerce": "Online store",
+        "other": "Something else"
+      }
+    },
+    "budget": {
+      "question": "What's your budget?",
+      "options": {
+        "s": "Under $2k",
+        "m": "$2k–5k",
+        "l": "$5k–15k",
+        "xl": "$15k+",
+        "unsure": "Not sure yet"
+      }
+    },
+    "timeline": {
+      "question": "When do you need it?",
+      "options": {
+        "asap": "As soon as possible",
+        "month": "Within a month",
+        "quarter": "In 1–3 months",
+        "flexible": "I'm flexible"
+      }
+    },
+    "details": {
+      "question": "How can I reach you?",
+      "name": "Name",
+      "email": "Email",
+      "message": "Anything else? (optional)",
+      "placeholder": "Goals, links, references…"
+    },
+    "errors": {
+      "choice": "Choose an option",
+      "name": "Enter your name",
+      "email": "Enter a valid email",
+      "generic": "Something went wrong. Please try again."
+    },
+    "success": {
+      "title": "Thank you!",
+      "text": "Your request is on its way. I'll get back to you soon."
+    },
+    "unavailable": "Online requests aren't connected yet. Please reach out via the links below.",
+    "elsewhere": "Or reach out directly"
+  },
+  "Preloader": {
+    "label": "Loading"
+  },
+  "NotFoundLog": {
+    "build": "Building route",
+    "deploy": "Deploying",
+    "error": "Error: route not found",
+    "hint": "Nothing here yet. Try one of these:"
+  },
+  "WorkMore": {
+    "all": "All projects"
   }
 }

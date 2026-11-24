@@ -23,9 +23,7 @@
   "Work": {
     "label": "精选作品",
     "title": "我做过的项目",
-    "intro": "从第一张草图到正式上线，由我完整设计、开发并发布的产品。",
-    "visit": "访问网站",
-    "newTab": "在新标签页中打开"
+    "intro": "从第一张草图到正式上线，由我完整设计、开发并发布的产品。"
   },
   "Services": {
     "label": "服务",
@@ -123,5 +121,148 @@
     "elsewhere": "其他平台",
     "backToTop": "回到顶部",
     "newTab": "在新标签页中打开"
+  },
+  "Nav": {
+    "label": "主菜单",
+    "open": "菜单",
+    "close": "关闭菜单",
+    "home": "首页",
+    "work": "作品",
+    "about": "关于我",
+    "contact": "联系"
+  },
+  "WorkPage": {
+    "metaTitle": "作品",
+    "metaDescription": "Sergey Belyakov 开发的网站、Web 应用和落地页。",
+    "label": "作品",
+    "title": "全部项目",
+    "intro": "真实上线的产品和开源代码：从营销落地页到实时 Web 应用。",
+    "filter": "项目类型",
+    "all": "全部",
+    "categories": {
+      "app": "Web 应用",
+      "website": "网站",
+      "landing": "落地页"
+    },
+    "view": "视图",
+    "grid": "网格",
+    "list": "列表",
+    "projects": "个项目",
+    "open": "查看案例"
+  },
+  "Case": {
+    "back": "全部作品",
+    "year": "年份",
+    "client": "客户",
+    "personal": "个人项目",
+    "role": "角色",
+    "stack": "技术栈",
+    "live": "在线网站",
+    "code": "源代码",
+    "newTab": "在新标签页中打开",
+    "highlights": "我做了什么",
+    "showcase": "动态展示",
+    "desktop": "桌面端",
+    "mobile": "移动端",
+    "next": "下一个项目"
+  },
+  "About": {
+    "metaTitle": "关于我",
+    "metaDescription": "全栈开发者 Sergey Belyakov：我的工作方式和作品。",
+    "label": "关于我",
+    "title": "你好，我是 Sergey",
+    "lead": "我是一名全栈开发者，从头到尾设计并开发网站和 Web 应用：界面、服务器、数据库和上线。",
+    "story": "我从 {year} 年开始做 Web 开发，至今已上线 {count}+ 个项目，从营销落地页到带 AI 功能的实时产品。",
+    "statYears": "年开发经验",
+    "statProjects": "个已上线项目",
+    "statSince": "开发起始于",
+    "valuesTitle": "我在意的事",
+    "values": {
+      "speed": {
+        "title": "速度",
+        "text": "快速的页面，高效的流程。性能是设计的一部分，而不是最后的补救。"
+      },
+      "craft": {
+        "title": "细节",
+        "text": "让界面用起来恰到好处的动效、排版和小细节。"
+      },
+      "ownership": {
+        "title": "负责",
+        "text": "一个人负责整个产品：更少的交接，每个决定都有明确的负责人。"
+      }
+    },
+    "code": "GitHub 上的代码"
+  },
+  "Contact": {
+    "metaTitle": "联系",
+    "metaDescription": "向 Sergey Belyakov 介绍你的项目：简短需求只需一分钟。",
+    "label": "联系",
+    "title": "聊聊你的项目",
+    "intro": "回答几个问题，只需一分钟。我会回复你下一步的安排。",
+    "step": "第 {current} 步，共 {total} 步",
+    "back": "返回",
+    "next": "下一步",
+    "submit": "发送需求",
+    "sending": "发送中…",
+    "type": {
+      "question": "我们要做什么？",
+      "options": {
+        "landing": "落地页",
+        "website": "网站",
+        "app": "Web 应用",
+        "ecommerce": "网店",
+        "other": "其他"
+      }
+    },
+    "budget": {
+      "question": "预算是多少？",
+      "options": {
+        "s": "$2k 以下",
+        "m": "$2k–5k",
+        "l": "$5k–15k",
+        "xl": "$15k 以上",
+        "unsure": "还不确定"
+      }
+    },
+    "timeline": {
+      "question": "什么时候需要？",
+      "options": {
+        "asap": "越快越好",
+        "month": "一个月内",
+        "quarter": "1–3 个月内",
+        "flexible": "时间灵活"
+      }
+    },
+    "details": {
+      "question": "怎么联系你？",
+      "name": "姓名",
+      "email": "邮箱",
+      "message": "还有其他补充吗？（可选）",
+      "placeholder": "目标、链接、参考…"
+    },
+    "errors": {
+      "choice": "请选择一个选项",
+      "name": "请输入姓名",
+      "email": "请输入有效的邮箱",
+      "generic": "出了点问题，请重试。"
+    },
+    "success": {
+      "title": "谢谢！",
+      "text": "你的需求已发送，我会尽快回复。"
+    },
+    "unavailable": "在线提交尚未接通，请通过下方链接联系我。",
+    "elsewhere": "或直接联系我"
+  },
+  "Preloader": {
+    "label": "加载中"
+  },
+  "NotFoundLog": {
+    "build": "正在构建路由",
+    "deploy": "正在部署",
+    "error": "错误：未找到路由",
+    "hint": "这里还什么都没有。试试："
+  },
+  "WorkMore": {
+    "all": "全部项目"
   }
 }

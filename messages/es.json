@@ -23,9 +23,7 @@
   "Work": {
     "label": "Trabajos destacados",
     "title": "Lo que he construido",
-    "intro": "Productos que diseñé, desarrollé y lancé de principio a fin, del primer boceto a producción.",
-    "visit": "Ver sitio",
-    "newTab": "se abre en una pestaña nueva"
+    "intro": "Productos que diseñé, desarrollé y lancé de principio a fin, del primer boceto a producción."
   },
   "Services": {
     "label": "Servicios",
@@ -123,5 +121,148 @@
     "elsewhere": "En otros sitios",
     "backToTop": "Volver arriba",
     "newTab": "se abre en una pestaña nueva"
+  },
+  "Nav": {
+    "label": "Menú principal",
+    "open": "Menú",
+    "close": "Cerrar menú",
+    "home": "Inicio",
+    "work": "Proyectos",
+    "about": "Sobre mí",
+    "contact": "Contacto"
+  },
+  "WorkPage": {
+    "metaTitle": "Proyectos",
+    "metaDescription": "Sitios web, aplicaciones web y landing pages de Sergey Belyakov.",
+    "label": "Proyectos",
+    "title": "Todos los proyectos",
+    "intro": "Productos reales con sitios en vivo y código abierto: desde landing pages de campaña hasta aplicaciones web en tiempo real.",
+    "filter": "Tipo de proyecto",
+    "all": "Todos",
+    "categories": {
+      "app": "Aplicaciones web",
+      "website": "Sitios web",
+      "landing": "Landing pages"
+    },
+    "view": "Vista",
+    "grid": "Cuadrícula",
+    "list": "Lista",
+    "projects": "proyectos",
+    "open": "Ver caso"
+  },
+  "Case": {
+    "back": "Todos los proyectos",
+    "year": "Año",
+    "client": "Cliente",
+    "personal": "Proyecto propio",
+    "role": "Rol",
+    "stack": "Stack",
+    "live": "Sitio en vivo",
+    "code": "Código fuente",
+    "newTab": "se abre en una pestaña nueva",
+    "highlights": "Qué construí",
+    "showcase": "En movimiento",
+    "desktop": "Escritorio",
+    "mobile": "Móvil",
+    "next": "Siguiente proyecto"
+  },
+  "About": {
+    "metaTitle": "Sobre mí",
+    "metaDescription": "Sergey Belyakov, desarrollador full-stack: cómo trabajo y qué construyo.",
+    "label": "Sobre mí",
+    "title": "Hola, soy Sergey",
+    "lead": "Soy desarrollador full-stack. Diseño y construyo sitios y aplicaciones web de principio a fin: interfaz, servidor, base de datos y lanzamiento.",
+    "story": "Construyo para la web desde {year}. Desde entonces he lanzado más de {count} proyectos, desde landing pages de campaña hasta productos en tiempo real con funciones de IA.",
+    "statYears": "años de desarrollo",
+    "statProjects": "proyectos lanzados",
+    "statSince": "desarrollando desde",
+    "valuesTitle": "Lo que me importa",
+    "values": {
+      "speed": {
+        "title": "Velocidad",
+        "text": "Páginas rápidas y un proceso rápido. El rendimiento es parte del diseño, no un arreglo al final."
+      },
+      "craft": {
+        "title": "Detalle",
+        "text": "Animación, tipografía y los pequeños detalles que hacen que una interfaz se sienta bien."
+      },
+      "ownership": {
+        "title": "Responsabilidad",
+        "text": "Una sola persona para todo el producto: menos traspasos y un responsable claro de cada decisión."
+      }
+    },
+    "code": "Código en GitHub"
+  },
+  "Contact": {
+    "metaTitle": "Contacto",
+    "metaDescription": "Cuéntale a Sergey Belyakov sobre tu proyecto: el brief lleva un minuto.",
+    "label": "Contacto",
+    "title": "Cuéntame sobre tu proyecto",
+    "intro": "Responde unas preguntas, lleva un minuto. Te responderé con los siguientes pasos.",
+    "step": "Paso {current} de {total}",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "submit": "Enviar solicitud",
+    "sending": "Enviando…",
+    "type": {
+      "question": "¿Qué vamos a construir?",
+      "options": {
+        "landing": "Landing page",
+        "website": "Sitio web",
+        "app": "Aplicación web",
+        "ecommerce": "Tienda online",
+        "other": "Otra cosa"
+      }
+    },
+    "budget": {
+      "question": "¿Cuál es tu presupuesto?",
+      "options": {
+        "s": "Menos de $2k",
+        "m": "$2k–5k",
+        "l": "$5k–15k",
+        "xl": "$15k+",
+        "unsure": "Aún no lo sé"
+      }
+    },
+    "timeline": {
+      "question": "¿Para cuándo?",
+      "options": {
+        "asap": "Lo antes posible",
+        "month": "En un mes",
+        "quarter": "En 1–3 meses",
+        "flexible": "Soy flexible"
+      }
+    },
+    "details": {
+      "question": "¿Cómo te contacto?",
+      "name": "Nombre",
+      "email": "Email",
+      "message": "¿Algo más? (opcional)",
+      "placeholder": "Objetivos, enlaces, referencias…"
+    },
+    "errors": {
+      "choice": "Elige una opción",
+      "name": "Escribe tu nombre",
+      "email": "Escribe un email válido",
+      "generic": "Algo salió mal. Inténtalo de nuevo."
+    },
+    "success": {
+      "title": "¡Gracias!",
+      "text": "Tu solicitud está en camino. Te responderé pronto."
+    },
+    "unavailable": "Las solicitudes en línea aún no están conectadas. Escríbeme por los enlaces de abajo.",
+    "elsewhere": "O escríbeme directamente"
+  },
+  "Preloader": {
+    "label": "Cargando"
+  },
+  "NotFoundLog": {
+    "build": "Construyendo ruta",
+    "deploy": "Desplegando",
+    "error": "Error: ruta no encontrada",
+    "hint": "Aquí aún no hay nada. Prueba:"
+  },
+  "WorkMore": {
+    "all": "Todos los proyectos"
   }
 }

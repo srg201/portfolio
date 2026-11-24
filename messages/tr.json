@@ -23,9 +23,7 @@
   "Work": {
     "label": "Seçili işler",
     "title": "Neler geliştirdim",
-    "intro": "İlk eskizden canlıya kadar baştan sona tasarlayıp geliştirdiğim ve yayına aldığım ürünler.",
-    "visit": "Siteyi aç",
-    "newTab": "yeni sekmede açılır"
+    "intro": "İlk eskizden canlıya kadar baştan sona tasarlayıp geliştirdiğim ve yayına aldığım ürünler."
   },
   "Services": {
     "label": "Hizmetler",
@@ -123,5 +121,148 @@
     "elsewhere": "Diğer kanallar",
     "backToTop": "Başa dön",
     "newTab": "yeni sekmede açılır"
+  },
+  "Nav": {
+    "label": "Ana menü",
+    "open": "Menü",
+    "close": "Menüyü kapat",
+    "home": "Ana sayfa",
+    "work": "Projeler",
+    "about": "Hakkımda",
+    "contact": "İletişim"
+  },
+  "WorkPage": {
+    "metaTitle": "Projeler",
+    "metaDescription": "Sergey Belyakov'un web siteleri, web uygulamaları ve açılış sayfaları.",
+    "label": "Projeler",
+    "title": "Tüm projeler",
+    "intro": "Yayında siteleri ve açık kaynak koduyla gerçek ürünler: kampanya açılış sayfalarından gerçek zamanlı web uygulamalarına.",
+    "filter": "Proje türü",
+    "all": "Tümü",
+    "categories": {
+      "app": "Web uygulamaları",
+      "website": "Web siteleri",
+      "landing": "Açılış sayfaları"
+    },
+    "view": "Görünüm",
+    "grid": "Izgara",
+    "list": "Liste",
+    "projects": "proje",
+    "open": "Projeyi incele"
+  },
+  "Case": {
+    "back": "Tüm projeler",
+    "year": "Yıl",
+    "client": "Müşteri",
+    "personal": "Kişisel proje",
+    "role": "Rol",
+    "stack": "Teknolojiler",
+    "live": "Canlı site",
+    "code": "Kaynak kodu",
+    "newTab": "yeni sekmede açılır",
+    "highlights": "Neler yaptım",
+    "showcase": "Hareket halinde",
+    "desktop": "Masaüstü",
+    "mobile": "Mobil",
+    "next": "Sonraki proje"
+  },
+  "About": {
+    "metaTitle": "Hakkımda",
+    "metaDescription": "Full-stack geliştirici Sergey Belyakov: nasıl çalışıyorum ve neler yapıyorum.",
+    "label": "Hakkımda",
+    "title": "Merhaba, ben Sergey",
+    "lead": "Full-stack geliştiriciyim. Web sitelerini ve web uygulamalarını baştan sona tasarlayıp geliştiriyorum: arayüz, sunucu, veritabanı ve yayına alma.",
+    "story": "{year} yılından beri web için geliştiriyorum. O zamandan bu yana kampanya açılış sayfalarından yapay zekâ özellikli gerçek zamanlı ürünlere kadar {count}+ proje yayına aldım.",
+    "statYears": "yıllık geliştirme",
+    "statProjects": "yayına alınan proje",
+    "statSince": "geliştirme başlangıcı",
+    "valuesTitle": "Benim için önemli olanlar",
+    "values": {
+      "speed": {
+        "title": "Hız",
+        "text": "Hızlı sayfalar ve hızlı bir süreç. Performans tasarımın parçasıdır, sondaki bir düzeltme değil."
+      },
+      "craft": {
+        "title": "Özen",
+        "text": "Bir arayüzü doğru hissettiren animasyon, tipografi ve küçük ayrıntılar."
+      },
+      "ownership": {
+        "title": "Sahiplik",
+        "text": "Tüm ürün için tek kişi: daha az devir teslim ve her kararın net bir sahibi."
+      }
+    },
+    "code": "GitHub'daki kodum"
+  },
+  "Contact": {
+    "metaTitle": "İletişim",
+    "metaDescription": "Projenizi Sergey Belyakov'a anlatın: kısa brif bir dakika sürer.",
+    "label": "İletişim",
+    "title": "Projenizden bahsedin",
+    "intro": "Birkaç soruyu yanıtlayın, bir dakika sürer. Sonraki adımlarla size döneceğim.",
+    "step": "Adım {current} / {total}",
+    "back": "Geri",
+    "next": "İleri",
+    "submit": "Talebi gönder",
+    "sending": "Gönderiliyor…",
+    "type": {
+      "question": "Ne yapıyoruz?",
+      "options": {
+        "landing": "Açılış sayfası",
+        "website": "Web sitesi",
+        "app": "Web uygulaması",
+        "ecommerce": "Online mağaza",
+        "other": "Başka bir şey"
+      }
+    },
+    "budget": {
+      "question": "Bütçeniz nedir?",
+      "options": {
+        "s": "$2k altı",
+        "m": "$2k–5k",
+        "l": "$5k–15k",
+        "xl": "$15k+",
+        "unsure": "Henüz bilmiyorum"
+      }
+    },
+    "timeline": {
+      "question": "Ne zaman lazım?",
+      "options": {
+        "asap": "En kısa sürede",
+        "month": "Bir ay içinde",
+        "quarter": "1–3 ay içinde",
+        "flexible": "Esneğim"
+      }
+    },
+    "details": {
+      "question": "Size nasıl ulaşabilirim?",
+      "name": "Ad",
+      "email": "E-posta",
+      "message": "Başka bir şey? (isteğe bağlı)",
+      "placeholder": "Hedefler, bağlantılar, referanslar…"
+    },
+    "errors": {
+      "choice": "Bir seçenek seçin",
+      "name": "Adınızı girin",
+      "email": "Geçerli bir e-posta girin",
+      "generic": "Bir şeyler ters gitti. Lütfen tekrar deneyin."
+    },
+    "success": {
+      "title": "Teşekkürler!",
+      "text": "Talebiniz yolda. Yakında size döneceğim."
+    },
+    "unavailable": "Çevrimiçi talepler henüz bağlı değil. Lütfen aşağıdaki bağlantılardan ulaşın.",
+    "elsewhere": "Ya da doğrudan ulaşın"
+  },
+  "Preloader": {
+    "label": "Yükleniyor"
+  },
+  "NotFoundLog": {
+    "build": "Rota derleniyor",
+    "deploy": "Yayına alınıyor",
+    "error": "Hata: rota bulunamadı",
+    "hint": "Burada henüz bir şey yok. Şunları deneyin:"
+  },
+  "WorkMore": {
+    "all": "Tüm projeler"
   }
 }
