@@ -261,6 +261,19 @@
   mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, black 20%, transparent 75%);
 }
 
+/* Preloader первого захода (components/motion/preloader.tsx) */
+html[data-preloading] [data-preloader] {
+  display: flex;
+}
+
+/* Новый шаг квиза на /contact (components/contact/quiz.tsx) */
+@keyframes quiz-in {
+  from {
+    opacity: 0;
+    translate: 0 24px;
+  }
+}
+
 /* Плашка Dock въезжает снизу после входа hero (components/ui/dock.tsx) */
 @keyframes dock-in {
   from {

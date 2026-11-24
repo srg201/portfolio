@@ -109,8 +109,7 @@
   },
   "NotFound": {
     "title": "Página no encontrada",
-    "description": "Esta página aún no se ha desplegado.",
-    "backHome": "Volver al inicio"
+    "description": "Esta página aún no se ha desplegado."
   },
   "Footer": {
     "label": "Siguiente paso",
@@ -217,10 +216,10 @@
     "budget": {
       "question": "¿Cuál es tu presupuesto?",
       "options": {
-        "s": "Menos de $2k",
-        "m": "$2k–5k",
-        "l": "$5k–15k",
-        "xl": "$15k+",
+        "s": "Menos de $300",
+        "m": "$300–700",
+        "l": "$700–1500",
+        "xl": "$1500+",
         "unsure": "Aún no lo sé"
       }
     },

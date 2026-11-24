@@ -3,6 +3,7 @@
 import { useRef, type ReactNode } from "react";
 import { ease } from "@/lib/animations/easings";
 import { FINE_POINTER } from "@/components/motion/magnetic";
+import { isPreloading, PRELOADER_DONE } from "@/components/motion/preloader";
 import { gsap, ScrollTrigger, SplitText, useGSAP } from "@/lib/animations/gsap";
 import { createRing, pickHandoff, type Ring } from "./ring-motion";
 
@@ -204,10 +205,23 @@ export function HeroMotion({
           });
         }
 
+        // Первый заход: preloader закрывает экран, вход ждёт его ухода
+        const waiting = isPreloading();
+        const start = () => {
+          intro.play();
+          cycle?.play();
+        };
+        if (waiting) {
+          intro.pause();
+          cycle?.pause();
+          window.addEventListener(PRELOADER_DONE, start, { once: true });
+        }
+
         const stopSpin = ring ? startRingSpin(ring) : () => {};
         const stopHandoff = ring ? createHandoff(root, ring) : () => {};
 
         return () => {
+          window.removeEventListener(PRELOADER_DONE, start);
           cycle?.kill();
           stopSpin();
           stopHandoff();

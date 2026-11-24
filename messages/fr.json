@@ -109,8 +109,7 @@
   },
   "NotFound": {
     "title": "Page introuvable",
-    "description": "Cette page n'a pas encore été déployée.",
-    "backHome": "Retour à l'accueil"
+    "description": "Cette page n'a pas encore été déployée."
   },
   "Footer": {
     "label": "Prochaine étape",
@@ -217,10 +216,10 @@
     "budget": {
       "question": "Quel est votre budget ?",
       "options": {
-        "s": "Moins de 2 k$",
-        "m": "2–5 k$",
-        "l": "5–15 k$",
-        "xl": "15 k$ et plus",
+        "s": "Moins de 300 $",
+        "m": "300–700 $",
+        "l": "700–1500 $",
+        "xl": "1500 $ et plus",
         "unsure": "Je ne sais pas encore"
       }
     },

@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
+import Script from "next/script";
 import { locale as rootLocale } from "next/root-params";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { LocaleStage } from "@/components/motion/locale-stage";
+import { Preloader, preloaderScript } from "@/components/motion/preloader";
 import { Providers } from "@/components/providers";
 import { Footer } from "@/components/sections/footer";
 import { Dock } from "@/components/ui/dock";
@@ -44,6 +46,7 @@ export default async function LocaleLayout({
   if (!hasLocale(routing.locales, locale)) notFound();
 
   const t = await getTranslations("Common");
+  const preloader = await getTranslations("Preloader");
 
   return (
     <html
@@ -53,6 +56,10 @@ export default async function LocaleLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col font-sans">
+        {/* До отрисовки: показывать ли preloader (первый заход в сессии) */}
+        <Script id="preloader" strategy="beforeInteractive">
+          {preloaderScript}
+        </Script>
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:start-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-foreground focus:px-4 focus:py-2 focus:text-background"
@@ -61,6 +68,7 @@ export default async function LocaleLayout({
         </a>
         <NextIntlClientProvider>
           <Providers direction={getDirection(locale)}>
+            <Preloader name={t("name")} label={preloader("label")} />
             <MistBackground />
             <LocaleStage>
               {children}

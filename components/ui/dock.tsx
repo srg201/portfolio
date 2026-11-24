@@ -1,7 +1,9 @@
 import { getTranslations } from "next-intl/server";
 import { LocaleSwitcher } from "@/components/ui/locale-switcher";
+import { Menu, type MenuItem } from "@/components/ui/menu";
 import { ThemeSwitcher } from "@/components/ui/theme-switcher";
 import { Link } from "@/i18n/navigation";
+import { site } from "@/lib/site";
 
 /** Инициалы из имени: «Sergey Belyakov» → «SB» */
 function initials(name: string) {
@@ -14,13 +16,21 @@ function initials(name: string) {
 }
 
 /**
- * Плавающая плашка внизу экрана: домой, язык, тема (кнопка меню появится на этапе 7).
+ * Плавающая плашка внизу экрана: домой, язык, тема и кнопка полноэкранного меню.
  * Заменяет шапку; на мобиле до неё удобно дотянуться большим пальцем.
  */
 export async function Dock() {
   const t = await getTranslations("Dock");
   const common = await getTranslations("Common");
+  const nav = await getTranslations("Nav");
+  const footer = await getTranslations("Footer");
   const name = common("name");
+  const items: MenuItem[] = [
+    { href: "/", label: nav("home"), image: "/work/portfolio/cover.jpg" },
+    { href: "/work", label: nav("work"), image: "/work/outpost/cover.jpg" },
+    { href: "/about", label: nav("about"), image: "/work/nextpro/cover.jpg" },
+    { href: "/contact", label: nav("contact"), image: "/work/xplane-labs/cover.jpg" },
+  ];
 
   return (
     <nav
@@ -48,6 +58,16 @@ export async function Dock() {
       <div className="flex items-center gap-1.5 sm:gap-2">
         <LocaleSwitcher />
         <ThemeSwitcher />
+        <Menu
+          items={items}
+          socials={site.socials}
+          labels={{
+            open: nav("open"),
+            close: nav("close"),
+            title: nav("label"),
+            newTab: footer("newTab"),
+          }}
+        />
       </div>
     </nav>
   );

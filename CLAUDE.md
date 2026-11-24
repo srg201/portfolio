@@ -25,12 +25,17 @@
 - Секреты только в `.env.local` (он в `.gitignore`), в репозиторий и в чат не попадают; переменные описываются в `.env.example`.
 
 ## Текущий статус
-- Этап 1 (каркас) готов: Next.js, next-intl (15 локалей, proxy, RTL, cookie), next-themes, Supabase-клиенты, Drizzle, `.env.example`. Не сделано: `.env.local` с ключами Supabase и деплой на Vercel.
+- Этап 1 (каркас) готов: Next.js, next-intl (15 локалей, proxy, RTL, cookie), next-themes, Supabase-клиенты, Drizzle, `.env.example`. `.env.local` заполнен. Не сделано: деплой на Vercel (там нужно задать те же переменные, минимум `GMAIL_USER_NAME` и `GMAIL_APP_PASSWORD`).
 - Сделаны:
   - тема shadcn от фирменного оранжевого и WebGL-туман;
   - Dock с переключателями языка и темы;
   - главная (`components/sections/`): hero-композиция (роль, меняющееся слово, CTA, имя) с 3D-каруселью обложек проектов в полосе между верхним рядом и именем (`project-ring.tsx`, раскладка в `ring-motion.ts`, текст не перекрывает); при скролле карусель расходится, и карточка первой работы перелетает в секцию работ (большая карточка и пары в 2 колонки, `#work`) → услуги (превью примера сбоку от курсора) → стек → процесс. Шоурил с главной убран, скрипты `pnpm showreel` и файлы в `public/showreel` остались;
   - футер с финальным CTA в layout. Отзывы пропущены, пока нет настоящих текстов;
-  - полировка: reduced motion, клавиатура, hreflang/canonical (`lib/seo.ts`), LCP.
+  - полировка: reduced motion, клавиатура, hreflang/canonical (`lib/seo.ts`), LCP;
+  - страницы `/work` (фильтры, сетка ↔ список) и `/work/[slug]` (кейс с видео), `/about`, `/contact`;
+  - квиз на `/contact`: заявка уходит письмом на Gmail владельца через nodemailer (`app/[locale]/contact/actions.ts`, шаблон письма `lib/lead-email.ts`), ловушки для ботов (скрытое поле и минимальное время). Бюджеты рассчитаны на старт: до $300 … $1500+. В Supabase заявки пока не сохраняются;
+  - полноэкранное меню из Dock (`components/ui/menu.tsx`), переход страниц шторкой (`template.tsx`), preloader первого захода, 404 с «логом деплоя», `sitemap.xml`, `robots.txt`, OG-картинка.
 - Данные пока моковые: `lib/mock/projects.ts`, `lib/career.ts`. Записи проектов: `pnpm showcases`, обложки: `pnpm covers`.
 - Шрифт Geist временный.
+- Ждём от владельца: публичный email для сайта (`lib/site.ts`, сейчас `email: null`), фото, таймлайн, CV, настоящие отзывы.
+- Дальше: этап 5 (Supabase: миграции, RLS, сиды, заявки в `leads`) и этап 8 (админка).

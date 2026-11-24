@@ -109,8 +109,7 @@
   },
   "NotFound": {
     "title": "Página não encontrada",
-    "description": "Esta página ainda não foi publicada.",
-    "backHome": "Voltar ao início"
+    "description": "Esta página ainda não foi publicada."
   },
   "Footer": {
     "label": "Próximo passo",
@@ -217,10 +216,10 @@
     "budget": {
       "question": "Qual é o orçamento?",
       "options": {
-        "s": "Até $2k",
-        "m": "$2k–5k",
-        "l": "$5k–15k",
-        "xl": "$15k+",
+        "s": "Até $300",
+        "m": "$300–700",
+        "l": "$700–1500",
+        "xl": "$1500+",
         "unsure": "Ainda não sei"
       }
     },
