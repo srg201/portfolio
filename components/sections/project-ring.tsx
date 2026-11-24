@@ -1,11 +1,8 @@
 import Image from "next/image";
-import { projects } from "@/lib/mock/projects";
 
 const CARDS = 10;
-
-/** Первая избранная работа: её карточка из карусели перелетает в секцию работ */
-const handoff = projects.find((project) => project.isFeatured)!;
-const handoffCover = `/work/${handoff.slug}/cover.jpg`;
+/** Снимок этого сайта: всегда в карусели */
+const SELF_COVER = "/work/portfolio/cover.jpg";
 
 /**
  * Карусель обложек проектов в hero: горизонтальное кольцо в полосе между
@@ -15,13 +12,16 @@ const handoffCover = `/work/${handoff.slug}/cover.jpg`;
  * на своё место в секции работ (RingProxy).
  * Без анимаций: статичное кольцо.
  */
-export function ProjectRing() {
-  const covers = [
-    ...projects
-      .filter((project) => project.inCarousel)
-      .map((project) => `/work/${project.slug}/cover.jpg`),
-    "/work/portfolio/cover.jpg",
-  ];
+export function ProjectRing({
+  covers: projectCovers,
+  handoffCover,
+}: {
+  /** Обложки проектов с пометкой «в карусели» */
+  covers: string[];
+  /** Обложка первой избранной работы: её карточка перелетает в секцию работ */
+  handoffCover: string | null;
+}) {
+  const covers = [...projectCovers, SELF_COVER];
   const cards = Array.from(
     { length: CARDS },
     (_, index) => covers[index % covers.length]!,
@@ -65,7 +65,8 @@ export function ProjectRing() {
  * Лежит вне 3D-сцены: fixed, положение и размер пишет hero-motion.tsx.
  * Под текстом hero (z-0 против z-10): по пути проходит за именем, не поверх.
  */
-export function RingProxy() {
+export function RingProxy({ cover }: { cover: string | null }) {
+  if (!cover) return null;
   return (
     <div
       aria-hidden
@@ -73,7 +74,7 @@ export function RingProxy() {
       className="pointer-events-none invisible fixed top-0 left-0 z-0 overflow-hidden bg-muted motion-reduce:hidden"
     >
       <Image
-        src={handoffCover}
+        src={cover}
         alt=""
         fill
         sizes="(min-width: 768px) 78vw, 100vw"

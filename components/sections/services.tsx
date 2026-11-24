@@ -1,5 +1,6 @@
-import { getTranslations } from "next-intl/server";
-import { projects } from "@/lib/mock/projects";
+import { getLocale, getTranslations } from "next-intl/server";
+import type { Locale } from "@/i18n/locales";
+import { getProjects } from "@/lib/content";
 import { services } from "@/lib/mock/services";
 import { cn } from "@/lib/utils";
 import { ServicesList, type ServiceItem } from "./services-list";
@@ -12,11 +13,13 @@ const meta = "font-mono text-[0.7rem] tracking-[0.14em] uppercase sm:text-xs";
  */
 export async function Services() {
   const t = await getTranslations("Services");
+  const projects = await getProjects((await getLocale()) as Locale);
 
   const items: ServiceItem[] = services.map((service, index) => {
     const project = projects.find((p) => p.slug === service.example);
-    const exampleName =
-      service.example === "portfolio" ? t("thisSite") : project?.title;
+    const isSelf = service.example === "portfolio";
+    const exampleName = isSelf ? t("thisSite") : project?.title;
+    const cover = isSelf ? "/work/portfolio/cover.jpg" : project?.cover.src;
     return {
       slug: service.slug,
       number: String(index + 1).padStart(2, "0"),
@@ -24,9 +27,9 @@ export async function Services() {
       description: t(`items.${service.slug}.description`),
       stack: service.stack,
       example:
-        service.example && exampleName
+        exampleName && cover
           ? {
-              cover: `/work/${service.example}/cover.jpg`,
+              cover,
               label: `${t("example")}: ${exampleName}`,
             }
           : null,

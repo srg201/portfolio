@@ -9,22 +9,23 @@ import { Reveal } from "@/components/motion/reveal";
 import { LazyVideo } from "@/components/work/lazy-video";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
-import { getNextProject, getProject, publishedProjects } from "@/lib/mock/projects";
+import { getNextProject, getProject, getProjects } from "@/lib/content";
 import { contentAttrs } from "@/lib/content-lang";
 import { localeAlternates } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
 const meta = "font-mono text-[0.7rem] tracking-[0.14em] uppercase sm:text-xs";
 
-export function generateStaticParams() {
-  return publishedProjects.map((project) => ({ slug: project.slug }));
+export async function generateStaticParams() {
+  const projects = await getProjects(routing.defaultLocale);
+  return projects.map((project) => ({ slug: project.slug }));
 }
 
 async function load(params: Promise<{ slug: string }>) {
   const locale = await rootLocale();
   if (!hasLocale(routing.locales, locale)) notFound();
   const { slug } = await params;
-  const project = getProject(slug);
+  const project = await getProject(slug, locale);
   if (!project) notFound();
   return { locale, project };
 }
@@ -33,7 +34,7 @@ export async function generateMetadata({
   params,
 }: PageProps<"/[locale]/work/[slug]">): Promise<Metadata> {
   const { locale, project } = await load(params);
-  const cover = `/work/${project.slug}/cover.jpg`;
+  const cover = project.cover.src;
   return {
     title: project.title,
     description: project.summary,
@@ -46,7 +47,7 @@ export async function generateMetadata({
  * Страница кейса: заголовок и ссылки, обложка, мета (год, клиент, роль,
  * стек), что сделано (пункты из README), записи сайта на десктопе
  * и телефоне, переход к следующему проекту.
- * Тексты проекта пока на английском: помечаем их lang="en".
+ * Если перевода нет, тексты проекта на английском: помечаем их lang/dir.
  */
 export default async function CasePage({
   params,
@@ -54,10 +55,10 @@ export default async function CasePage({
   const { locale, project } = await load(params);
   const t = await getTranslations("Case");
   const work = await getTranslations("WorkPage");
-  const next = getNextProject(project.slug);
-  const content = contentAttrs(locale);
-  const base = `/work/${project.slug}`;
-  const hasMobile = project.showcase.mobile !== false;
+  const next = await getNextProject(project.slug, locale);
+  const content = contentAttrs(locale, project.lang);
+  const nextContent = contentAttrs(locale, next.lang);
+  const hasMobile = Boolean(project.caseMobileVideo);
 
   const facts = [
     { label: t("year"), value: <span dir="ltr">{project.year}</span> },
@@ -125,8 +126,8 @@ export default async function CasePage({
               {project.summary}
             </p>
             <div className="flex flex-wrap gap-3">
-              {external(project.liveUrl, t("live"), true)}
-              {external(project.repoUrl, t("code"))}
+              {project.liveUrl && external(project.liveUrl, t("live"), true)}
+              {project.repoUrl && external(project.repoUrl, t("code"))}
             </div>
           </div>
         </div>
@@ -134,7 +135,7 @@ export default async function CasePage({
 
       <div className="relative aspect-[16/10] overflow-hidden rounded-md bg-muted md:aspect-[2/1]">
         <Image
-          src={`${base}/cover.jpg`}
+          src={project.cover.src}
           alt=""
           fill
           priority
@@ -179,6 +180,7 @@ export default async function CasePage({
         </Reveal>
       )}
 
+      {project.caseVideo && (
       <Reveal className="flex flex-col gap-8">
         <h2
           data-reveal-item
@@ -201,8 +203,8 @@ export default async function CasePage({
               </div>
               <div className="aspect-[16/10]">
                 <LazyVideo
-                  src={`${base}/case.mp4`}
-                  poster={`${base}/cover.jpg`}
+                  src={project.caseVideo}
+                  poster={project.cover.src}
                   label={`${project.title}, ${t("desktop")}`}
                 />
               </div>
@@ -214,7 +216,7 @@ export default async function CasePage({
               <div className="overflow-hidden rounded-[2rem] border-4 border-foreground/15 bg-muted shadow-2xl">
                 <div className="aspect-[540/920]">
                   <LazyVideo
-                    src={`${base}/case-mobile.mp4`}
+                    src={project.caseMobileVideo!}
                     label={`${project.title}, ${t("mobile")}`}
                   />
                 </div>
@@ -224,6 +226,7 @@ export default async function CasePage({
           )}
         </div>
       </Reveal>
+      )}
 
       {/* Следующий проект */}
       <Link
@@ -233,7 +236,7 @@ export default async function CasePage({
         <p className={cn(meta, "text-muted-foreground")}>{t("next")}</p>
         <div className="flex items-end justify-between gap-6">
           <span
-            {...content}
+            {...nextContent}
             className="text-[clamp(3rem,10vw,9rem)] leading-[0.85] font-light tracking-[-0.05em] transition-colors duration-500 group-hover/next:text-brand"
           >
             {next.title}
@@ -247,7 +250,7 @@ export default async function CasePage({
         </div>
         <div className="relative aspect-[3/1] overflow-hidden rounded-md bg-muted">
           <Image
-            src={`/work/${next.slug}/cover.jpg`}
+            src={next.cover.src}
             alt=""
             fill
             sizes="100vw"

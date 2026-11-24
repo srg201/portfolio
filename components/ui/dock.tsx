@@ -3,7 +3,7 @@ import { LocaleSwitcher } from "@/components/ui/locale-switcher";
 import { Menu, type MenuItem } from "@/components/ui/menu";
 import { ThemeSwitcher } from "@/components/ui/theme-switcher";
 import { Link } from "@/i18n/navigation";
-import { site } from "@/lib/site";
+import { getSettings } from "@/lib/content";
 
 /** Инициалы из имени: «Sergey Belyakov» → «SB» */
 function initials(name: string) {
@@ -20,6 +20,7 @@ function initials(name: string) {
  * Заменяет шапку; на мобиле до неё удобно дотянуться большим пальцем.
  */
 export async function Dock() {
+  const settings = await getSettings();
   const t = await getTranslations("Dock");
   const common = await getTranslations("Common");
   const nav = await getTranslations("Nav");
@@ -60,7 +61,7 @@ export async function Dock() {
         <ThemeSwitcher />
         <Menu
           items={items}
-          socials={site.socials}
+          socials={settings.socials}
           labels={{
             open: nav("open"),
             close: nav("close"),

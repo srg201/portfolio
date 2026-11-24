@@ -7,13 +7,14 @@
 ## Ключевые решения (уже приняты, не пересматривать)
 - Next.js 16 App Router (`cacheComponents`, React Compiler, Turbopack) + TypeScript strict + Tailwind v4. Пакетный менеджер pnpm.
 - В Next 16 `middleware.ts` называется `proxy.ts`. Локаль на сервере читается через `next/root-params` (см. `i18n/request.ts`), а не через `requestLocale`/`setRequestLocale`.
-- Supabase: БД, Auth, Storage. Контент переводится через таблицы `*_translations`.
+- Контент (проекты, настройки сайта) в Sanity: админка Sanity Studio на `/admin` (решение владельца, заменило план админки на Supabase). Схема в `sanity/schemaTypes/`, конфиг `sanity.config.ts`. Переводы: поля `localeString`/`localeText` (английский обязателен, остальные 14 языков опциональны, на сайте откат на английский). Сайт читает контент только через `lib/content` (кеш `"use cache"` + тег `sanity`, сброс вебхуком `/api/revalidate`); без `NEXT_PUBLIC_SANITY_PROJECT_ID` или при пустом датасете берёт `lib/mock`.
+- Supabase (БД, Auth, Storage) остаётся для будущих данных вроде заявок.
 - ORM: Drizzle (1.0 RC). Схема и RLS-политики в `lib/db/schema.ts`, миграции через `pnpm db:generate` / `db:migrate` в папку `drizzle/`. Drizzle на сервере обходит RLS, поэтому публичные запросы сами фильтруют `is_published`. supabase-js используется для Auth и Storage.
-- Supabase Auth-сессия обновляется в `proxy.ts` только для `/admin`; публичный сайт статический и cookies не читает.
+- `proxy.ts` только про языки; `/admin` и `/api` вне локалей. Публичный сайт статический и cookies не читает.
 - next-intl, 15 языков: en, zh, es, hi, ar (RTL), pt, ru, fr, de, ja, ko, pl, tr, it, uk; fallback `en`. Язык определяется автоматически по `Accept-Language`, ручной выбор хранится в cookie. URL с префиксом `/{locale}`.
 - next-themes: светлая и тёмная тема плюс system, по умолчанию тёмная. Цвета только через CSS-переменные.
 - Анимации: Motion (UI), GSAP + ScrollTrigger + SplitText (скролл), Lenis (плавный скролл), R3F/OGL (WebGL-туман).
-- Админка `/admin` с автопереводом контента через Claude API.
+- Безопасность: заголовки и CSP в `next.config.ts` (отдельная политика для `/admin`), лимиты и проверки в форме заявки.
 - Деплой на Vercel.
 
 ## Правила
@@ -35,7 +36,7 @@
   - страницы `/work` (фильтры, сетка ↔ список) и `/work/[slug]` (кейс с видео), `/about`, `/contact`;
   - квиз на `/contact`: заявка уходит письмом владельцу через Gmail SMTP (`lib/mail.ts`, шаблон `lib/lead-email.ts`, проверка `pnpm mail:check`). Ловушки для ботов: скрытое поле и минимальное время. Resend не используем. У владельца включён VPN, который режет SMTP, поэтому локально письма не уходят, на Vercel уйдут. Бюджеты рассчитаны на старт: до $300 … $1500+. В Supabase заявки пока не сохраняются;
   - полноэкранное меню из Dock (`components/ui/menu.tsx`), переход страниц шторкой (`template.tsx`), preloader первого захода, 404 с «логом деплоя», `sitemap.xml`, `robots.txt`, OG-картинка.
-- Данные пока моковые: `lib/mock/projects.ts`, `lib/career.ts`. Записи проектов: `pnpm showcases`, обложки: `pnpm covers`.
+- Данные: Sanity, а до его подключения `lib/mock/projects.ts`, `lib/career.ts`. Перенос моков в Sanity: `pnpm sanity:seed`. Записи проектов: `pnpm showcases`, обложки: `pnpm covers`.
 - Шрифт Geist временный.
 - Ждём от владельца: публичный email для сайта (`lib/site.ts`, сейчас `email: null`), фото, таймлайн, CV, настоящие отзывы.
-- Дальше: этап 5 (Supabase: миграции, RLS, сиды, заявки в `leads`) и этап 8 (админка).
+- Дальше: подключить проект Sanity (ключи в `.env.local` и Vercel, вебхук), автоперевод в Studio через Claude API, заявки в Supabase.

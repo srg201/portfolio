@@ -35,13 +35,17 @@ const siteCsp = csp({
 
 const studioCsp = csp({
   "default-src": ["'self'"],
-  "script-src": ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
-  "style-src": ["'self'", "'unsafe-inline'"],
+  "script-src": ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://core.sanity-cdn.com"],
+  "style-src": ["'self'", "'unsafe-inline'", "https://design-system-static.sanity.io"],
   // Аватары пользователей Sanity приходят с разных доменов (Google, GitHub)
   "img-src": ["'self'", "data:", "blob:", "https:"],
   "media-src": ["'self'", "blob:", "https://cdn.sanity.io"],
-  "font-src": ["'self'", "data:"],
-  "connect-src": ["'self'", "https://*.sanity.io", "wss://*.sanity.io", ...(isDev ? ["ws:"] : [])],
+  "font-src": ["'self'", "data:", "https://design-system-static.sanity.io"],
+  "connect-src": [
+    "'self'",
+    "https://*.sanity.io",
+    "wss://*.sanity.io",
+    "https://*.sanity-cdn.com", ...(isDev ? ["ws:"] : [])],
   "worker-src": ["'self'", "blob:"],
   "frame-src": ["'self'", "https://*.sanity.io"],
   "frame-ancestors": ["'self'"],
@@ -62,6 +66,10 @@ const common = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  images: {
+    // Обложки из Sanity
+    remotePatterns: [{ protocol: "https", hostname: "cdn.sanity.io", pathname: "/images/**" }],
+  },
   async headers() {
     return [
       {

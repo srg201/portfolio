@@ -11,7 +11,7 @@ import { TechStack } from "@/components/sections/tech-stack";
 import { routing } from "@/i18n/routing";
 import { getCareerStats } from "@/lib/career";
 import { localeAlternates } from "@/lib/seo";
-import { site } from "@/lib/site";
+import { getSettings } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 const meta = "font-mono text-[0.7rem] tracking-[0.14em] uppercase sm:text-xs";
@@ -42,7 +42,8 @@ export default async function AboutPage() {
   await currentLocale();
   const t = await getTranslations("About");
   const format = await getFormatter();
-  const { years, startYear, projects } = await getCareerStats();
+  const site = await getSettings();
+  const { years, startYear, projects } = await getCareerStats(site.careerStart, site.projectsCount);
   const github = site.socials.find((social) => social.name === "GitHub");
   const footer = await getTranslations("Footer");
 

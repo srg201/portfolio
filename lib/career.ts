@@ -1,8 +1,8 @@
 import { cacheLife } from "next/cache";
 
 /**
- * Карьера в цифрах. Дата начала и число проектов задаются здесь,
- * позже переедут в site_settings (админка).
+ * Карьера в цифрах по умолчанию. Если подключён Sanity, значения берутся
+ * из «Настроек сайта» (lib/content).
  */
 export const career = {
   /** Когда начал писать код (месяц и день условные) */
@@ -17,11 +17,14 @@ const DAY_MS = 86_400_000;
  * Дни и годы с начала карьеры. Текущая дата читается в "use cache":
  * число попадает в статический HTML и пересчитывается раз в сутки.
  */
-export async function getCareerStats() {
+export async function getCareerStats(
+  startDate: string = career.start,
+  projects: number = career.projects,
+) {
   "use cache";
   cacheLife("days");
 
-  const start = new Date(`${career.start}T00:00:00Z`);
+  const start = new Date(`${startDate}T00:00:00Z`);
   const now = new Date();
   const days = Math.floor((now.getTime() - start.getTime()) / DAY_MS);
 
@@ -34,6 +37,6 @@ export async function getCareerStats() {
     days,
     years,
     startYear: start.getUTCFullYear(),
-    projects: career.projects,
+    projects,
   };
 }

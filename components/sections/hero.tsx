@@ -1,7 +1,9 @@
 import { ArrowUpRight } from "lucide-react";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Magnetic } from "@/components/motion/magnetic";
 import { Link } from "@/i18n/navigation";
+import type { Locale } from "@/i18n/locales";
+import { getProjects, getSettings } from "@/lib/content";
 import { cn } from "@/lib/utils";
 import { HeroMotion } from "./hero-motion";
 import { ProjectRing, RingProxy } from "./project-ring";
@@ -26,6 +28,10 @@ export async function Hero() {
     .filter(Boolean);
   const last = rest.join(" ");
   const words = t.raw("words") as string[];
+  const locale = (await getLocale()) as Locale;
+  const [projects, settings] = await Promise.all([getProjects(locale), getSettings()]);
+  const covers = projects.filter((project) => project.inCarousel).map((project) => project.cover.src);
+  const handoffCover = projects.find((project) => project.isFeatured)?.cover.src ?? null;
 
   return (
     <section aria-labelledby="hero-title" data-hero-scene className="relative">
@@ -39,19 +45,23 @@ export async function Hero() {
 
             {/* Верх: статус слева; роль, слово и CTA справа */}
             <div className="flex items-start justify-between gap-6">
-              <p
-                data-reveal
-                className={cn(
-                  meta,
-                  "flex items-center gap-2 leading-relaxed text-muted-foreground",
-                )}
-              >
-                <span aria-hidden className="relative flex size-2 shrink-0">
-                  <span className="absolute inset-0 animate-ping rounded-full bg-success opacity-60 motion-reduce:hidden" />
-                  <span className="relative size-2 rounded-full bg-success" />
-                </span>
-                {t("available")}
-              </p>
+              {settings.available ? (
+                <p
+                  data-reveal
+                  className={cn(
+                    meta,
+                    "flex items-center gap-2 leading-relaxed text-muted-foreground",
+                  )}
+                >
+                  <span aria-hidden className="relative flex size-2 shrink-0">
+                    <span className="absolute inset-0 animate-ping rounded-full bg-success opacity-60 motion-reduce:hidden" />
+                    <span className="relative size-2 rounded-full bg-success" />
+                  </span>
+                  {t("available")}
+                </p>
+              ) : (
+                <span aria-hidden />
+              )}
 
               <div className="flex flex-col items-end gap-3 text-end sm:gap-4">
                 <p data-reveal className={cn(meta, "leading-relaxed")}>
@@ -92,7 +102,7 @@ export async function Hero() {
 
             {/* Центр: карусель проектов в свободной полосе */}
             <div className="relative my-6 min-h-44 flex-1 sm:my-8">
-              <ProjectRing />
+              <ProjectRing covers={covers} handoffCover={handoffCover} />
             </div>
 
             {/* Низ: имя слева, манифест справа */}
@@ -122,7 +132,7 @@ export async function Hero() {
           </div>
         </div>
       </HeroMotion>
-      <RingProxy />
+      <RingProxy cover={handoffCover} />
 
       {/* Без JS сцена не запустится: показываем hero сразу */}
       <noscript>

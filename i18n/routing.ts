@@ -1,24 +1,9 @@
 import { defineRouting } from "next-intl/routing";
+import { defaultLocale, locales } from "./locales";
 
 export const routing = defineRouting({
-  locales: [
-    "en",
-    "zh",
-    "es",
-    "hi",
-    "ar",
-    "pt",
-    "ru",
-    "fr",
-    "de",
-    "ja",
-    "ko",
-    "pl",
-    "tr",
-    "it",
-    "uk",
-  ],
-  defaultLocale: "en",
+  locales,
+  defaultLocale,
   localePrefix: "always",
   // Ручной выбор языка важнее Accept-Language: храним его год
   localeCookie: {

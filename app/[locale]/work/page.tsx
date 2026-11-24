@@ -6,8 +6,9 @@ import { getTranslations } from "next-intl/server";
 import { PageIntro } from "@/components/sections/page-intro";
 import { WorkBrowser, type WorkItem } from "@/components/work/work-browser";
 import { routing } from "@/i18n/routing";
-import { projectCategories, publishedProjects } from "@/lib/mock/projects";
+import { getProjects } from "@/lib/content";
 import { contentAttrs } from "@/lib/content-lang";
+import { projectCategories } from "@/lib/mock/projects";
 import { localeAlternates } from "@/lib/seo";
 
 async function currentLocale() {
@@ -34,7 +35,8 @@ export default async function WorkPage() {
     projectCategories.map((key) => [key, t(`categories.${key}`)]),
   ) as Record<(typeof projectCategories)[number], string>;
 
-  const items: WorkItem[] = publishedProjects.map((project) => ({
+  const projects = await getProjects(locale);
+  const items: WorkItem[] = projects.map((project) => ({
     slug: project.slug,
     title: project.title,
     summary: project.summary,
@@ -42,8 +44,9 @@ export default async function WorkPage() {
     category: project.category,
     categoryLabel: categories[project.category],
     stack: project.stack,
-    cover: `/work/${project.slug}/cover.jpg`,
-    preview: `/work/${project.slug}/preview.mp4`,
+    cover: project.cover.src,
+    preview: project.preview,
+    content: contentAttrs(locale, project.lang),
   }));
 
   return (
@@ -54,7 +57,6 @@ export default async function WorkPage() {
       <PageIntro label={t("label")} title={t("title")} intro={t("intro")} />
       <WorkBrowser
         items={items}
-        content={contentAttrs(locale)}
         labels={{
           filter: t("filter"),
           all: t("all"),

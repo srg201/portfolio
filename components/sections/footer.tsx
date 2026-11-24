@@ -2,7 +2,8 @@ import { ArrowUp, ArrowUpRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { Magnetic } from "@/components/motion/magnetic";
 import { Link } from "@/i18n/navigation";
-import { getCurrentYear, site } from "@/lib/site";
+import { getSettings } from "@/lib/content";
+import { getCurrentYear } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { FooterMotion } from "./footer-motion";
 
@@ -12,9 +13,10 @@ const meta = "font-mono text-[0.7rem] tracking-[0.14em] uppercase sm:text-xs";
  * Финальный CTA и футер, общий для всех страниц (layout).
  * Карточка со скруглённым верхом: над ней виден туман, при входе
  * содержимое выезжает шторкой (footer-motion.tsx).
- * Почта показывается, только если задана в lib/site.ts.
+ * Почта показывается, только если задана в настройках сайта (админка).
  */
 export async function Footer() {
+  const site = await getSettings();
   const t = await getTranslations("Footer");
   const common = await getTranslations("Common");
   const year = await getCurrentYear();

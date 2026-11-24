@@ -19,7 +19,9 @@ export type WorkItem = {
   categoryLabel: string;
   stack: string[];
   cover: string;
-  preview: string;
+  preview: string | null;
+  /** lang/dir текстов проекта, если их язык не совпадает с языком страницы */
+  content: { lang?: string; dir?: "ltr" | "rtl" };
 };
 
 type Labels = {
@@ -42,16 +44,14 @@ const EASE = [0.16, 1, 0.3, 1] as const;
  * - Сетка: обложка, при наведении мышью играет превью.
  * - Список: строки, рядом с курсором (сбоку, не под ним) плывёт обложка.
  * - prefers-reduced-motion: без анимаций перестройки и превью.
- * Тексты проектов пока на английском: lang="en" у них, если язык сайта другой.
+ * У текстов проекта lang/dir, если показан английский вместо перевода.
  */
 export function WorkBrowser({
   items,
   labels,
-  content,
 }: {
   items: WorkItem[];
   labels: Labels;
-  content: { lang?: string; dir?: "ltr" };
 }) {
   const [filter, setFilter] = useState<ProjectCategory | "all">("all");
   const [view, setView] = useState<"grid" | "list">("grid");
@@ -137,13 +137,13 @@ export function WorkBrowser({
                     exit={{ opacity: 0, scale: 0.96 }}
                     transition={{ duration: 0.7, ease: EASE, delay: index * 0.04 }}
                   >
-                    <GridCard item={item} content={content} open={labels.open} />
+                    <GridCard item={item} open={labels.open} />
                   </motion.li>
                 ))}
               </AnimatePresence>
             </ul>
           ) : (
-            <ListView items={visible} content={content} open={labels.open} />
+            <ListView items={visible} open={labels.open} />
           )}
         </LayoutGroup>
       </div>
@@ -153,11 +153,9 @@ export function WorkBrowser({
 
 function GridCard({
   item,
-  content,
   open,
 }: {
   item: WorkItem;
-  content: { lang?: string; dir?: "ltr" };
   open: string;
 }) {
   const video = useRef<HTMLVideoElement>(null);
@@ -171,6 +169,7 @@ function GridCard({
       onPointerEnter={(event) => {
         const element = video.current;
         if (event.pointerType !== "mouse" || !element || !canPreview()) return;
+        if (!item.preview) return;
         if (!element.src) element.src = item.preview;
         element
           .play()
@@ -212,10 +211,10 @@ function GridCard({
       </div>
       <div className="flex items-start justify-between gap-4">
         <div className="flex flex-col gap-1.5">
-          <h2 {...content} className="text-xl leading-tight sm:text-2xl">
+          <h2 {...item.content} className="text-xl leading-tight sm:text-2xl">
             {item.title}
           </h2>
-          <p {...content} className="max-w-md text-sm text-pretty text-muted-foreground">
+          <p {...item.content} className="max-w-md text-sm text-pretty text-muted-foreground">
             {item.summary}
           </p>
           <p className={cn(meta, "mt-1 text-muted-foreground")}>
@@ -241,11 +240,9 @@ function GridCard({
 /** Список: строки с номером, названием, типом и годом; обложка рядом с курсором */
 function ListView({
   items,
-  content,
   open,
 }: {
   items: WorkItem[];
-  content: { lang?: string; dir?: "ltr" };
   open: string;
 }) {
   const root = useRef<HTMLDivElement>(null);
@@ -316,7 +313,7 @@ function ListView({
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <span
-                  {...content}
+                  {...item.content}
                   className="text-3xl leading-none font-light tracking-[-0.03em] transition-[translate,color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/row:translate-x-3 group-hover/row:text-brand sm:text-5xl rtl:group-hover/row:-translate-x-3"
                 >
                   {item.title}

@@ -9,7 +9,7 @@ import { PageIntro } from "@/components/sections/page-intro";
 import { routing } from "@/i18n/routing";
 import { mailEnabled } from "@/lib/mail";
 import { localeAlternates } from "@/lib/seo";
-import { site } from "@/lib/site";
+import { getSettings } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 const meta = "font-mono text-[0.7rem] tracking-[0.14em] uppercase sm:text-xs";
@@ -42,6 +42,7 @@ export default async function ContactPage() {
   const t = await getTranslations("Contact");
   const footer = await getTranslations("Footer");
   const enabled = mailEnabled();
+  const site = await getSettings();
 
   return (
     <main

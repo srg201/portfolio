@@ -2,20 +2,13 @@ import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import type { Locale } from "@/i18n/locales";
+import { getProjects, type Project } from "@/lib/content";
 import { contentAttrs } from "@/lib/content-lang";
-import { projects, type MockProject } from "@/lib/mock/projects";
 import { cn } from "@/lib/utils";
 import { FeaturedWorkMotion } from "./featured-work-motion";
 
 const meta = "font-mono text-[0.7rem] tracking-[0.14em] uppercase sm:text-xs";
-
-/** Медиа карточки: `pnpm covers` (scripts/build-covers.ts) */
-function media(slug: string) {
-  return {
-    cover: `/work/${slug}/cover.jpg`,
-    preview: `/work/${slug}/preview.mp4`,
-  };
-}
 
 /**
  * Избранные работы: сразу за hero. Карточка первой работы
@@ -27,16 +20,15 @@ function media(slug: string) {
 export async function FeaturedWork() {
   const t = await getTranslations("Work");
   const more = await getTranslations("WorkMore");
-  const locale = await getLocale();
+  const locale = (await getLocale()) as Locale;
+  const projects = await getProjects(locale);
   const [first, ...rest] = projects.filter((project) => project.isFeatured);
-  // Тексты проектов пока на английском
-  const content = contentAttrs(locale);
-  const card = (project: MockProject, large = false) => (
+  const card = (project: Project, large = false) => (
     <WorkCard
       key={project.slug}
       project={project}
       large={large}
-      content={content}
+      content={contentAttrs(locale, project.lang)}
     />
   );
 
@@ -101,11 +93,11 @@ function WorkCard({
   large,
   content,
 }: {
-  project: MockProject;
+  project: Project;
   large: boolean;
-  content: { lang?: string; dir?: "ltr" };
+  content: { lang?: string; dir?: "ltr" | "rtl" };
 }) {
-  const { cover, preview } = media(project.slug);
+  const { cover, preview } = project;
 
   return (
     <article
@@ -129,7 +121,7 @@ function WorkCard({
           )}
         >
           <Image
-            src={cover}
+            src={cover.src}
             alt=""
             fill
             sizes={
@@ -140,6 +132,7 @@ function WorkCard({
             className="object-cover object-top transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/card:scale-[1.03] motion-reduce:transition-none"
           />
           {/* Превью грузится только при наведении (featured-work-motion.tsx) */}
+          {preview && (
           <video
             data-work-preview
             data-src={preview}
@@ -150,6 +143,7 @@ function WorkCard({
             preload="none"
             className="absolute inset-0 size-full object-cover object-top opacity-0 transition-opacity duration-500 data-playing:opacity-100"
           />
+          )}
         </div>
       </div>
 

@@ -1,16 +1,17 @@
 import type { MetadataRoute } from "next";
 import { routing } from "@/i18n/routing";
-import { publishedProjects } from "@/lib/mock/projects";
+import { getProjects } from "@/lib/content";
 import { siteUrl } from "@/lib/seo";
 
 /** Все страницы на всех языках, у каждой ссылки на остальные языки (hreflang) */
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const projects = await getProjects(routing.defaultLocale);
   const paths = [
     "",
     "/work",
     "/about",
     "/contact",
-    ...publishedProjects.map((project) => `/work/${project.slug}`),
+    ...projects.map((project) => `/work/${project.slug}`),
   ];
   const url = (locale: string, path: string) => new URL(`/${locale}${path}`, siteUrl).href;
 
