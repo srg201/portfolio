@@ -243,7 +243,8 @@
       "choice": "Bir seçenek seçin",
       "name": "Adınızı girin",
       "email": "Geçerli bir e-posta girin",
-      "generic": "Bir şeyler ters gitti. Lütfen tekrar deneyin."
+      "generic": "Bir şeyler ters gitti. Lütfen tekrar deneyin.",
+      "limited": "Çok fazla istek. Lütfen birkaç dakika sonra tekrar deneyin."
     },
     "success": {
       "title": "Teşekkürler!",

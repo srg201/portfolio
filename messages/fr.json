@@ -243,7 +243,8 @@
       "choice": "Choisissez une option",
       "name": "Saisissez votre nom",
       "email": "Saisissez un e-mail valide",
-      "generic": "Une erreur s'est produite. Veuillez réessayer."
+      "generic": "Une erreur s'est produite. Veuillez réessayer.",
+      "limited": "Trop de demandes. Réessayez dans quelques minutes."
     },
     "success": {
       "title": "Merci !",

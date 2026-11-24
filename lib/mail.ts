@@ -7,6 +7,7 @@
  * Нужны открытые почтовые порты 465/587: на Vercel они открыты,
  * а локально их может закрывать VPN.
  */
+import "server-only";
 import nodemailer from "nodemailer";
 
 export type OwnerMail = {

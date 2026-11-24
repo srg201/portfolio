@@ -243,7 +243,8 @@
       "choice": "Wählen Sie eine Option",
       "name": "Geben Sie Ihren Namen ein",
       "email": "Geben Sie eine gültige E-Mail ein",
-      "generic": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut."
+      "generic": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
+      "limited": "Zu viele Anfragen. Bitte versuchen Sie es in ein paar Minuten erneut."
     },
     "success": {
       "title": "Danke!",

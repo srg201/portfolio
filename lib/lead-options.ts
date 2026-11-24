@@ -8,4 +8,5 @@ export type LeadState =
   | { status: "sent" }
   | { status: "invalid"; fields: string[] }
   | { status: "unavailable" }
+  | { status: "limited" }
   | { status: "error" };

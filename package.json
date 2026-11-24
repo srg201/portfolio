@@ -15,7 +15,7 @@
     "showcases": "tsx scripts/record-showcases.ts",
     "showreel": "tsx scripts/build-showreel.ts",
     "covers": "tsx scripts/build-covers.ts",
-    "mail:check": "tsx --env-file=.env.local scripts/check-mail.ts"
+    "mail:check": "tsx --env-file=.env.local --conditions=react-server scripts/check-mail.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",

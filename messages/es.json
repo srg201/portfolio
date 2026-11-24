@@ -243,7 +243,8 @@
       "choice": "Elige una opción",
       "name": "Escribe tu nombre",
       "email": "Escribe un email válido",
-      "generic": "Algo salió mal. Inténtalo de nuevo."
+      "generic": "Algo salió mal. Inténtalo de nuevo.",
+      "limited": "Demasiadas solicitudes. Inténtalo de nuevo en unos minutos."
     },
     "success": {
       "title": "¡Gracias!",

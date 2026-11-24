@@ -243,7 +243,8 @@
       "choice": "Choose an option",
       "name": "Enter your name",
       "email": "Enter a valid email",
-      "generic": "Something went wrong. Please try again."
+      "generic": "Something went wrong. Please try again.",
+      "limited": "Too many requests. Please try again in a few minutes."
     },
     "success": {
       "title": "Thank you!",

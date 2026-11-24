@@ -97,9 +97,11 @@ export function Quiz({ enabled, email }: { enabled: boolean; email: string | nul
   const serverMessage =
     state.status === "unavailable"
       ? t("unavailable")
-      : state.status === "error"
-        ? t("errors.generic")
-        : null;
+      : state.status === "limited"
+        ? t("errors.limited")
+        : state.status === "error"
+          ? t("errors.generic")
+          : null;
 
   /** Без отправки: письмо с ответами в почтовом клиенте */
   const mailto = (form: HTMLFormElement) => {

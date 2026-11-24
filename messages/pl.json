@@ -243,7 +243,8 @@
       "choice": "Wybierz opcję",
       "name": "Wpisz imię",
       "email": "Wpisz poprawny e-mail",
-      "generic": "Coś poszło nie tak. Spróbuj ponownie."
+      "generic": "Coś poszło nie tak. Spróbuj ponownie.",
+      "limited": "Zbyt wiele zgłoszeń. Spróbuj ponownie za kilka minut."
     },
     "success": {
       "title": "Dziękuję!",
