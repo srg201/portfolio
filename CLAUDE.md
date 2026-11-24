@@ -25,7 +25,7 @@
 - Секреты только в `.env.local` (он в `.gitignore`), в репозиторий и в чат не попадают; переменные описываются в `.env.example`.
 
 ## Текущий статус
-- Этап 1 (каркас) готов: Next.js, next-intl (15 локалей, proxy, RTL, cookie), next-themes, Supabase-клиенты, Drizzle, `.env.example`. `.env.local` заполнен. Не сделано: деплой на Vercel (там нужно задать те же переменные, минимум `GMAIL_USER_NAME` и `GMAIL_APP_PASSWORD`).
+- Этап 1 (каркас) готов: Next.js, next-intl (15 локалей, proxy, RTL, cookie), next-themes, Supabase-клиенты, Drizzle, `.env.example`. `.env.local` заполнен. Не сделано: деплой на Vercel (там нужно задать те же переменные, минимум почту для заявок: `RESEND_API_KEY` + `LEADS_EMAIL` или `GMAIL_USER_NAME` + `GMAIL_APP_PASSWORD`).
 - Сделаны:
   - тема shadcn от фирменного оранжевого и WebGL-туман;
   - Dock с переключателями языка и темы;
@@ -33,7 +33,7 @@
   - футер с финальным CTA в layout. Отзывы пропущены, пока нет настоящих текстов;
   - полировка: reduced motion, клавиатура, hreflang/canonical (`lib/seo.ts`), LCP;
   - страницы `/work` (фильтры, сетка ↔ список) и `/work/[slug]` (кейс с видео), `/about`, `/contact`;
-  - квиз на `/contact`: заявка уходит письмом на Gmail владельца через nodemailer (`app/[locale]/contact/actions.ts`, шаблон письма `lib/lead-email.ts`), ловушки для ботов (скрытое поле и минимальное время). Бюджеты рассчитаны на старт: до $300 … $1500+. В Supabase заявки пока не сохраняются;
+  - квиз на `/contact`: заявка уходит письмом владельцу (`lib/mail.ts`: Resend по HTTPS, если задан `RESEND_API_KEY`, иначе Gmail SMTP; шаблон `lib/lead-email.ts`, проверка `pnpm mail:check`). У владельца включён VPN, который режет SMTP, поэтому локально работает только Resend, ловушки для ботов (скрытое поле и минимальное время). Бюджеты рассчитаны на старт: до $300 … $1500+. В Supabase заявки пока не сохраняются;
   - полноэкранное меню из Dock (`components/ui/menu.tsx`), переход страниц шторкой (`template.tsx`), preloader первого захода, 404 с «логом деплоя», `sitemap.xml`, `robots.txt`, OG-картинка.
 - Данные пока моковые: `lib/mock/projects.ts`, `lib/career.ts`. Записи проектов: `pnpm showcases`, обложки: `pnpm covers`.
 - Шрифт Geist временный.

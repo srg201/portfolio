@@ -1,9 +1,9 @@
 "use server";
 
 import { getTranslations } from "next-intl/server";
-import nodemailer from "nodemailer";
 import { z } from "zod";
 import { renderLeadEmail } from "@/lib/lead-email";
+import { MailError, mailProvider, sendOwnerMail } from "@/lib/mail";
 import {
   leadBudgets,
   leadTimelines,
@@ -26,19 +26,10 @@ const schema = z.object({
   locale: z.string().max(10),
 });
 
-/** Gmail для отправки: без адреса и пароля приложения форма не отправляется */
-function gmail() {
-  const user = process.env.GMAIL_USER_NAME;
-  const pass = process.env.GMAIL_APP_PASSWORD;
-  if (!user || !pass) return null;
-  // Google показывает пароль приложения группами через пробел: убираем пробелы
-  return { user, pass: pass.replace(/\s+/g, ""), to: process.env.LEADS_EMAIL || user };
-}
-
 /**
  * Заявка из квиза. Проверка zod, ловушки для ботов (скрытое поле hp_note
- * и минимальное время заполнения), затем письмо владельцу через Gmail SMTP:
- * с его адреса на его же адрес, «Ответить» ведёт клиенту (reply-to).
+ * и минимальное время заполнения), затем письмо владельцу (lib/mail.ts:
+ * Resend или Gmail SMTP), «Ответить» ведёт клиенту (reply-to).
  * Позже заявки будут ещё и сохраняться в Supabase (leads).
  */
 export async function submitLead(_previous: LeadState, form: FormData): Promise<LeadState> {
@@ -59,9 +50,8 @@ export async function submitLead(_previous: LeadState, form: FormData): Promise<
     };
   }
 
-  const account = gmail();
-  if (!account) {
-    console.error("Lead email: GMAIL_USER_NAME or GMAIL_APP_PASSWORD is not set");
+  if (!mailProvider()) {
+    console.error("Lead email: neither RESEND_API_KEY nor GMAIL_USER_NAME + GMAIL_APP_PASSWORD is set");
     return { status: "unavailable" };
   }
 
@@ -90,28 +80,20 @@ export async function submitLead(_previous: LeadState, form: FormData): Promise<
   );
 
   try {
-    const transport = nodemailer.createTransport({
-      service: "gmail",
-      auth: { user: account.user, pass: account.pass },
-      // Без ответа SMTP форма не должна висеть минутами: через ~20 с покажем ошибку
-      connectionTimeout: 10_000,
-      greetingTimeout: 10_000,
-      socketTimeout: 20_000,
-    });
-    const info = await transport.sendMail({
-      from: { name: "Портфолио", address: account.user },
-      to: account.to,
-      replyTo: { name: lead.name, address: lead.email },
+    const sent = await sendOwnerMail({
       subject: `Заявка: ${t(`type.options.${lead.type}`)} · ${lead.name}`,
-      text,
       html,
+      text,
+      replyTo: { name: lead.name, address: lead.email },
     });
-    console.info("Lead email sent:", info.messageId);
+    console.info(`Lead email sent via ${sent.provider}:`, sent.id);
     return { status: "sent" };
   } catch (error) {
-    // Код и ответ SMTP помогают понять причину (535 = неверный пароль приложения)
-    const smtp = error as { code?: string; responseCode?: number; message?: string };
-    console.error("Lead email failed:", smtp.code, smtp.responseCode ?? "", smtp.message ?? error);
+    // Код помогает понять причину: gmail-535 (неверный пароль), gmail-ETIMEDOUT (закрыт порт), resend-403...
+    console.error(
+      "Lead email failed:",
+      error instanceof MailError ? `${error.code}: ${error.message}` : error,
+    );
     return { status: "error" };
   }
 }

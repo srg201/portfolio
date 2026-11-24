@@ -1,50 +1,49 @@
 /**
  * Проверка почты для заявок: `pnpm mail:check`.
- * Подключается к Gmail с ключами из .env.local, проверяет вход
- * и отправляет тестовое письмо на адрес заявок. Пароль не печатает.
+ * Отправляет тестовое письмо тем же способом, что и квиз (lib/mail.ts):
+ * через Resend, если задан RESEND_API_KEY, иначе через Gmail SMTP.
+ * Ключи и пароли не печатает.
  */
-import nodemailer from "nodemailer";
-
-const user = process.env.GMAIL_USER_NAME?.trim();
-const pass = process.env.GMAIL_APP_PASSWORD?.replace(/\s+/g, "");
-const to = process.env.LEADS_EMAIL?.trim() || user;
-
-if (!user || !pass) {
-  console.error("✕ В .env.local не заданы GMAIL_USER_NAME и/или GMAIL_APP_PASSWORD");
-  process.exit(1);
-}
-console.log(`Ящик: ${user}, пароль приложения: ${pass.length} символов (должно быть 16)`);
-
-const transport = nodemailer.createTransport({
-  service: "gmail",
-  auth: { user, pass },
-  connectionTimeout: 10_000,
-  greetingTimeout: 10_000,
-  socketTimeout: 20_000,
-});
+import { MailError, mailProvider, mailRecipient, sendOwnerMail } from "../lib/mail";
 
 async function main() {
+  const provider = mailProvider();
+  if (!provider) {
+    console.error(
+      "✕ Почта не настроена: задайте в .env.local RESEND_API_KEY\n" +
+        "  или GMAIL_USER_NAME и GMAIL_APP_PASSWORD",
+    );
+    process.exit(1);
+  }
+  console.log(`Способ: ${provider === "resend" ? "Resend (HTTPS)" : "Gmail SMTP"}, получатель: ${mailRecipient()}`);
+
   try {
-    await transport.verify();
-    console.log("✓ Вход в Gmail успешен");
-    const info = await transport.sendMail({
-      from: { name: "Портфолио", address: user },
-      to,
+    const sent = await sendOwnerMail({
       subject: "Проверка почты для заявок",
       text: "Если вы видите это письмо, заявки с сайта будут приходить сюда.",
     });
-    console.log(`✓ Письмо отправлено на ${to} (${info.messageId})`);
-    console.log("  Не видно во «Входящих»? Посмотрите «Отправленные», «Все письма» и «Спам».");
+    console.log(`✓ Письмо отправлено (${sent.id})`);
+    console.log("  Не видно во «Входящих»? Посмотрите «Все письма» и «Спам».");
   } catch (error) {
-    const smtp = error as { code?: string; responseCode?: number; message?: string };
-    console.error(`✕ ${smtp.code ?? ""} ${smtp.responseCode ?? ""} ${smtp.message ?? error}`);
-    if (smtp.responseCode === 535 || smtp.code === "EAUTH") {
+    const code = error instanceof MailError ? error.code : "";
+    console.error(`✕ ${code} ${error instanceof Error ? error.message : error}`);
+    if (code === "gmail-535" || code === "gmail-EAUTH") {
       console.error(
-        "  Gmail не принял логин или пароль. Нужен именно пароль приложения (не обычный пароль),\n" +
+        "  Gmail не принял логин или пароль. Нужен пароль приложения (не обычный пароль)\n" +
           "  при включённой двухэтапной проверке: https://myaccount.google.com/apppasswords",
       );
-    } else if (smtp.code === "ETIMEDOUT" || smtp.code === "ESOCKET") {
-      console.error("  Нет связи с smtp.gmail.com: проверьте сеть, VPN или файрвол (порт 465).");
+    } else if (code === "gmail-ETIMEDOUT" || code === "gmail-ESOCKET") {
+      console.error(
+        "  Нет связи с smtp.gmail.com: почтовые порты закрыты (часто их режет VPN).\n" +
+          "  Выход: RESEND_API_KEY в .env.local, Resend работает по HTTPS.",
+      );
+    } else if (code === "resend-401" || code === "resend-400") {
+      console.error("  Resend не принял ключ: проверьте RESEND_API_KEY (начинается с re_).");
+    } else if (code === "resend-403") {
+      console.error(
+        "  С отправителем onboarding@resend.dev можно писать только на адрес,\n" +
+          "  с которым заведён аккаунт Resend. Укажите его в LEADS_EMAIL.",
+      );
     }
     process.exit(1);
   }
