@@ -102,6 +102,7 @@ async function main() {
     _id: "settings",
     _type: "settings",
     available: true,
+    email: "siarheibeliakou444@gmail.com",
     socials: [{ _key: "github", _type: "social", name: "GitHub", url: "https://github.com/srg201" }],
     careerStart: career.start,
     projectsCount: career.projects,

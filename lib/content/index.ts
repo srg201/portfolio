@@ -48,7 +48,7 @@ export type Settings = {
 
 const defaultSettings: Settings = {
   available: true,
-  email: null,
+  email: "siarheibeliakou444@gmail.com",
   socials: [{ name: "GitHub", url: "https://github.com/srg201" }],
   careerStart: career.start,
   projectsCount: career.projects,

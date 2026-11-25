@@ -38,5 +38,5 @@
   - полноэкранное меню из Dock (`components/ui/menu.tsx`), переход страниц шторкой (`template.tsx`), preloader первого захода, 404 с «логом деплоя», `sitemap.xml`, `robots.txt`, OG-картинка.
 - Данные: Sanity, а до его подключения `lib/mock/projects.ts`, `lib/career.ts`. Перенос моков в Sanity: `pnpm sanity:seed`. Записи проектов: `pnpm showcases`, обложки: `pnpm covers`.
 - Шрифт Geist временный.
-- Ждём от владельца: публичный email для сайта (`lib/site.ts`, сейчас `email: null`), фото, таймлайн, CV, настоящие отзывы.
+- Публичный email владельца: в `lib/content` (по умолчанию) и в настройках Sanity. Ждём от владельца: фото, таймлайн, CV, настоящие отзывы.
 - Дальше: подключить проект Sanity (ключи в `.env.local` и Vercel, вебхук), автоперевод в Studio через Claude API, заявки в Supabase.
